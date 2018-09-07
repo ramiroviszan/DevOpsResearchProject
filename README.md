@@ -34,10 +34,11 @@ git remote add heroku https://git.heroku.com/app-obli-devops-backend.git
 heroku open
 
 Remotos:
+<pre>
+DevOpsResearchProject git:(master) git remote -v
 
-➜  DevOpsResearchProject git:(master) git remote -v
-heroku	https://git.heroku.com/app-obli-devops-backend.git (fetch)
-heroku	https://git.heroku.com/app-obli-devops-backend.git (push)
-origin	git@github.com:ramiroviszan/DevOpsResearchProject.git (fetch)
-origin	git@github.com:ramiroviszan/DevOpsResearchProject.git (push)
-
+heroku  https://git.heroku.com/app-obli-devops-backend.git (fetch)
+heroku  https://git.heroku.com/app-obli-devops-backend.git (push)
+origin  git@github.com:ramiroviszan/DevOpsResearchProject.git (fetch)
+origin  git@github.com:ramiroviszan/DevOpsResearchProject.git (push)
+</pre>
