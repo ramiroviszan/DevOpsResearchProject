@@ -10,7 +10,7 @@ Url Backend
 https://app-obli-devops-backend.herokuapp.com/
 
 
-Instalar hambiente de desarrollo del backend:
+Instalar ambiente de desarrollo del backend:
 - instalar heroku desde la pagina.
 
 - Primero hay que bajar el repositorio del profesor con:
@@ -30,7 +30,7 @@ git remote add heroku https://git.heroku.com/app-obli-devops-backend.git
 
 - listar los remotos y ver que existan dos remotos (en realidad son 4), pero uno es al repositorio del profesor y otro a heroku
 
-- probar que ande heroku con:
+- probar:
 heroku open
 
 Remotos:
