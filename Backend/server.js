@@ -1,12 +1,20 @@
-var http = require('http');
-var server = http.createServer();
+const express = require('express');
+const MongoClient = require('mongodb').MongoClient;
+const bodyParser = require('body-parser');
+const db = require('./config/db');
 
-var port = process.env.PORT || 8080;
+const app = express();
 
-function control(petic, resp) {
-resp.writeHead(200, {'content-type': 'text/plain'});
-resp.write('Hola, Mundo!');
-resp.end();
-}
-server.on('request', control);
-server.listen(port);
+const port = 8000;
+
+
+app.use(bodyParser.urlencoded({extended : true}));
+
+MongoClient.connect(db.url, (err, database) => {
+    if(err) return console.log(err)
+    require('./src/routes')(app, database);
+    
+    app.listen(port, () => {
+        console.log('Escuchando al puerto: '+port)
+    });
+});
