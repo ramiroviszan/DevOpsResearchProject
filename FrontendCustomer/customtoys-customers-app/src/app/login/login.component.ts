@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   private _subject = new Subject<string>();
   errorMessage: string;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -26,7 +26,10 @@ export class LoginComponent implements OnInit {
   }
 
   keyDownFunction(event){
-  
+  }
+
+  login(event){
+    this.router.navigateByUrl('/customer');
   }
 
 }
