@@ -17,7 +17,7 @@ module.exports = (app) => {
                 }
             },
             (apiError, apiResponse, apiBody) => {
-                if(apiError != null) {
+                if(apiError == null) {
                     console.log(`External API responded with token: ${apiBody['token']}`)
                     response.send(apiBody['token']);
                 }
