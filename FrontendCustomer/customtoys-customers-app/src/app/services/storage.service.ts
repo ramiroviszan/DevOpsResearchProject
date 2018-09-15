@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Session} from "../classes/session";
 import {User} from "../classes/user";
+import {Client} from "../classes/client";
 import {Router} from "@angular/router";
 
 @Injectable({
@@ -18,11 +19,13 @@ export class StorageService {
 
   setCurrentSession(session: Session): void {
     this.currentSession = session;
-    this.localStorageService.setItem('currentUser', JSON.stringify(session));
+    
+    this.localStorageService.setItem('sesion', JSON.stringify(session));
   }
 
   loadSessionData(): Session{
-    var sessionStr = this.localStorageService.getItem('currentUser');
+    var sessionStr = this.localStorageService.getItem('sesion');
+    
     return (sessionStr) ? <Session> JSON.parse(sessionStr) : null;
   }
 
@@ -31,12 +34,14 @@ export class StorageService {
   }
 
   removeCurrentSession(): void {
-    this.localStorageService.removeItem('currentUser');
+    this.localStorageService.removeItem('sesion');
+    
     this.currentSession = null;
   }
 
   getCurrentUser(): User {
     var session: Session = this.getCurrentSession();
+    
     return (session && session.user) ? session.user : null;
   };
 
@@ -46,7 +51,22 @@ export class StorageService {
 
   getCurrentToken(): string {
     var session = this.getCurrentSession();
-    return (session && session.token) ? session.token : null;
+    
+    return (session && session.user && session.user.token) ? session.user.token : null;
+  };
+
+  getCurrentClient(): Client {
+    var session = this.getCurrentSession();
+    
+    return (session && session.client) ? session.client : null;
+  };
+
+  setCurrentClient(client: Client) {
+    var session = this.getCurrentSession();
+    
+    session.setClient(client);
+    
+    this.setCurrentSession(session);
   };
 
   logout(): void{

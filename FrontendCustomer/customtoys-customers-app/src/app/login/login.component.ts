@@ -5,8 +5,10 @@ import {HttpResponse} from '@angular/common/http';
 import {debounceTime} from "rxjs/operators";
 import {Subject} from 'rxjs';
 import {LoginService} from '../services/login.service';
+import {CustomerService} from '../services/customer.service';
 import {StorageService} from "../services/storage.service";
 import {User} from "../classes/user";
+import {Client} from "../classes/client";
 import {Session} from "../classes/session";
 
 @Component({
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
 
   constructor(private formBuilder: FormBuilder, private router: Router, 
-    private storageService: StorageService, private loginService: LoginService) { }
+    private storageService: StorageService, private loginService: LoginService, private customerService: CustomerService) { }
 
   ngOnInit() {
     this._subject.subscribe((message) => this.errorMessage = message);
@@ -57,11 +59,29 @@ export class LoginComponent implements OnInit {
 
   private correctLogin(data: HttpResponse<User>) {
     let user=data.body;
-    let token=data.headers.get("Token");
-    let session=new Session(token,user);
+    let session=new Session(user);
     this.storageService.setCurrentSession(session);
 
-    this.router.navigate(['/projects']);
+    this.getCheckRut();
+  }
+
+  private getCheckRut() {
+    this.customerService.get()
+    .subscribe(
+       ((data: HttpResponse<Client>) => this.checkRouting(data)),
+       ((error: any) => {console.error(error);this.setErrorMessage()})
+    )
+  }
+
+  private checkRouting(data: HttpResponse<Client>) {
+    let client=data.body;
+
+    this.storageService.setCurrentClient(client);
+
+    if(this.storageService.getCurrentClient().rut!='') 
+      this.router.navigate(['/projects']);
+    else
+      this.router.navigate(['/customer']);
   }
 
   keyDownFunction(event){

@@ -8,6 +8,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CustomerComponent } from './customer/customer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { HttpClientModule } from '@angular/common/http'; 
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { ProjectsComponent } from './projects/projects.component';
     BrowserModule,
     Routing,
     ReactiveFormsModule,
-    FormsModule,
+    FormsModule,HttpClientModule,
     NgbModule.forRoot()
   ],
   providers: [],

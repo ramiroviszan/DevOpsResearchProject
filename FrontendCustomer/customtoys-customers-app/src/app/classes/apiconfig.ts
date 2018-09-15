@@ -1,6 +1,6 @@
 export class Apiconfig {
     private static ApiIP: string = "localhost";
-    private static ApiPort: string = "5392";
+    private static ApiPort: string = "8000";
   
     public static getIP() : string {
       return this.ApiIP;

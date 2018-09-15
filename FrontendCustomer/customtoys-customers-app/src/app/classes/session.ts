@@ -1,11 +1,19 @@
 import {User} from "./user";
+import {Client} from "./client";
 
 export class Session {
-  public token: string;
   public user: User;
+  public client: Client;
 
-  constructor(token:string,user:User){
-    this.token=token;
+  constructor(user:User){
     this.user=user;
+  }
+
+  public setClient(client:Client) {
+    this.client = client;
+  }
+
+  public getClient():Client {
+    return this.client;
   }
 }
