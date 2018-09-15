@@ -1,6 +1,6 @@
 # DevOpsResearchProject
 
-Solo para recordar como configurar heroku y git para usar una subcarpeta dentro del repositorio:
+Solo para recordar como pushear a heroku y usar una subcarpeta dentro del repositorio:
 si la carpeta se llama 'Backend' el comando es:
 ```plain
 git subtree push --prefix Backend heroku master
