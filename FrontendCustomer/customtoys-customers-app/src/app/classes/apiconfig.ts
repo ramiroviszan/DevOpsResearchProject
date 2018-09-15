@@ -1,6 +1,6 @@
 export class Apiconfig {
-    private static ApiIP: string = "localhost";
-    private static ApiPort: string = "8000";
+    private static ApiIP: string = "app-obli-devops-backend.herokuapp.com";
+    private static ApiPort: string = "80";
   
     public static getIP() : string {
       return this.ApiIP;
