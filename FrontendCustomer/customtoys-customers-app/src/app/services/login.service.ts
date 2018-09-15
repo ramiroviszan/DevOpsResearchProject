@@ -14,13 +14,13 @@ export class LoginService {
   private WEB_API_URL: string;
 
   constructor(private httpClient: HttpClient) {
-    this.WEB_API_URL = 'http://' + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/login';
+    this.WEB_API_URL = 'http://' + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/CustomerLogin';
   }
 
   login(username: string, password: string): Observable<HttpResponse<User>> {
     const myHeaders= new HttpHeaders({
-      'UserName': username,
-      'Password': password
+      'username': username,
+      'password': password
     });
     const httpOptions = {
       headers:myHeaders,

@@ -12,7 +12,7 @@ export class LogoutService {
   private WEB_API_URL: string;
 
   constructor(private httpClient: HttpClient) {
-    this.WEB_API_URL = 'http://' + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/Logout';
+    this.WEB_API_URL = 'http://' + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/CustomerLogout';
   }
 
   logout(token: string): Observable<HttpResponse<any>> {
