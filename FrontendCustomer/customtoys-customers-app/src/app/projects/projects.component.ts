@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {Subject} from "rxjs/index";
+import {debounceTime} from "rxjs/operators";
+import {ProjectService} from "../services/project.service";
+import {Project} from "../classes/project";
+import {StorageService} from "../services/storage.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-projects',
@@ -8,26 +15,47 @@ import { Component, OnInit } from '@angular/core';
 export class ProjectsComponent implements OnInit {
   
   pageTitle = 'Projects';
+  projects: Array<Project>;
 
-  projectsTest = [
-    new Project('Proyecto 1', '2018-09-01','2018-09-21'),
-    new Project('Proyecto 2', '2018-09-01','2018-09-21'),
-    new Project('Proyecto 3', '2018-09-01','2018-09-21'),
-    new Project('Proyecto 4', '2018-09-01','2018-09-21')
-  ];
+  private _subjectError = new Subject<string>();
+  errorMessage: string;
 
-  private dataList;
-
-  constructor() { }
+  constructor(private router: Router, private projectsService : ProjectService, private storageService: StorageService) { }
 
   ngOnInit() {
+    this._subjectError.subscribe((message) => this.errorMessage = message);
+    this._subjectError.pipe(
+      debounceTime(3000)
+    ).subscribe(() => this.errorMessage = null);
+
+    if(this.storageService.getCurrentClient())
+      this.getProjects();
   }
 
-}
+  getProjects(){
+    this.projectsService.getProjectsOfClient().subscribe(
+      ((data : HttpResponse<Array<Project>>) => this.result(data)),
+      ((error: HttpErrorResponse) => { console.error(error);this.handleError(error)})
+    );
+  }
 
-export class Project {
-  constructor(
-    public name: string,
-    public started_at: string,
-    public finish_at: string) { }
+  showComments(id_project){
+    this.router.navigateByUrl('/projects/${id_project}/comments');
+  }
+
+  private result(data: HttpResponse<Array<Project>>): void {
+    this.projects = data.body;
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if(error.status==401){
+      this._subjectError.next(this.errorMessage='Usuario no autorizado');
+    }else{
+      if(error.error.Message!=null){
+        this._subjectError.next(this.errorMessage=error.error.Message);
+      }else {
+        this._subjectError.next(this.errorMessage='Se ha producido un error');
+      }
+    }
+  }
 }

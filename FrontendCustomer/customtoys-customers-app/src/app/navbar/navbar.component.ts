@@ -39,7 +39,8 @@ export class NavbarComponent implements OnInit {
   }
 
   private checkRouting() {
-    if(this.storageService.getCurrentClient().rut=='')
-      this.router.navigate(['/customer']);
+    if (this.storageService.isAuthenticated()) 
+      if(this.storageService.getCurrentClient() && this.storageService.getCurrentClient().rut=='')
+        this.router.navigate(['/customer']);
   }
 }
