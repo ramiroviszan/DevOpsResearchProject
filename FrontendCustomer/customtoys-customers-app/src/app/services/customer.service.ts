@@ -16,7 +16,7 @@ export class CustomerService {
   private WEB_API_URL: string;
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
-    this.WEB_API_URL = 'http://' + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/client';
+    this.WEB_API_URL = 'http://' + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/clients';
   }
 
   get(): Observable<HttpResponse<Client>> {

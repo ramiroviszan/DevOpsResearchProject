@@ -8,7 +8,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CustomerComponent } from './customer/customer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProjectsComponent } from './projects/projects.component';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
+import { CommentsComponent } from './comments/comments.component'; 
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     CustomerComponent,
     NavbarComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,
