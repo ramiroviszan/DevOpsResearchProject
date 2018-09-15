@@ -1,3 +1,5 @@
+const clientLogic = require('../business-logic/client.logic');
+
 var ObjectID = require('mongodb').ObjectID;
 
 module.exports = function(app, db) {
@@ -65,4 +67,26 @@ module.exports = function(app, db) {
       }
     });
   });
+
+
+
+  app.get('/api/Clients/:id', (req, res) => {
+    const id = req.params.id;
+
+    if (!req.params.id || req.params.id.length != 24){
+      res.status(400).send('Id field must be 24 hexadecimal characters long.');
+      return;
+    } 
+    
+    clientLogic.getClient(id, (err, client) => {
+      if (err || !client) {
+        res.status(404).send('Client not found.');
+      } else {
+        res.send(client);
+      } 
+    });     
+  });
+
+
+
 };
