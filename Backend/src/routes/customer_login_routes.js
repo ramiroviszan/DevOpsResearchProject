@@ -20,4 +20,19 @@ module.exports = function (app) {
             }
         });       
     });
+
+    app.post('/api/CustomerLogout', (req, res) => {
+        if (!req.headers.token){
+            res.status(400).send('Current session token is required.');
+            return;
+        }
+
+        const token = req.headers.token;
+        customerLogic.processLogout(token, (err) => {
+            if(err){
+                res.status(401).send('The current session was not found.');
+            }
+            res.status(200).send();
+        });       
+    });
 };

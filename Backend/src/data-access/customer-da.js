@@ -32,5 +32,24 @@ function generateOIDAndSave(user, cb) {
     });
 };
 
+function clearToken(currentToken, cb) {
+    MongoClient.connect(DB_URL, (err, database) => {
+        if (err){ 
+            return cb(err);
+        }
+        else {
+            let query = { token: ObjectID(currentToken) };
+            let newValues = { $set: { token: "" } };
+            console.log(query);
+            console.log(newValues);
+            database.collection('users').updateOne(query, newValues, (error, res) => {
+                return cb(error);
+            });
+        }
+        database.close();
+    });
+};
+
 module.exports.getUser = getUser;
 module.exports.generateOIDAndSave = generateOIDAndSave;
+module.exports.clearToken = clearToken;
