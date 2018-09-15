@@ -11,7 +11,15 @@ function processLogin(credentials, cb){
     });
 };
 
+function processLogout(token, cb){ 
+    customerDA.clearToken(token, (err) => {
+        return cb(err);
+    });
+};
+
 module.exports.processLogin = processLogin;
+module.exports.processLogout = processLogout;
+
 
 
 
