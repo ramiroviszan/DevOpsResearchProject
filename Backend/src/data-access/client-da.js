@@ -48,6 +48,20 @@ function updateClient(clientNewData, cb) {
     });
 };
 
+function getClientProjects(clientId, cb){
+    MongoClient.connect(DB_URL, (err, database) => {
+        if (err) return cb(err, database);
+        else {
+            const query = { 'id_client': new ObjectID(clientId) };
+            database.collection('projects').find(query).toArray((error, items) => {
+                return cb(error, items);
+            });
+        }
+        database.close();
+    });
+}
+
 module.exports.getClient = getClient;
 module.exports.updateClient = updateClient;
 module.exports.userBelongsToCompany = userBelongsToCompany;
+module.exports.getClientProjects = getClientProjects;
