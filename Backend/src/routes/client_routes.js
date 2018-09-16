@@ -119,6 +119,25 @@ module.exports = function(app, db) {
     });     
   });
 
+  app.get('/api/Clients/:id/Projects', (req, res) => {
+    const dataToSearch = {
+      id : req.params.id,
+      token : req.headers.token
+    };
+
+    if (!req.params.id || req.params.id.length != 24){
+      res.status(400).send('Id field must be 24 hexadecimal characters long.');
+      return;
+    } 
+
+    clientLogic.getClientProjects(dataToSearch, (err, projects) => {
+      if (err || !projects) {
+        res.status(404).send('Client not found.');
+      } else {
+        res.send(projects);
+      } 
+    });     
+  });
 
 
 };

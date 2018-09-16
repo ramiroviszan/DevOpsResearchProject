@@ -42,6 +42,19 @@ function updateClient(dataToSearch, clientNewData, cb) {
     });
 }
 
+function getClientProjects(dataToSearch, cb){
+    //clientDA.userBelongsToCompany(dataToSearch, (result) => {
+    //    if (result == true) {
+            clientDA.getClientProjects(dataToSearch.id, (err, projects) => {
+                return cb(err, projects);
+            });
+    //    } else {
+    //        return cb('', null);
+    //    }
+    //});
+}
+
 module.exports.getClient = getClient;
 module.exports.updateClient = updateClient;
+module.exports.getClientProjects = getClientProjects;
 
