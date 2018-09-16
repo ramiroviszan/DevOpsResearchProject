@@ -59,6 +59,7 @@ export class CustomerComponent implements OnInit {
   }
 
   private correctSave(data: HttpResponse<Client>) {
+    this.storageService.setCurrentClient(data.body);
     this.router.navigateByUrl('/projects');
   }
 
