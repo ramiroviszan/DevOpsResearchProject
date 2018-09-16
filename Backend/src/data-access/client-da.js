@@ -15,4 +15,21 @@ function getClient(id, cb) {
     });
 };
 
+function updateClient(clientNewData, cb) {
+    MongoClient.connect(DB_URL, (err, database) => {
+        if (err) return cb(err, database);
+        else {
+            let query = { '_id': new ObjectID(clientNewData._id) };
+            clientNewData._id = new ObjectID(clientNewData._id);
+            console.log(clientNewData);
+            console.log(query);
+            database.collection('clients').findOneAndUpdate(query, clientNewData, {returnOriginal: false}, (error, res) => {
+                return cb(error, res.value);
+            });
+        }
+        database.close();
+    });
+};
+
 module.exports.getClient = getClient;
+module.exports.updateClient = updateClient;

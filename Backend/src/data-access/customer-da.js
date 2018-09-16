@@ -39,9 +39,7 @@ function clearToken(currentToken, cb) {
         }
         else {
             let query = { token: ObjectID(currentToken) };
-            let newValues = { $set: { token: "" } };
-            console.log(query);
-            console.log(newValues);
+            let newValues = { $set: { token: '' } };
             database.collection('users').updateOne(query, newValues, (error, res) => {
                 return cb(error);
             });
