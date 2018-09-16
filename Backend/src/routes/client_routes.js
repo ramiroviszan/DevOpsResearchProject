@@ -71,14 +71,17 @@ module.exports = function(app, db) {
 
 
   app.get('/api/Clients/:id', (req, res) => {
-    const id = req.params.id;
+    const dataToSearch = {
+      id : req.params.id,
+      token : req.headers.token
+    };
 
     if (!req.params.id || req.params.id.length != 24){
       res.status(400).send('Id field must be 24 hexadecimal characters long.');
       return;
     } 
-    
-    clientLogic.getClient(id, (err, client) => {
+
+    clientLogic.getClient(dataToSearch, (err, client) => {
       if (err || !client) {
         res.status(404).send('Client not found.');
       } else {
@@ -88,7 +91,10 @@ module.exports = function(app, db) {
   });
 
   app.put('/api/Clients/:id', (req, res) => {
-    const id = req.params.id;
+    const dataToSearch = {
+      id : req.params.id,
+      token : req.headers.token
+    };
 
     if (!req.params.id || req.params.id.length != 24){
       res.status(400).send('Id field must be 24 hexadecimal characters long.');
@@ -96,13 +102,13 @@ module.exports = function(app, db) {
     } 
 
     const clientNewData = {
-      _id: id,
+      _id: dataToSearch.id,
       company_name: req.body.company_name,
       rut: req.body.rut,
       entry_date: req.body.entry_date
     };
 
-    clientLogic.updateClient(clientNewData, (err, client, status) => {
+    clientLogic.updateClient(dataToSearch, clientNewData, (err, client, status) => {
       if (err) {
         res.status(404).send('Client not found.');
       } else if(!status){
