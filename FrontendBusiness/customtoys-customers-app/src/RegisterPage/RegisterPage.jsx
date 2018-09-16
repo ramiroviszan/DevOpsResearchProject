@@ -9,7 +9,7 @@ class RegisterPage extends React.Component {
         super(props);
 
         this.state = {
-            user: {
+            client: {
                 username: '',
                 password: '',
                 client_company: '',
@@ -25,23 +25,23 @@ class RegisterPage extends React.Component {
 
     handleChange(event) {
         const { name, value } = event.target;
-        const { user } = this.state;
+        const { client } = this.state;
         this.setState({
-            user: {
-                ...user,
+            client: {
+                ...client,
                 [name]: value
             }
         });
     }
 
     fieldsCompleted(){
-        const { user } = this.state;
+        const { client } = this.state;
 
         let completed = false;
-        completed &= user.username;
-        completed &= user.password;
-        completed &= user.client_company;
-        completed &= user.entry_date;
+        completed &= client.username;
+        completed &= client.password;
+        completed &= client.client_company;
+        completed &= client.entry_date;
 
         return completed;
     }
@@ -50,45 +50,45 @@ class RegisterPage extends React.Component {
         event.preventDefault();
 
         this.setState({ submitted: true });
-        const { user } = this.state;
+        const { client } = this.state;
         const { dispatch } = this.props;
         if (fieldsCompleted()) {
-            dispatch(userActions.register(user));
+            dispatch(userActions.register(client));
         }
     }
 
     render() {
         const { registering  } = this.props;
-        const { user, submitted } = this.state;
+        const { client, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h2>Register</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !user.username ? ' has-error' : '')}>
+                    <div className={'form-group' + (submitted && !client.username ? ' has-error' : '')}>
                         <label htmlFor="username">Nombre de Usuario</label>
-                        <input type="text" className="form-control" name="username" value={user.username} onChange={this.handleChange} />
-                        {submitted && !user.username &&
+                        <input type="text" className="form-control" name="username" value={client.username} onChange={this.handleChange} />
+                        {submitted && !client.username &&
                             <div className="help-block">Debe ingresar un nombre de usuario</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
+                    <div className={'form-group' + (submitted && !client.password ? ' has-error' : '')}>
                         <label htmlFor="password">Contraseña</label>
-                        <input type="password" className="form-control" name="password" value={user.password} onChange={this.handleChange} />
-                        {submitted && !user.password &&
+                        <input type="password" className="form-control" name="password" value={client.password} onChange={this.handleChange} />
+                        {submitted && !client.password &&
                             <div className="help-block">Debe ingresar una contraseña</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !user.client_company ? ' has-error' : '')}>
+                    <div className={'form-group' + (submitted && !client.client_company ? ' has-error' : '')}>
                         <label htmlFor="client_company">Nombre de la Empresa Cliente</label>
-                        <input type="text" className="form-control" name="client_company" value={user.client_company} onChange={this.handleChange} />
-                        {submitted && !user.client_company &&
+                        <input type="text" className="form-control" name="client_company" value={client.client_company} onChange={this.handleChange} />
+                        {submitted && !client.client_company &&
                             <div className="help-block">Debe ingresar un nombre para la empresa cliente</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !user.entry_date ? ' has-error' : '')}>
+                    <div className={'form-group' + (submitted && !client.entry_date ? ' has-error' : '')}>
                         <label htmlFor="entry_date">Password</label>
-                        <input type="date" className="form-control" name="entry_date" value={user.entry_date} onChange={this.handleChange} />
-                        {submitted && !user.entry_date &&
+                        <input type="date" className="form-control" name="entry_date" value={client.entry_date} onChange={this.handleChange} />
+                        {submitted && !client.entry_date &&
                             <div className="help-block">Password is required</div>
                         }
                     </div>

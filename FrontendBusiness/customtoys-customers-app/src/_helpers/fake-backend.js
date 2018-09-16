@@ -1,6 +1,7 @@
 // array in local storage for registered users
 let users = JSON.parse(localStorage.getItem('users')) || [];
-    
+let clients = JSON.parse(localStorage.getItem('clients')) || [];
+
 export function configureFakeBackend() {
     let realFetch = window.fetch;
     window.fetch = function (url, opts) {
@@ -31,7 +32,7 @@ export function configureFakeBackend() {
                         resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(responseJson)) });
                     } else {
                         // else return error
-                        reject('Username or password is incorrect');
+                        reject('Datos incorrectos');
                     }
 
                     return;
@@ -41,7 +42,20 @@ export function configureFakeBackend() {
                 if (url.endsWith('/users') && opts.method === 'GET') {
                     // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
                     if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
-                        resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(users))});
+                        resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(users)) });
+                    } else {
+                        // return 401 not authorised if token is null or invalid
+                        reject('Unauthorised');
+                    }
+
+                    return;
+                }
+
+                //get clients
+                if (url.endsWith('/clients') && opts.method === 'GET') {
+                    // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+                    if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
+                        resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(clients)) });
                     } else {
                         // return 401 not authorised if token is null or invalid
                         reject('Unauthorised');
@@ -61,7 +75,27 @@ export function configureFakeBackend() {
                         let user = matchedUsers.length ? matchedUsers[0] : null;
 
                         // respond 200 OK with user
-                        resolve({ ok: true, text: () => JSON.stringify(user)});
+                        resolve({ ok: true, text: () => JSON.stringify(user) });
+                    } else {
+                        // return 401 not authorised if token is null or invalid
+                        reject('Unauthorised');
+                    }
+
+                    return;
+                }
+
+                // get client by id
+                if (url.match(/\/clients\/\d+$/) && opts.method === 'GET') {
+                    // check for fake auth token in header and return client if valid, this security is implemented server side in a real application
+                    if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
+                        // find client by id in client array
+                        let urlParts = url.split('/');
+                        let id = parseInt(urlParts[urlParts.length - 1]);
+                        let matchedUsers = clients.filter(client => { return client.id === id; });
+                        let client = matchedUsers.length ? matchedUsers[0] : null;
+
+                        // respond 200 OK with client
+                        resolve({ ok: true, text: () => JSON.stringify(client) });
                     } else {
                         // return 401 not authorised if token is null or invalid
                         reject('Unauthorised');
@@ -78,7 +112,7 @@ export function configureFakeBackend() {
                     // validation
                     let duplicateUser = users.filter(user => { return user.username === newUser.username; }).length;
                     if (duplicateUser) {
-                        reject('Username "' + newUser.username + '" is already taken');
+                        reject('Nombre de usuario: "' + newUser.username + '" ya fue registrado');
                         return;
                     }
 
@@ -86,6 +120,29 @@ export function configureFakeBackend() {
                     newUser.id = users.length ? Math.max(...users.map(user => user.id)) + 1 : 1;
                     users.push(newUser);
                     localStorage.setItem('users', JSON.stringify(users));
+
+                    // respond 200 OK
+                    resolve({ ok: true, text: () => Promise.resolve() });
+
+                    return;
+                }
+
+                // register client
+                if (url.endsWith('/clients/register') && opts.method === 'POST') {
+                    // get new client object from post body
+                    let newClient = JSON.parse(opts.body);
+
+                    // validation
+                    let duplicateUser = clients.filter(client => { return client.username === newClient.username; }).length;
+                    if (duplicateUser) {
+                        reject('Nombre de usuario:  "' + newClient.username + '" ya fue registrado');
+                        return;
+                    }
+
+                    // save new client
+                    newCLient.id = clients.length ? Math.max(...clients.map(client => client.id)) + 1 : 1;
+                    clients.push(newUser);
+                    localStorage.setItem('clients', JSON.stringify(clients));
 
                     // respond 200 OK
                     resolve({ ok: true, text: () => Promise.resolve() });
