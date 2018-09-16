@@ -12,4 +12,17 @@ function getProjectComments(dataToSearch, cb){
     //});
 }
 
+function saveProjectComments(dataToSearch, newComment, cb){
+    //clientDA.userBelongsToCompany(dataToSearch, (result) => {
+    //    if (result == true) {
+            projectDA.saveProjectComments(newComment, (err, comment) => {
+                return cb(err, comment);
+            });
+    //    } else {
+    //        return cb('', null);
+    //    }
+    //});
+}
+
 module.exports.getProjectComments = getProjectComments;
+module.exports.saveProjectComments = saveProjectComments;
