@@ -27,3 +27,7 @@
     cursor: pointer;
     cursor: hand;
   }
+
+  .show-comment{
+    cursor: pointer;
+  }

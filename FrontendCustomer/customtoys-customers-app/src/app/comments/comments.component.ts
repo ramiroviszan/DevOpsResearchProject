@@ -31,14 +31,15 @@ export class CommentsComponent implements OnInit {
     this._subjectError.pipe(
       debounceTime(3000)
     ).subscribe(() => this.errorMessage = null);
-
+    
     this.id_project = "" + this.currentRoute.snapshot.params["id"];
+    this.pageTitle = "Comments";
     if (this.id_project == 'undefined') {
       this.id_project = null;
       this._subjectError.next(this.errorMessage='Se necesita un ID de proyecto');
     }
     else{
-      this.getProject();
+      //this.getProject();
       this.getComments();
     }
 
