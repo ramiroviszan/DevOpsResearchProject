@@ -1,27 +1,49 @@
 const projectDA = require('../data-access/project-da');
 
 function getProjectComments(dataToSearch, cb){
-    //clientDA.userBelongsToCompany(dataToSearch, (result) => {
-    //    if (result == true) {
+    userAndProjectBelongsToCompany(dataToSearch, (result) => {
+        if (result == true) {
             projectDA.getProjectComments(dataToSearch.id, (err, comments) => {
                 return cb(err, comments);
             });
-    //    } else {
-    //        return cb('', null);
-    //    }
-    //});
+        } else {
+            return cb('', null);
+        }
+    });
 }
 
 function saveProjectComments(dataToSearch, newComment, cb){
-    //clientDA.userBelongsToCompany(dataToSearch, (result) => {
-    //    if (result == true) {
+    userAndProjectBelongsToCompany(dataToSearch, (result) => {
+        if (result == true) {
             projectDA.saveProjectComments(newComment, (err, comment) => {
                 return cb(err, comment);
             });
-    //    } else {
-    //        return cb('', null);
-    //    }
-    //});
+        } else {
+            return cb('', null);
+        }
+    });
+}
+
+function userAndProjectBelongsToCompany(dataToSearch, cb){
+    projectDA.getProject(dataToSearch.id, (err, project)=>{
+        if (!err && project){
+            projectDA.getUser(dataToSearch.token, (error, user) =>{
+                if(!error && user){
+                    if(project.id_client == user.id_client && 
+                       project._id == dataToSearch.id &&
+                       user.token == dataToSearch.token){
+                           cb(true);
+                       }else{
+                           cb(false);
+                       }
+                }else{
+                    cb(false);
+                }
+            });
+        }else{
+            cb(false);
+        }
+    });
 }
 
 module.exports.getProjectComments = getProjectComments;

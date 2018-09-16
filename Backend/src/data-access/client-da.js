@@ -4,14 +4,11 @@ const { DB_URL } = require('../config');
 
 
 function userBelongsToCompany(dataToSearch, cb){
-    console.log(dataToSearch);
     MongoClient.connect(DB_URL, (err, database) => {
         if (err) return cb(false);
         else {
             const queryuser = { 'token': new ObjectID(dataToSearch.token) };
-            console.log(queryuser);
             database.collection('users').findOne(queryuser, (errUser, itemUser) => {
-                console.log(itemUser);
                 if(!errUser && itemUser && itemUser.id_client == dataToSearch.id) return cb(true);
                 return cb(false);
             });
