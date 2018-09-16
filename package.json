@@ -5,14 +5,15 @@
   "main": "./Backend/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./Backend/server.js"
+    "dev": "node ./Backend/server.js"
   },
   "author": "",
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongodb": "^2.2.16",
-    "request": "^2.88.0"
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
