@@ -17,8 +17,8 @@ export class ProjectService {
   private WEB_API_URL_CLIENTS: string;
 
   constructor(private httpClient: HttpClient, private storageService: StorageService) {
-    this.WEB_API_URL_PROJECTS = 'http://' + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/projects';
-    this.WEB_API_URL_CLIENTS = 'http://' + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/clients';
+    this.WEB_API_URL_PROJECTS = Apiconfig.getProtocol() + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/projects';
+    this.WEB_API_URL_CLIENTS = Apiconfig.getProtocol() + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/clients';
   }
 
   getProject(id_project: string): Observable<HttpResponse< Project>> {
