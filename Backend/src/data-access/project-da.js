@@ -28,5 +28,34 @@ function saveProjectComments(newComment, cb){
     });
 }
 
+function getProject(id, cb){
+    MongoClient.connect(DB_URL, (err, database) => {
+        if (err) return cb(err, database);
+        else {
+            const query = { '_id': new ObjectID(id) };
+            database.collection('projects').findOne(query, (error, item) => {
+                return cb(error, item);
+            });
+        }
+        database.close();
+    });
+}
+
+function getUser(token, cb){
+    MongoClient.connect(DB_URL, (err, database) => {
+        if (err) return cb(err, database);
+        else {
+            const query = { 'token': new ObjectID(token) };
+            database.collection('users').findOne(query, (error, item) => {
+                return cb(error, item);
+            });
+        }
+        database.close();
+    });
+}
+
+
 module.exports.getProjectComments = getProjectComments;
 module.exports.saveProjectComments = saveProjectComments;
+module.exports.getProject = getProject;
+module.exports.getUser = getUser;
