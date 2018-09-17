@@ -1,5 +1,11 @@
 const projectDA = require('../data-access/project-da');
 
+function getAllProjects(callback) {
+    projectDA.getAllProjects((error, projects) => {
+        return callback(error, projects);
+    });
+}
+
 function addProject(newProject, callback) {
     projectDA.createProject(newProject, (error, createdProject) => {
         return callback(error, createdProject);
@@ -55,5 +61,6 @@ function userAndProjectBelongsToCompany(dataToSearch, cb){
 module.exports = {
     getProjectComments,
     saveProjectComments,
-    addProject
+    addProject,
+    getAllProjects
 };
