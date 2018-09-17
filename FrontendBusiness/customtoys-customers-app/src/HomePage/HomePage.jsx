@@ -25,7 +25,7 @@ class HomePage extends React.Component {
                 <div className="container gray highlightTextIn">
                     
                     <Link to="/Register" className="link" alt="Crear Cliente">Crear Cliente</Link>
-                    <Link to="/" className="link" alt="Crear Proyecto">Crear Proyecto</Link>
+                    <Link to="/createProject" className="link" alt="Crear Proyecto">Crear Proyecto</Link>
                 </div>
 
                 <div className="welcomeMsg">

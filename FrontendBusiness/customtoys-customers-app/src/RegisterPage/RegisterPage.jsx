@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../_actions';
+import { clientActions } from '../_actions';
 
-class RegisterPage extends React.Component {    
+class RegisterPage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -34,31 +34,36 @@ class RegisterPage extends React.Component {
         });
     }
 
-    fieldsCompleted(){
+    fieldsCompleted() {
         const { client } = this.state;
 
-        let completed = false;
-        completed &= client.username;
-        completed &= client.password;
-        completed &= client.client_company;
-        completed &= client.entry_date;
+        let completed = true;
+        completed &= client.username.trim() != "";
+        completed &= client.password.trim() != "";
+        completed &= client.client_company.trim() != "";
+        completed &= client.entry_date.trim() != "";
 
         return completed;
     }
 
     handleSubmit(event) {
+        console.log("ENTRE AL HANDLE SUBMIT");
         event.preventDefault();
 
         this.setState({ submitted: true });
         const { client } = this.state;
         const { dispatch } = this.props;
-        if (fieldsCompleted()) {
-            dispatch(userActions.register(client));
+        if (this.fieldsCompleted()) {
+            console.log("ENTRE AL COSO DEL FIELDS COMPLETED");
+            dispatch(clientActions.register(client));
+        }
+        else {
+            console.log("ENTRE AL ELSE");
         }
     }
 
     render() {
-        const { registering  } = this.props;
+        const { registering } = this.props;
         const { client, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
@@ -86,15 +91,15 @@ class RegisterPage extends React.Component {
                         }
                     </div>
                     <div className={'form-group' + (submitted && !client.entry_date ? ' has-error' : '')}>
-                        <label htmlFor="entry_date">Password</label>
+                        <label htmlFor="entry_date">Fecha de ingreso</label>
                         <input type="date" className="form-control" name="entry_date" value={client.entry_date} onChange={this.handleChange} />
                         {submitted && !client.entry_date &&
-                            <div className="help-block">Password is required</div>
+                            <div className="help-block">Debe ingresar la fecha de entrada</div>
                         }
                     </div>
                     <div className="form-group">
                         <button className="btn btn-primary">Register</button>
-                        {registering && 
+                        {registering &&
                             <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                         }
                         <Link to="/" className="btn btn-link">Cancel</Link>

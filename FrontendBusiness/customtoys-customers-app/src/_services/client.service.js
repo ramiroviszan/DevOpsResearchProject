@@ -8,6 +8,7 @@ export const clientService = {
 };
 
 function register(client) {
+    console.log("ESTOY EN EL SERVICIO DE CLIENTE HACIENDO EL REGISTERRRRR");
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

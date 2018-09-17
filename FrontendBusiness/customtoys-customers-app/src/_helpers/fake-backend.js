@@ -140,8 +140,8 @@ export function configureFakeBackend() {
                     }
 
                     // save new client
-                    newCLient.id = clients.length ? Math.max(...clients.map(client => client.id)) + 1 : 1;
-                    clients.push(newUser);
+                    newClient.id = clients.length ? Math.max(...clients.map(client => client.id)) + 1 : 1;
+                    clients.push(newClient);
                     localStorage.setItem('clients', JSON.stringify(clients));
 
                     // respond 200 OK

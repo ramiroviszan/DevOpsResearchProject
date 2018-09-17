@@ -5,17 +5,19 @@ import { history } from '../_helpers';
 
 export const clientActions = {
     register,
-    getAll,
-    getById
+    getAll
 };
 
 function register(client) {
+    console.log("ENTRE AL REGISTER DE CLIENTTT");
     return dispatch => {
+        console.log("ESTOY UNA LINEA ANTES DEL dispatch(request(client))");
         dispatch(request(client));
-
+        console.log("ESTOY UNA LINEA ANTES DEL CLIENTSERVICE.REGISTER");
         clientService.register(client)
             .then(
                 client => { 
+                    console.log("ESTOY EN EL DISPATCH SUCCESS");
                     dispatch(success());
                     history.push('/login');
                     dispatch(alertActions.success('Registration successful'));
