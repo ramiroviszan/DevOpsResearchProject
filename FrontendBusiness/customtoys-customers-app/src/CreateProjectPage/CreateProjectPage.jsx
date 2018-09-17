@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { clientActions } from '../_actions';
+import { userActions } from '../_actions';
 
 class CreateProjectPage extends React.Component {
     componentDidMount() {
@@ -12,12 +13,27 @@ class CreateProjectPage extends React.Component {
     handleDeleteUser(id) {
         return (e) => this.props.dispatch(clientActions.delete(id));
     }
+
+    showObject(obj) {
+        if (obj) {
+            const j = Object.values(obj);
+            var journalEntries = "";
+
+            for (var i = 0; i < j.length; i++) {
+                journalEntries += j + " - ";
+            }
+
+            return journalEntries;
+        }
+        return obj;
+    }
+
     render() {
-        const { client, clients } = this.props;
-        return(<div>Create Project Page</div>);
-        /*return (
+        return(<div>Create Project</div>)
+        /*const { user, clients } = this.props;
+        return (
             <div className="col-md-6 col-md-offset-3">
-                <h1 className='test'>Hi {client.firstName}!</h1>
+                <h1 className='test'>Hi {user.username}!</h1>
                 <p>You're logged in with React!!</p>
                 <h3>All registered clients:</h3>
                 {clients.loading && <em>Loading clients...</em>}
@@ -26,7 +42,14 @@ class CreateProjectPage extends React.Component {
                     <ul>
                         {clients.items.map((client, index) =>
                             <li key={client.id}>
-                                {client.firstName + ' ' + client.lastName}
+                                {"Nombre de usuario: " + client.username}
+                                <br />
+                                {"Empresa: " + client.client_company}
+                                <br />
+                                {"Fecha de entrada: " + client.entry_date}
+                                <br />
+                                {"RUT: " + client.rut}
+                                <br />
                                 {
                                     client.deleting ? <em> - Deleting...</em>
                                         : client.deleteError ? <span className="text-danger"> - ERROR: {client.deleteError}</span>
@@ -46,9 +69,9 @@ class CreateProjectPage extends React.Component {
 
 function mapStateToProps(state) {
     const { clients, authentication } = state;
-    const { client } = authentication;
+    const { user } = authentication;
     return {
-        client,
+        user,
         clients
     };
 }
