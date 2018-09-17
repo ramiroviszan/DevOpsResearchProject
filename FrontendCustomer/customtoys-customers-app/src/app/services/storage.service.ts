@@ -64,7 +64,7 @@ export class StorageService {
   setCurrentClient(client: Client) {
     var session = this.getCurrentSession();
     
-    session.setClient(client);
+    session.client = client;
     
     this.setCurrentSession(session);
   };

@@ -26,12 +26,12 @@
           <!--Cuerpo de la tabla-->
           <tbody>
           <!-- Aca va todo el contenido de la tabla  -->
-          <tr *ngFor='let p of projectsTest'>
+          <tr *ngFor='let p of projects'>
             <td>{{p.name}}</td>
             <td>{{p.start_date}}</td>
             <td>{{p.end_date}}</td>
 
-            <td>Show comments<span class="fa fa-edit" [title]='"Show comments"' (click)='showComments(p.Id)'></span></td>
+            <td><span class="fa fa-edit show-comment" [title]='"Show comments"' (click)='showComments(p._id)'>Show comments</span></td>
           </tr>
           </tbody>
         </table>

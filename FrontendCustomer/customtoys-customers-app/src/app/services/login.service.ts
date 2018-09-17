@@ -14,7 +14,7 @@ export class LoginService {
   private WEB_API_URL: string;
 
   constructor(private httpClient: HttpClient) {
-    this.WEB_API_URL = 'http://' + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/CustomerLogin';
+    this.WEB_API_URL = Apiconfig.getProtocol() + Apiconfig.getIP() + ':' + Apiconfig.getPort() + '/api/CustomerLogin';
   }
 
   login(username: string, password: string): Observable<HttpResponse<User>> {

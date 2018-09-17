@@ -1,11 +1,32 @@
-//module.exports = (app) => {
-//    app.get('/api/clients', () => {
-//        console.log('GET CLIENTS NOT IMPLEMENTED');
-//    })
-//}
-
 const clientDA = require('../data-access/client-da');
-const rutValidator = require('../services/client-rut-validation.service')
+const rutValidator = require('../services/client-rut-validation.service');
+const companyPermissions = require('../permissions/company.permissions');
+
+function getAllClients(callback) {
+    //check company logged in
+    clientDA.getAllClients((error, clients) => {
+        return callback(error, clients);
+    });
+   /*  if(companyPermissions('get-all-clients')) {
+        
+    }
+    else {
+        callback('Not enough permissions', null)
+    } */
+}
+
+function createClient(newClient, callback) {
+    //check company logged in
+    clientDA.createClient(newClient, (error, createdClient) => {
+        return callback(error, createdClient);
+    });
+   /*  if(companyPermissions('create-clients')) {
+        
+    }
+    else {
+        callback('Not enough permissions', null)
+    } */
+};
 
 function getClient(dataToSearch, cb) {
 
@@ -42,6 +63,22 @@ function updateClient(dataToSearch, clientNewData, cb) {
     });
 }
 
-module.exports.getClient = getClient;
-module.exports.updateClient = updateClient;
+function getClientProjects(dataToSearch, cb){
+    clientDA.userBelongsToCompany(dataToSearch, (result) => {
+        if (result == true) {
+            clientDA.getClientProjects(dataToSearch.id, (err, projects) => {
+                return cb(err, projects);
+            });
+        } else {
+            return cb('', null);
+        }
+    });
+};
 
+module.exports = {
+    getClient,
+    updateClient,
+    getClientProjects,
+    createClient,
+    getAllClients
+};

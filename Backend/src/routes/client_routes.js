@@ -1,74 +1,34 @@
 const clientLogic = require('../business-logic/client.logic');
 
-var ObjectID = require('mongodb').ObjectID;
-
-module.exports = function(app, db) {
-  app.put('/clients/:id', (req, res) => {
-    const id = req.params.id;
-    const details = { '_id': new ObjectID(id) };
-    
-    const client = { 
-      username: req.body.username, 
-      password: req.body.password,
-      company_name: req.body.company_name,
-      rut: req.body.rut,
-      entry_date: req.body,date 
-    };
-    
-    db.collection('clients').update(details, client, (err, result) => {
-      if (err) {
-        res.send({'error':'Error al modificar cliente'});
-      } else {
-        res.send(client);
-      } 
-    });
-  });
-  
-  app.delete('/clients/:id', (req, res) => {
-    const id = req.params.id;
-    const details = { '_id': new ObjectID(id) };
-    db.collection('clients').remove(details, (err, item) => {
-      if (err) {
-        res.send({'error':'Error al eliminar cliente'});
-      } else {
-        res.send('Cliente ' + id + ' eliminado!');
-      } 
-    });
-  });
-  
-  app.get('/clients/:id', (req, res) => {
-    const id = req.params.id;
-    const details = { '_id': new ObjectID(id) };
-    db.collection('clients').findOne(details, (err, item) => {
-      if (err) {
-        res.send({'error':'Error al obtener cliente'});
-      } else {
-        res.send(item);
-      } 
-    });
-  });
-  
-  
-  app.post('/clients', (req, res) => {
-    
-    const client = { 
-      username: req.body.username, 
-      password: req.body.password,
-      company_name: req.body.company_name,
-      rut: req.body.rut,
-      entry_date: req.body.entry_date 
-    };
-    
-    db.collection('clients').insert(client, (err, result) => {
-      if (err) { 
-        res.send({ 'error': 'Error al crear cliente' }); 
-      } else {
-        res.send(result.ops[0]);
+module.exports = function(app) {
+  app.get('/api/clients', (request, response) => {
+    clientLogic.getAllClients((error, clients) => {
+      if(error) {
+        console.log(error);
+        response.status(500).send('Error al obtener los clientes');
+      }
+      else {
+        response.send(clients);
       }
     });
   });
 
-
+  app.post('/api/clients', (request, response) => {
+    const newClient = {
+      company_name: request.body.company_name,
+      entry_date: request.body.entry_date
+    }
+    
+    clientLogic.createClient(newClient, (error, addedClient) => {
+      if(error) {
+        console.log(error);
+        response.status(500).send('Error al crear cliente');
+      }
+      else {
+        response.send(addedClient);
+      }
+    });
+  });
 
   app.get('/api/Clients/:id', (req, res) => {
     const dataToSearch = {
@@ -119,6 +79,23 @@ module.exports = function(app, db) {
     });     
   });
 
+  app.get('/api/Clients/:id/Projects', (req, res) => {
+    const dataToSearch = {
+      id : req.params.id,
+      token : req.headers.token
+    };
 
+    if (!req.params.id || req.params.id.length != 24){
+      res.status(400).send('Id field must be 24 hexadecimal characters long.');
+      return;
+    } 
 
+    clientLogic.getClientProjects(dataToSearch, (err, projects) => {
+      if (err || !projects) {
+        res.status(404).send('Client not found.');
+      } else {
+        res.send(projects);
+      } 
+    });     
+  });
 };
