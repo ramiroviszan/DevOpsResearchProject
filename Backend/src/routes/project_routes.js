@@ -1,6 +1,18 @@
 const projectLogic = require('../business-logic/project.logic');
 
 module.exports = (app) => {
+  app.get('/api/projects', (request, response) => {
+    projectLogic.getAllProjects((error, projects) => {
+      if(error) {
+        console.log(error);
+        response.status(500).send('Error al obtener los proyectos');
+      }
+      else {
+        response.send(projects);
+      }
+    });
+  });
+
   app.post('/api/projects', (request, response) => {
     const newProject = {
       name: request.body.name,

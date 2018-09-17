@@ -6,12 +6,11 @@ function getAllClients(callback) {
     MongoClient.connect(DB_URL, (error, database) => {
         if(error) return callback(error, null);
         else {
-            const clients = database.collection('clients').find().toArray((internalError, clients) => {
+            database.collection('clients').find().toArray((internalError, clients) => {
                 if(internalError) {
                     return callback(internalError, null);
                 }
                 else {
-                    console.log(clients);
                     return callback(null, clients);
                 }
             });
