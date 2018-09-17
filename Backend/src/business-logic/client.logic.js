@@ -1,10 +1,31 @@
 const clientDA = require('../data-access/client-da');
 const rutValidator = require('../services/client-rut-validation.service');
+const companyPermissions = require('../permissions/company.permissions');
+
+function getAllClients(callback) {
+    console.log('>client.logic.getAllClients()');
+    //check company logged in
+    clientDA.getAllClients((error, clients) => {
+        return callback(error, clients);
+    });
+   /*  if(companyPermissions('get-all-clients')) {
+        
+    }
+    else {
+        callback('Not enough permissions', null)
+    } */
+}
 
 function createClient(newClient, callback) {
     clientDA.createClient(newClient, (error, createdClient) => {
         return callback(error, createdClient);
     });
+   /*  if(companyPermissions('create-clients')) {
+        
+    }
+    else {
+        callback('Not enough permissions', null)
+    } */
 };
 
 function getClient(dataToSearch, cb) {
@@ -58,5 +79,6 @@ module.exports = {
     getClient,
     updateClient,
     getClientProjects,
-    createClient
+    createClient,
+    getAllClients
 };
