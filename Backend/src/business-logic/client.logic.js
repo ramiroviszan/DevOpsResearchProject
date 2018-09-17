@@ -3,7 +3,6 @@ const rutValidator = require('../services/client-rut-validation.service');
 const companyPermissions = require('../permissions/company.permissions');
 
 function getAllClients(callback) {
-    console.log('>client.logic.getAllClients()');
     //check company logged in
     clientDA.getAllClients((error, clients) => {
         return callback(error, clients);
@@ -17,6 +16,7 @@ function getAllClients(callback) {
 }
 
 function createClient(newClient, callback) {
+    //check company logged in
     clientDA.createClient(newClient, (error, createdClient) => {
         return callback(error, createdClient);
     });

@@ -3,7 +3,6 @@ const ObjectID = require('mongodb').ObjectID;
 const { DB_URL } = require('../config');
 
 function getAllClients(callback) {
-    console.log('client-da.getAllClients()');
     MongoClient.connect(DB_URL, (error, database) => {
         if(error) return callback(error, null);
         else {
