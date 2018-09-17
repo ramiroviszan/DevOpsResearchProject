@@ -1,16 +1,9 @@
 const clientDA = require('../data-access/client-da');
 const rutValidator = require('../services/client-rut-validation.service');
 
-function createClient(newClient, response) {
+function createClient(newClient, callback) {
     clientDA.createClient(newClient, (error, createdClient) => {
-        if(error)
-        {
-            return response(error, null);
-        }
-        else
-        {
-            return response(error, createdClient);
-        }
+        return callback(error, createdClient);
     });
 };
 

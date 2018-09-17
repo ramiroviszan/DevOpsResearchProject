@@ -2,6 +2,19 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const { DB_URL } = require('../config');
 
+function createProject(newProject, callback) {
+    MongoClient.connect(DB_URL, (error, database) => {
+        if(error) return callback(error, null);
+        else {
+            newProject._id = new ObjectID(newProject._id);
+            database.collection('projects').insertOne(newProject, (error, result) => {
+                return callback(error, result.ops[0]);
+            });
+        }
+        database.close();
+    });
+}
+
 function getProjectComments(projectId, cb){
     MongoClient.connect(DB_URL, (err, database) => {
         if (err) return cb(err, database);
@@ -54,8 +67,10 @@ function getUser(token, cb){
     });
 }
 
-
-module.exports.getProjectComments = getProjectComments;
-module.exports.saveProjectComments = saveProjectComments;
-module.exports.getProject = getProject;
-module.exports.getUser = getUser;
+module.exports = {
+    getProjectComments,
+    saveProjectComments,
+    getProject,
+    getUser,
+    createProject
+}

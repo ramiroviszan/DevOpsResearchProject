@@ -1,5 +1,11 @@
 const projectDA = require('../data-access/project-da');
 
+function addProject(newProject, callback) {
+    projectDA.createProject(newProject, (error, createdProject) => {
+        return callback(error, createdProject);
+    });
+}
+
 function getProjectComments(dataToSearch, cb){
     userAndProjectBelongsToCompany(dataToSearch, (result) => {
         if (result == true) {
@@ -44,7 +50,10 @@ function userAndProjectBelongsToCompany(dataToSearch, cb){
             cb(false);
         }
     });
-}
+};
 
-module.exports.getProjectComments = getProjectComments;
-module.exports.saveProjectComments = saveProjectComments;
+module.exports = {
+    getProjectComments,
+    saveProjectComments,
+    addProject
+};

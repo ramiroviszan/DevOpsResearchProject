@@ -2,8 +2,22 @@ const projectLogic = require('../business-logic/project.logic');
 
 module.exports = (app) => {
   app.post('/api/projects', (request, response) => {
-    console.log('Call to api/projects');
-    response.send('Call to /api/projects');
+    const newProject = {
+      name: request.body.name,
+      start_date: request.body.start_date,
+      end_date: request.body.end_date,
+      id_client: request.body.id_client
+    };
+
+    projectLogic.addProject(newProject, (error, addedProject) => {
+      if(error) {
+        console.log(error);
+        response.status(500).send('Error al crear proyecto');
+      }
+      else {
+        response.send(addedProject);
+      }
+    });
   });
   
   app.get('/api/Projects/:id/Comments', (req, res) => {

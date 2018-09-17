@@ -3,15 +3,14 @@ const clientLogic = require('../business-logic/client.logic');
 module.exports = function(app) {
   app.post('/api/clients', (request, response) => {
     const newClient = {
-      company_name: request.body['company_name'],
-      entry_date: request.body['entry_date']
+      company_name: request.body.company_name,
+      entry_date: request.body.entry_date
     }
     
     clientLogic.createClient(newClient, (error, addedClient) => {
-      if(error)
-      {
+      if(error) {
         console.log(error);
-        response.status(500).send('Error al agregar cliente');
+        response.status(500).send('Error al crear cliente');
       }
       else {
         response.send(addedClient);
