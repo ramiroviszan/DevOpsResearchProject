@@ -2,6 +2,20 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const { DB_URL } = require('../config');
 
+function getAllProjects(callback) {
+    MongoClient.connect(DB_URL, (error, database) => {
+        if(error) return callback(error, null);
+        else {
+            database.collection('projects').find().toArray((internalError, projects) => {
+                if(internalError) return callback(internalError, null);
+                else {
+                    return callback(null, projects);
+                }
+            });
+        }
+    });
+}
+
 function createProject(newProject, callback) {
     MongoClient.connect(DB_URL, (error, database) => {
         if(error) return callback(error, null);
@@ -72,5 +86,6 @@ module.exports = {
     saveProjectComments,
     getProject,
     getUser,
-    createProject
+    createProject,
+    getAllProjects
 }
