@@ -1,9 +1,3 @@
-//module.exports = (app) => {
-//    app.get('/api/clients', () => {
-//        console.log('GET CLIENTS NOT IMPLEMENTED');
-//    })
-//}
-
 const clientDA = require('../data-access/client-da');
 const rutValidator = require('../services/client-rut-validation.service')
 
