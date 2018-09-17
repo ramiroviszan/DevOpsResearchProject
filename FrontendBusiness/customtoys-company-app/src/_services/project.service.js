@@ -11,7 +11,7 @@ function register(project) {
         body: JSON.stringify(project)
     };
 
-    return fetch(`${config.apiUrl}/project/create`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/api/projects`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
@@ -20,7 +20,6 @@ function handleResponse(response) {
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
-                console.log("TOY EN EL LOGOUT DEL PROJECT QUE PUSE RECINENNNN");
                 logout();
                 location.reload(true);
             }

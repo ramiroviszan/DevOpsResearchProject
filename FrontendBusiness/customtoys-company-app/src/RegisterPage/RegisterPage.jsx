@@ -12,7 +12,7 @@ class RegisterPage extends React.Component {
             client: {
                 username: '',
                 password: '',
-                client_company: '',
+                company_name: '',
                 entry_date: '',
                 rut: ''
             },
@@ -40,26 +40,20 @@ class RegisterPage extends React.Component {
         let completed = true;
         completed &= client.username.trim() != "";
         completed &= client.password.trim() != "";
-        completed &= client.client_company.trim() != "";
+        completed &= client.company_name.trim() != "";
         completed &= client.entry_date.trim() != "";
 
         return completed;
     }
 
     handleSubmit(event) {
-        console.log("ENTRE AL HANDLE SUBMIT");
         event.preventDefault();
 
         this.setState({ submitted: true });
         const { client } = this.state;
         const { dispatch } = this.props;
-        if (this.fieldsCompleted()) {
-            console.log("ENTRE AL COSO DEL FIELDS COMPLETED");
+        if (this.fieldsCompleted())
             dispatch(clientActions.register(client));
-        }
-        else {
-            console.log("ENTRE AL ELSE");
-        }
     }
 
     render() {
@@ -83,10 +77,10 @@ class RegisterPage extends React.Component {
                             <div className="help-block">Debe ingresar una contraseña</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !client.client_company ? ' has-error' : '')}>
-                        <label htmlFor="client_company">Nombre de la Empresa Cliente</label>
-                        <input type="text" className="form-control" name="client_company" value={client.client_company} onChange={this.handleChange} />
-                        {submitted && !client.client_company &&
+                    <div className={'form-group' + (submitted && !client.company_name ? ' has-error' : '')}>
+                        <label htmlFor="company_name">Nombre de la Empresa Cliente</label>
+                        <input type="text" className="form-control" name="company_name" value={client.company_name} onChange={this.handleChange} />
+                        {submitted && !client.company_name &&
                             <div className="help-block">Debe ingresar un nombre para la empresa cliente</div>
                         }
                     </div>

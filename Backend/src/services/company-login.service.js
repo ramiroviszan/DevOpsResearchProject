@@ -1,7 +1,11 @@
 const apiRequest = require('request');
 const { COMPANY_LOGIN_API_URL } = require('../config');
+var cors = require('cors');
 
 module.exports = (app) => {
+
+    app.use(cors());
+
     app.post('/api/company/login', (request, response) => {
         const userName = request.headers['user-name'];
         const password = request.headers['password'];

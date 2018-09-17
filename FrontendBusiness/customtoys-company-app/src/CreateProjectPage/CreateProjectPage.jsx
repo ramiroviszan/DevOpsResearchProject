@@ -92,12 +92,11 @@ class CreateProjectPage extends React.Component {
         if (clients && clients.items) {
             clients.items.map((client, index) =>
                 optionItems.push({
-                    value: client.username, label: "Nombre de Usuario: " + client.username
+                    value: client._id, label: "Id del cliente: " + client._id
                 })
             );
         }
-        else
-            console.log("NO ENTRE EN EL COSO");
+        
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h2>Crear Proyecto</h2>

@@ -8,18 +8,15 @@ import './styles.css';
 
 class HomePage extends React.Component {
     componentDidMount() {
-        this.props.dispatch(userActions.getAll());
+        //this.props.dispatch(userActions.getAll());
     }
 
-    handleDeleteUser(id) {
-        return (e) => this.props.dispatch(userActions.delete(id));
-    }
     render() {
-        const { user } = this.props;
+        //const { user } = this.props;
         return (
             <div>
                 <div className="welcomeMsg">
-                    <p>Bienvenido/a {user.username}!</p>
+                    <p>Bienvenido/a {/*user.username*/}!</p>
                 </div>
 
                 <div className="container gray highlightTextIn">
