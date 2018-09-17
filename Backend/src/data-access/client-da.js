@@ -2,12 +2,12 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const { DB_URL } = require('../config');
 
-function createClient(clientToAdd, callback) {
-    MongoClient.connect(DB_URL, (err, database) => {
-        if (err) return callback(err, null);
+function createClient(newClient, callback) {
+    MongoClient.connect(DB_URL, (error, database) => {
+        if (error) return callback(error, null);
         else {
-            clientToAdd._id = new ObjectID(clientToAdd._id);
-            database.collection('clients').insertOne(clientToAdd, (error, result) => {
+            newClient._id = new ObjectID(newClient._id);
+            database.collection('clients').insertOne(newClient, (error, result) => {
                 return callback(error, result.ops[0]);
             });
         }
