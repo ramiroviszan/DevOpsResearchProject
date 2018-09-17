@@ -1,5 +1,18 @@
 const clientDA = require('../data-access/client-da');
-const rutValidator = require('../services/client-rut-validation.service')
+const rutValidator = require('../services/client-rut-validation.service');
+
+function createClient(newClient, response) {
+    clientDA.createClient(newClient, (error, createdClient) => {
+        if(error)
+        {
+            return response(error, null);
+        }
+        else
+        {
+            return response(error, createdClient);
+        }
+    });
+};
 
 function getClient(dataToSearch, cb) {
 
@@ -46,9 +59,11 @@ function getClientProjects(dataToSearch, cb){
             return cb('', null);
         }
     });
-}
+};
 
-module.exports.getClient = getClient;
-module.exports.updateClient = updateClient;
-module.exports.getClientProjects = getClientProjects;
-
+module.exports = {
+    getClient,
+    updateClient,
+    getClientProjects,
+    createClient
+};

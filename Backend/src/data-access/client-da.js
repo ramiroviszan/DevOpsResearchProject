@@ -2,6 +2,18 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const { DB_URL } = require('../config');
 
+function createClient(clientToAdd, callback) {
+    MongoClient.connect(DB_URL, (err, database) => {
+        if (err) return callback(err, null);
+        else {
+            clientToAdd._id = new ObjectID(clientToAdd._id);
+            database.collection('clients').insertOne(clientToAdd, (error, result) => {
+                return callback(error, result.ops[0]);
+            });
+        }
+        database.close();
+    });
+}
 
 function userBelongsToCompany(dataToSearch, cb){
     MongoClient.connect(DB_URL, (err, database) => {
@@ -58,7 +70,10 @@ function getClientProjects(clientId, cb){
     });
 }
 
-module.exports.getClient = getClient;
-module.exports.updateClient = updateClient;
-module.exports.userBelongsToCompany = userBelongsToCompany;
-module.exports.getClientProjects = getClientProjects;
+module.exports = {
+    getClient,
+    updateClient,
+    userBelongsToCompany,
+    getClientProjects,
+    createClient
+}
