@@ -19,6 +19,7 @@
     "react-navigation-redux-helpers": "^2.0.5",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.2",
+    "react-select": "^2.0.0",
     "reactjs-popup": "^1.2.0",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
@@ -35,6 +36,7 @@
     "babel-preset-stage-3": "^6.24.1",
     "html-webpack-plugin": "^2.26.0",
     "path": "^0.12.7",
+    "redux-devtools-extension": "^2.13.5",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.8.2"
   }

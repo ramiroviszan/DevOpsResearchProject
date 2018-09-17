@@ -21,6 +21,7 @@ function login(username, password) {
     return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
+            console.log("TE MUESTRO EL TOKEN GUACHO: "+user.token);
             // login successful if there's a jwt token in the response
             if (user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -33,6 +34,7 @@ function login(username, password) {
 
 function logout() {
     // remove user from local storage to log user out
+    console.log("TOY EN EL LOGOUT DEL USER.SERVICE.JS EN LA PROPIA FUNCION");
     localStorage.removeItem('user');
 }
 
@@ -90,6 +92,7 @@ function handleResponse(response) {
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
+                console.log("TOY EN EL LOGOUT DEL USER SERVICE");
                 logout();
                 location.reload(true);
             }

@@ -12,7 +12,7 @@ function register(client) {
     console.log("ENTRE AL REGISTER DE CLIENTTT");
     return dispatch => {
         console.log("ESTOY UNA LINEA ANTES DEL dispatch(request(client))");
-        dispatch(request(client));
+         dispatch(request(client));
         console.log("ESTOY UNA LINEA ANTES DEL CLIENTSERVICE.REGISTER");
         clientService.register(client)
             .then(
