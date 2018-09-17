@@ -1,6 +1,6 @@
 export class Apiconfig {
     private static ApiIP: string = "app-obli-devops-backend.herokuapp.com";
-    private static ApiProtocol: string = "https://";
+    private static ApiProtocol: string = "http://";
     private static ApiPort: string = "80";
   
     public static getIP() : string {
