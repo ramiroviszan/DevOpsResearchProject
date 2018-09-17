@@ -2,6 +2,24 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 const { DB_URL } = require('../config');
 
+function getAllClients(callback) {
+    console.log('client-da.getAllClients()');
+    MongoClient.connect(DB_URL, (error, database) => {
+        if(error) return callback(error, null);
+        else {
+            const clients = database.collection('clients').find().toArray((internalError, clients) => {
+                if(internalError) {
+                    return callback(internalError, null);
+                }
+                else {
+                    console.log(clients);
+                    return callback(null, clients);
+                }
+            });
+        }
+    });
+}
+
 function createClient(newClient, callback) {
     MongoClient.connect(DB_URL, (error, database) => {
         if (error) return callback(error, null);
@@ -75,5 +93,6 @@ module.exports = {
     updateClient,
     userBelongsToCompany,
     getClientProjects,
-    createClient
+    createClient,
+    getAllClients
 }

@@ -1,7 +1,21 @@
 const clientLogic = require('../business-logic/client.logic');
 
 module.exports = function(app) {
+  app.get('/api/clients', (request, response) => {
+    console.log('client.routes.GET/api/clients')
+    clientLogic.getAllClients((error, clients) => {
+      if(error) {
+        console.log(error);
+        response.status(500).send('Error al obtener los clientes');
+      }
+      else {
+        response.send(clients);
+      }
+    });
+  });
+
   app.post('/api/clients', (request, response) => {
+    //check company logged in
     const newClient = {
       company_name: request.body.company_name,
       entry_date: request.body.entry_date
