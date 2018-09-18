@@ -4,8 +4,9 @@
   "description": "",
   "main": "./dist/server.js",
   "scripts": {
-    "build": "tsc",
-    "start": "ts-node ./src/server.ts",
+    "format": "tsfmt -r",
+    "build": "npm run format && tsc",
+    "start": "npm run format && ts-node ./src/server.ts",
     "dev": "nodemon",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.2",
     "jest": "^23.6.0",
-    "ts-jest": "^23.1.4"
+    "ts-jest": "^23.1.4",
+    "typescript-formatter": "^7.2.2"
   }
 }
