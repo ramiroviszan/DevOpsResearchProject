@@ -1,13 +1,34 @@
 import { Router, Request, Response } from "express";
-import ICredentials from "../models/credentials.model";
+import loginCompanyController from "../controllers/login-company.controller";
 
 export default (router: Router) => {
     router.post("/login/company", (request: Request, response: Response) => {
-        let session: ICredentials = {
-            username: request.header("username"),
-            password: request.header("password")
-        };
-        //get token from credentials
-        response.send(session);
+        const token: string = loginCompanyController.login(request.header("username"), request.header("password"));
+
+        response.setHeader("x-auth", token);
+        response.send();
+    });
+
+    router.post("/logout/company", (request: Request, response: Response) => {
+        loginCompanyController.logout(request.header("x-auth"), (errorMessage, success) => {
+            if (errorMessage) {
+                response.status(400).send(errorMessage);
+            } else {
+                if (!success) {
+                    response.status(400).send("Erorr desconocido");
+                } else {
+                    response.send();
+                }
+            }
+        });
+
+        // MIDDLEWARE
+        // loginCompanyController.verify(request.header("x-auth"), (errorMessage, credentials) => {
+        //     if (errorMessage) {
+        //         response.status(400).send(errorMessage);
+        //     } else {
+        //         response.send();
+        //     }
+        // });
     });
 };
