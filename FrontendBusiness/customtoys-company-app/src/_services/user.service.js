@@ -18,7 +18,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${config.apiUrl}/api/company/login`, requestOptions)
+    return fetch(`${config.apiUrl}/api/login/company`, requestOptions)
         .then(handleResponse)
         .then(token => {
             // login successful if there's a jwt token in the response
@@ -28,7 +28,7 @@ function login(username, password) {
                     'username': requestOptions.body.username,
                     'password': requestOptions.body.password,
                     'token': token
-                };
+                }
                 localStorage.setItem('user', JSON.stringify(user));
             }
 

@@ -129,6 +129,7 @@ class CreateProjectPage extends React.Component {
                             value={selectedOption}
                             onChange={this.handleChange}
                             options={optionItems}
+                            noOptionsMessage={() => "No hay clientes registrados"}
                         />
                         {submitted && !project.id_client &&
                             <div className="help-block">Debe seleccionar un cliente</div>
