@@ -16,7 +16,7 @@ export default {
         };
 
         const token: string = session.signCredentials(credentials);
-        //sessionDataAccess.saveToken(token, username????);
+        //sessionDataAccess.saveToken(token, credentials);
 
         return token;
     },
@@ -39,7 +39,7 @@ export default {
         return token;
     },
     logout(token: string, callback: ILogoutCallback): void {
-        //sessionDataAccess.revokeToken(token, (error, success) => {...});
+        //sessionDataAccess.revokeToken(token, credentials, (error, success) => {...});
         callback(undefined, true);
     }
 };
