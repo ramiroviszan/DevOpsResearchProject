@@ -3,10 +3,15 @@ import loginCompanyController from "../controllers/login-company.controller";
 
 export default (router: Router) => {
     router.post("/login/company", (request: Request, response: Response) => {
-        const token: string = loginCompanyController.login(request.header("username"), request.header("password"));
-
-        response.setHeader("x-auth", token);
-        response.send();
+        loginCompanyController.login(request.header("username"), request.header("password"), (errorMessage, token) => {
+            if (errorMessage) {
+                response.status(400).send(errorMessage);
+            }
+            else {
+                response.setHeader("x-auth", token);
+                response.send();
+            }
+        });
     });
 
     router.post("/logout/company", (request: Request, response: Response) => {

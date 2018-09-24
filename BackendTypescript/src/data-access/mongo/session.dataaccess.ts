@@ -16,27 +16,65 @@ class SessionMongoDataAccess implements ISessionDataAccess {
         tokenToSave.password = credentials.password;
         tokenToSave.token = token;
 
-        MongoClient.connect(config.DB_URL, (error, client) => {
+        MongoClient.connect(config.DB_URL, { useNewUrlParser: true }, (error, client) => {
             if (error) {
+                console.log(error);
                 return callback("Error al conectarse a la base de datos", undefined);
             }
             else {
                 client.db().collection(mongoConfig.COMPANY_SESSIONS_COLLECTION).insertOne(tokenToSave, (error, result) => {
                     if (error) {
-                        return callback("Error al conectarse a la base de datos", undefined);
+                        return callback("Error al guardar la sesion", undefined);
                     }
                     else {
-                        return callback(undefined, result.ops[0].token);
+                        console.log(result.ops[0].token);
+                        return callback(undefined, result.ops[0].token); //Comprobar si esta bien
                     }
                 });
             }
-        })
+        });
     };
     getToken(username: string, callback: ISessionObtainedCallback): void {
-        throw new Error("Method not implemented.");
+        const tokenToFind: SessionDTO = new SessionDTO();
+        tokenToFind.username = username;
+
+        MongoClient.connect(config.DB_URL, { useNewUrlParser: true }, (error, client) => {
+            if (error) {
+                return callback("Error al conectarse a la base de datos", undefined);
+            }
+            else {
+                client.db().collection(mongoConfig.COMPANY_SESSIONS_COLLECTION).findOne(tokenToFind, (error, result) => {
+                    if (error) {
+                        return callback("Error al obtener la sesion. Pruebe ingresando al sistema nuevamente.", undefined);
+                    }
+                    else {
+                        console.log(result.ops[0].token);
+                        return callback(undefined, result.ops[0].token)
+                    }
+                });
+            }
+        });
     };
     revokeToken(token: string, callback: ISessionRevokedCallback): void {
-        throw new Error("Method not implemented.");
+        const tokenToDelete: SessionDTO = new SessionDTO();
+        tokenToDelete.token = token;
+
+        MongoClient.connect(config.DB_URL, { useNewUrlParser: true }, (error, client) => {
+            if (error) {
+                return callback("Error al conectarse a la base de datos", undefined);
+            }
+            else {
+                client.db().collection(mongoConfig.COMPANY_SESSIONS_COLLECTION).findOneAndDelete(tokenToDelete, (error, result) => {
+                    if (error) {
+                        return callback("Error al obtener la sesion. Pruebe ingresando al sistema nuevamente.", undefined);
+                    }
+                    else {
+                        console.log(result.ok);
+                        return callback(undefined, result.ok === 1);
+                    }
+                });
+            }
+        });
     }
 }
 

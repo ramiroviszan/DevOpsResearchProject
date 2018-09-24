@@ -4,6 +4,8 @@ interface IRepository {
     SessionDataAccess: ISessionDataAccess
 }
 
+export default IRepository;
+
 export {
-    IRepository
+    ISessionDataAccess
 }

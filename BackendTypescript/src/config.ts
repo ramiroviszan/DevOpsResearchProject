@@ -1,5 +1,11 @@
+const DB_DEV_URL: string = "mongodb://customtoys:password@ds263832.mlab.com:63832/customtoys-dev-db";
+const DB_PROD_URL: string = "mongodb://customtoys:password@ds163842.mlab.com:63842/customtoys-prod-db";
+
 export default {
-    DB_URL: 'mongodb://admin:passw0rd@ds161062.mlab.com:61062/devops',
+    DB_DEV_URL: DB_DEV_URL,
+    DB_PROD_URL: DB_PROD_URL,
+    DB_URL: DB_DEV_URL,
+
     PORT: process.env.PORT || 3000,
     JWT_SECRET: process.env.JWT_SECRET || "7eb74c33-140d-4083-8809-e5e6a0eac1e4",
     HASH_SALT: process.env.HASH_SALT || "1b2b322c-c268-4e30-b661-2ae4bbe3a0ed",

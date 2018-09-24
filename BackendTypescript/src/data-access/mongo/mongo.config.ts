@@ -1,3 +1,3 @@
 export default {
-    COMPANY_SESSIONS_COLLECTION: 'user-company'
+    COMPANY_SESSIONS_COLLECTION: 'company-users'
 }
