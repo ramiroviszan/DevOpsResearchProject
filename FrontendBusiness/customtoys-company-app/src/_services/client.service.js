@@ -3,6 +3,7 @@ import { authHeader } from '../_helpers';
 
 export const clientService = {
     register,
+    update,
     getAll,
     getById
 };
@@ -15,6 +16,16 @@ function register(client) {
     };
 
     return fetch(`${config.apiUrl}/api/clients`, requestOptions).then(handleResponse);
+}
+
+function update(client) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(client)
+    };
+
+    return fetch(`${config.apiUrl}/api/client/${client.id}`, requestOptions).then(handleResponse);;
 }
 
 function getAll() {
@@ -32,8 +43,9 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/clients/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/api/clients/${id}`, requestOptions).then(handleResponse);
 }
+
 
 function handleResponse(response) {
     return response.text().then(text => {

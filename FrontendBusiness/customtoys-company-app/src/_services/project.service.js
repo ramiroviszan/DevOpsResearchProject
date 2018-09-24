@@ -1,7 +1,9 @@
 import config from 'config';
 
 export const projectService = {
-    register
+    register,
+    getAll,
+    getClientProjects
 };
 
 function register(project) {
@@ -12,6 +14,25 @@ function register(project) {
     };
 
     return fetch(`${config.apiUrl}/api/projects`, requestOptions).then(handleResponse);
+}
+
+
+function getAll() {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/api/projects`, requestOptions).then(handleResponse);
+}
+
+function getClientProjects(idClient) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    };
+
+    return fetch(`${config.apiUrl}/api/client/${idClient}/projects`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

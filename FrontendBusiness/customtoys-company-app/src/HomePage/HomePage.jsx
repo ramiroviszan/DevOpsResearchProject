@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import { userActions } from '../_actions';
 
 import './styles.css';
+import { HomeHTML } from './HomeHTML';
 
 class HomePage extends React.Component {
     componentDidMount() {
@@ -19,17 +19,8 @@ class HomePage extends React.Component {
                     <p>Bienvenido/a {/*user.username*/}!</p>
                 </div>
 
-                <div className="container gray highlightTextIn">
-                    
-                    <Link to="/Register" className="link" alt="Crear Cliente">Crear Cliente</Link>
-                    <Link to="/createProject" className="link" alt="Crear Proyecto">Crear Proyecto</Link>
-                </div>
-
-                <div className="welcomeMsg">
-                    <p>
-                        <Link to="/login">Logout</Link>
-                    </p>
-                </div>
+                <HomeHTML />
+                
             </div>
         );
     }
