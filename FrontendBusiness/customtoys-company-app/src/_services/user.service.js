@@ -20,15 +20,10 @@ function login(username, password) {
 
     return fetch(`${config.apiUrl}/api/login/company`, requestOptions)
         .then(handleResponse)
-        .then(token => {
+        .then(user => {
             // login successful if there's a jwt token in the response
-            if (token) {
+            if (user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                var user = {
-                    'username': requestOptions.body.username,
-                    'password': requestOptions.body.password,
-                    'token': token
-                }
                 localStorage.setItem('user', JSON.stringify(user));
             }
 
@@ -38,6 +33,8 @@ function login(username, password) {
 
 function logout() {
     // remove user from local storage to log user out
+    
+    console.log("TOY METIENDO LOGOUT DE LA FUNCTION LOGOUT");
     localStorage.removeItem('user');
 }
 
@@ -91,7 +88,7 @@ function _delete(id) {
 
 function handleResponse(response) {
     return response.text().then(text => {
-        const data = text;
+        const data = text && JSON.parse(text);
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api

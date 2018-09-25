@@ -15,7 +15,7 @@ function register(project) {
             .then(
                 project => {
                     dispatch(success());
-                    history.push('/login');
+                    history.push('/');
                     dispatch(alertActions.success('Registration successful'));
                 },
                 error => {

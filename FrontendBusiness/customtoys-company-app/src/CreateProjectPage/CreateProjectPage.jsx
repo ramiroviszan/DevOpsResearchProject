@@ -92,7 +92,7 @@ class CreateProjectPage extends React.Component {
         if (clients && clients.items) {
             clients.items.map((client, index) =>
                 optionItems.push({
-                    value: client._id, label: "Id del cliente: " + client._id
+                    value: client.username, label: "Nombre de usuario del cliente: " + client.username
                 })
             );
         }
