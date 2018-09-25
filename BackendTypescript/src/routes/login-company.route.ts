@@ -8,7 +8,7 @@ export default (router: Router) => {
                 response.status(400).send(errorMessage);
             }
             else {
-                response.setHeader("x-auth", token);
+                response.setHeader("Authorization", token);
                 response.send();
             }
         });
