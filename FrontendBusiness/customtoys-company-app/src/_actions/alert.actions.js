@@ -7,7 +7,6 @@ export const alertActions = {
 };
 
 function success(message) {
-    console.log("ESTOY EN EL SUCCESS MESSAGE");
     return { type: alertConstants.SUCCESS, message };
 }
 

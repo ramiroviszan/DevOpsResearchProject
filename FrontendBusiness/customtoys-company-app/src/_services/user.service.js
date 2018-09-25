@@ -17,7 +17,6 @@ function login(username, password) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     };
-
     return fetch(`${config.apiUrl}/api/login/company`, requestOptions)
         .then(handleResponse)
         .then(user => {
@@ -34,7 +33,6 @@ function login(username, password) {
 function logout() {
     // remove user from local storage to log user out
     
-    console.log("TOY METIENDO LOGOUT DE LA FUNCTION LOGOUT");
     localStorage.removeItem('user');
 }
 

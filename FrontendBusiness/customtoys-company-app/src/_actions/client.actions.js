@@ -9,15 +9,12 @@ export const clientActions = {
 };
 
 function register(client) {
-    console.log("ESTOY EN EL REGISTER");
     return dispatch => {
          dispatch(request(client));
         clientService.register(client)
             .then(
                 client => { 
-                    console.log("ESTOY ANTES DEL DISPATCH");
                     dispatch(success());
-                    console.log("ESTOY ANTES DEL HISTORY.PUSH");
                     history.push('/');
                     dispatch(alertActions.success('Registration successful'));
                 },

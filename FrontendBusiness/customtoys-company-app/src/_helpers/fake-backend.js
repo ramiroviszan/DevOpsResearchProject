@@ -6,7 +6,6 @@ let projects = JSON.parse(localStorage.getItem('projects')) || [];
 function authenticate(opts, reject, resolve) {
     // get parameters from post request
     let params = JSON.parse(opts.body);
-
     // find if any user matches login credentials
     let filteredUsers = users.filter(user => {
         return user.username === params.username && user.password === params.password;
