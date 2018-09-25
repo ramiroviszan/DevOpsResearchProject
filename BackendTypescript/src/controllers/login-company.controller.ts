@@ -2,12 +2,14 @@ import ICredentials from "../models/credentials.model";
 import session from "../services/session.service";
 import { SHA256 } from "crypto-js";
 import config from "../config";
+import repository from "../data-access/repository-chooser.dataaccess";
 
+interface ILoginCallback { (errorMessage: string, token: string): void }
 interface IVerifyCallback { (errorMessage: string, username: string): void }
 interface ILogoutCallback { (errorMessage: string, success: boolean): void }
 
 export default {
-    login(username: string, password: string): string {
+    login(username: string, password: string, callback: ILoginCallback): void {
         const hashedPassword: string = SHA256(password + config.HASH_SALT).toString();
 
         const credentials: ICredentials = {
@@ -16,9 +18,14 @@ export default {
         };
 
         const token: string = session.signCredentials(credentials);
-        //sessionDataAccess.saveToken(token, username????);
-
-        return token;
+        repository.SessionDataAccess.saveToken(token, credentials, (errorMessage, savedToken) => {
+            if (errorMessage) {
+                return callback(errorMessage, undefined);
+            }
+            else {
+                return callback(undefined, savedToken);
+            }
+        });
     },
     verify(token: string, callback: IVerifyCallback): string {
         session.verifyCredentials(token, undefined, (error, decoded) => {
@@ -39,7 +46,13 @@ export default {
         return token;
     },
     logout(token: string, callback: ILogoutCallback): void {
-        //sessionDataAccess.revokeToken(token, (error, success) => {...});
-        callback(undefined, true);
+        repository.SessionDataAccess.revokeToken(token, (errorMessage, success) => {
+            if (errorMessage) {
+                return callback(errorMessage, undefined);
+            }
+            else {
+                return callback(undefined, success);
+            }
+        })
     }
 };
