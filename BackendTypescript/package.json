@@ -29,10 +29,14 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
     "mongodb": "^3.1.6",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
     "@types/jest": "^23.3.2",
+    "@types/request": "^2.47.1",
+    "@types/request-promise-native": "^1.0.15",
     "husky": "^0.14.3",
     "jest": "^23.6.0",
     "ts-jest": "^23.1.4",
