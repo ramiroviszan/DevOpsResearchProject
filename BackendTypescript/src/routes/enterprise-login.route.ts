@@ -11,8 +11,8 @@ export default (router: Router) => {
                 response.setHeader("Authorization", token);
                 response.send();
             })
-            .catch(({ statusCode, message }) => {
-                response.status(statusCode).send(message);
+            .catch(reason => {
+                response.status(reason.statusCode).send(reason.message);
             });
     });
 };
