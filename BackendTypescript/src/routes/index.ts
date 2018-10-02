@@ -1,6 +1,6 @@
 import { Router } from "express";
-import loginCompany from "./login-company.route";
+import enterpriseLogin from "./enterprise-login.route";
 
 export default (router: Router) => {
-    loginCompany(router);
+    enterpriseLogin(router);
 }
