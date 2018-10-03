@@ -1,8 +1,8 @@
-import IRepository, { ISessionDataAccess } from "../irepository.dataaccess";
-import SessionDataAccess from "./session.dataaccess";
+import Repository from "../interfaces/repository.dataaccess";
+import MongoClientsRepository from "./mongo-clients-repository.dataaccess";
 
-class MongoRepository implements IRepository {
-    SessionDataAccess: ISessionDataAccess = SessionDataAccess;
+class MongoRepository implements Repository {
+    clients: MongoClientsRepository;
 }
 
 export default new MongoRepository();

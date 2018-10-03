@@ -7,8 +7,6 @@ export default (router: Router) => {
     router.post("/clients", (request, response) => {
         requireEnterpriseAuth(request)
             .then(enterpriseUser => {
-                console.log(request.body);
-
                 const client: Client = {
                     companyName: request.body["company_name"],
                     entryDate: new Date(request.body["entry_date"])

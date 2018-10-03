@@ -13,7 +13,7 @@ export default (request: Request): Promise<EnterpriseUser> => {
                 statusCode: 401
             };
             reject(reason);
-        };
+        }
         try {
             const decodedToken = jwt.verify(token, config.JWT_SECRET);
 
