@@ -1,6 +1,6 @@
-import IRepository from "./interfaces/repository.dataaccess";
+import Repository from "./interfaces/repository.dataaccess";
 import mongoRepository from "./mongo/mongo-repository.dataaccess";
 
-const repository: IRepository = mongoRepository;
+const repository: Repository = mongoRepository;
 
 export default repository;

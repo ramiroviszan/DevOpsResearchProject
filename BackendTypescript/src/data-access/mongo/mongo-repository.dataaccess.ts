@@ -1,8 +1,8 @@
 import Repository from "../interfaces/repository.dataaccess";
-import MongoClientsRepository from "./mongo-clients-repository.dataaccess";
+import mongoClientsRepository from "./mongo-clients-repository.dataaccess";
 
-class MongoRepository implements Repository {
-    clients: MongoClientsRepository;
-}
+const mongoRepository: Repository = {
+    clients: mongoClientsRepository
+};
 
-export default new MongoRepository();
+export default mongoRepository;

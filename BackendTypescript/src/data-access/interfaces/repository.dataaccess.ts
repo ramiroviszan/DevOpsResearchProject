@@ -1,11 +1,7 @@
-import ClientsRepository from "./clients-repository.dataaccess";
+import clientsRepository from "./clients-repository.dataaccess";
 
 interface Repository {
-    clients: ClientsRepository;
+    clients: clientsRepository;
 }
 
 export default Repository;
-
-export {
-    ClientsRepository
-}

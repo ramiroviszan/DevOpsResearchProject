@@ -1,14 +1,18 @@
-import { ClientsRepository } from "../interfaces/repository.dataaccess";
-import ClientDTO from "./data-transfer-objects/client.dto";
+import Client from "../../models/client.model";
+import ClientsRepository from "../interfaces/clients-repository.dataaccess";
 
-export default class MongoClientsRepository implements ClientsRepository {
-    add(client: ClientDTO): Promise<ClientDTO> {
+const mongoClientsRepo: ClientsRepository = {
+    add(client: Client): Promise<Client> {
+        return new Promise((resolve, reject) => {
+            resolve(client);
+        });
+    },
+    modify(client: Client): Promise<Client> {
         throw new Error();
-    }
-    modify(client: ClientDTO): Promise<ClientDTO> {
-        throw new Error();
-    }
-    remove(client: ClientDTO): Promise<any> {
+    },
+    remove(client: Client): Promise<any> {
         throw new Error();
     }
 }
+
+export default mongoClientsRepo;
