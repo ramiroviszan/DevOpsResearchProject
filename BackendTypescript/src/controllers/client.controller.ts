@@ -12,5 +12,16 @@ export default {
                     reject(reason);
                 });
         });
+    },
+    getAllClients():Promise<Client[]> {
+        return new Promise((resolve, reject) => {
+            repository.clients.getAll()
+            .then(clients => {
+                resolve(clients);
+            })
+            .catch(reason => {
+                reject(reason);
+            });
+        });
     }
 }
