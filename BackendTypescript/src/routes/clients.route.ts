@@ -1,6 +1,6 @@
 import { Router } from "express";
 import requireEnterpriseAuth from "../services/require-enterprise-auth.service";
-import clientController from "../controllers/client.controller";
+import clientController from "../controllers/clients.controller";
 import Client from "../models/client.model";
 
 function extractClientFromRequest(request): Client {
@@ -40,7 +40,7 @@ export default (router: Router) => {
                     });
             })
             .catch(reason => {
-
+                response.status(reason.statusCode).send(reason.message);
             });
     })
 }
