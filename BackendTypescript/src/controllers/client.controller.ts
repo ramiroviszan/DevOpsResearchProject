@@ -13,15 +13,15 @@ export default {
                 });
         });
     },
-    getAllClients():Promise<Client[]> {
+    getAllClients(): Promise<Client[]> {
         return new Promise((resolve, reject) => {
             repository.clients.getAll()
-            .then(clients => {
-                resolve(clients);
-            })
-            .catch(reason => {
-                reject(reason);
-            });
+                .then(clients => {
+                    resolve(clients);
+                })
+                .catch(reason => {
+                    reject(reason);
+                });
         });
     }
 }

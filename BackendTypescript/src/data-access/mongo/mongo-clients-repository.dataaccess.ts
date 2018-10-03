@@ -13,7 +13,7 @@ const mongoClientsRepo: ClientsRepository = {
     remove(client: Client): Promise<any> {
         throw new Error();
     },
-    getAll():Promise<Client[]> {
+    getAll(): Promise<Client[]> {
         throw new Error();
     }
 }
