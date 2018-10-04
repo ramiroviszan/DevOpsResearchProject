@@ -1,5 +1,5 @@
-const DB_DEV_URL: string = "mongodb://customtoys:password@ds263832.mlab.com:63832/customtoys-dev-db";
-const DB_PROD_URL: string = "mongodb://customtoys:password@ds163842.mlab.com:63842/customtoys-prod-db";
+const DB_DEV_URL: string = "mongodb://enterprise:passw0rd@ds263832.mlab.com:63832/customtoys-dev-db";
+const DB_PROD_URL: string = "mongodb://enterprise:passw0rd@ds163842.mlab.com:63842/customtoys-prod-db";
 
 export default {
     DB_URL: DB_DEV_URL,

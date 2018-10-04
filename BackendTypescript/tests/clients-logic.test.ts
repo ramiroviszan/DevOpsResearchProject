@@ -1,4 +1,4 @@
-import clientController from "../src/controllers/client.controller";
+import clientController from "../src/controllers/clients.controller";
 import Client from "../src/models/client.model";
 import repository from "../src/data-access/repository-chooser.dataaccess";
 

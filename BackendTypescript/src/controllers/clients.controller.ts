@@ -1,11 +1,14 @@
 import Client from "../models/client.model";
 import repository from "../data-access/repository-chooser.dataaccess";
+import { ClientDTO, clientToDTO, dtoToClient } from "../data-access/data-transfer-objects/client.dto";
 
 export default {
     createClient(client: Client): Promise<Client> {
         return new Promise((resolve, reject) => {
-            repository.clients.add(client)
-                .then(addedClient => {
+            const clientDTO: ClientDTO = clientToDTO(client);
+            repository.clients.add(clientDTO)
+                .then(addedClientDTO => {
+                    const addedClient: Client = dtoToClient(addedClientDTO);
                     resolve(addedClient);
                 })
                 .catch(reason => {

@@ -1,8 +1,8 @@
-import Client from "../../models/client.model";
+import { ClientDTO } from "../data-transfer-objects/client.dto";
 
 export default interface ClientsRepository {
-    add(client: Client): Promise<Client>;
-    modify(client: Client): Promise<Client>;
-    remove(client: Client): Promise<any>;
-    getAll(): Promise<Client[]>;
+    add(client: ClientDTO): Promise<ClientDTO>;
+    modify(client: ClientDTO): Promise<ClientDTO>;
+    remove(client: ClientDTO): Promise<any>;
+    getAll(): Promise<ClientDTO[]>;
 }

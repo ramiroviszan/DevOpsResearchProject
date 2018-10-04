@@ -33,7 +33,7 @@ export default (router: Router) => {
             .then(() => {
                 clientController.getAllClients()
                     .then(clients => {
-                        response.send(clients);
+                        response.status(201).send(clients);
                     })
                     .catch(reason => {
                         response.status(reason.statusCode).send(reason.message);

@@ -1,19 +1,45 @@
-import Client from "../../models/client.model";
 import ClientsRepository from "../interfaces/clients-repository.dataaccess";
+import { MongoClient } from "mongodb";
+import config from "../../config";
+import mongoConfig from "./mongo.config";
+import RejectReason from "../../models/reject-reason.model";
+import { ClientDTO } from "../data-transfer-objects/client.dto";
+
+const mongoClient = new MongoClient(config.DB_URL, { useNewUrlParser: true });
 
 const mongoClientsRepo: ClientsRepository = {
-    add(client: Client): Promise<Client> {
+    add(client: ClientDTO): Promise<ClientDTO> {
         return new Promise((resolve, reject) => {
-            resolve(client);
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.CLIENTS_COLLECTION).insertOne(client)
+                        .then(writeResult => {
+                            resolve(writeResult.ops[0]);
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
         });
     },
-    modify(client: Client): Promise<Client> {
+    modify(client: ClientDTO): Promise<ClientDTO> {
         throw new Error();
     },
-    remove(client: Client): Promise<any> {
+    remove(client: ClientDTO): Promise<any> {
         throw new Error();
     },
-    getAll(): Promise<Client[]> {
+    getAll(): Promise<ClientDTO[]> {
         throw new Error();
     }
 }
