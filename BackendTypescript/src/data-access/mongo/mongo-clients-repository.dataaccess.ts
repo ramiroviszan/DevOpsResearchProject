@@ -40,7 +40,29 @@ const mongoClientsRepo: ClientsRepository = {
         throw new Error();
     },
     getAll(): Promise<ClientDTO[]> {
-        throw new Error();
+        return new Promise((resolve, reject) => {
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.CLIENTS_COLLECTION).find().toArray()
+                        .then(findResult => {
+                            resolve(findResult);
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
+        });
     }
 }
 

@@ -1,6 +1,6 @@
 import Client from "../models/client.model";
 import repository from "../data-access/repository-chooser.dataaccess";
-import { ClientDTO, clientToDTO, dtoToClient } from "../data-access/data-transfer-objects/client.dto";
+import { ClientDTO, clientToDTO, dtoToClient, dtoToClientArray } from "../data-access/data-transfer-objects/client.dto";
 
 export default {
     createClient(client: Client): Promise<Client> {
@@ -19,7 +19,8 @@ export default {
     getAllClients(): Promise<Client[]> {
         return new Promise((resolve, reject) => {
             repository.clients.getAll()
-                .then(clients => {
+                .then(clientDTOs => {
+                    const clients: Client[] = dtoToClientArray(clientDTOs);
                     resolve(clients);
                 })
                 .catch(reason => {

@@ -18,7 +18,7 @@ export default (router: Router) => {
                 const client: Client = extractClientFromRequest(request);
                 clientController.createClient(client)
                     .then(createdClient => {
-                        response.send(createdClient);
+                        response.status(201).send(createdClient);
                     })
                     .catch(reason => {
                         response.status(reason.statusCode).send(reason.message);
@@ -33,7 +33,7 @@ export default (router: Router) => {
             .then(() => {
                 clientController.getAllClients()
                     .then(clients => {
-                        response.status(201).send(clients);
+                        response.send(clients);
                     })
                     .catch(reason => {
                         response.status(reason.statusCode).send(reason.message);

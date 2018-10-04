@@ -27,8 +27,17 @@ function clientToDTO(client: Client): ClientDTO {
     return clientDTO;
 }
 
+function dtoToClientArray(clientDTOs: ClientDTO[]): Client[] {
+    let clients: Client[] = [];
+    clientDTOs.forEach(clientDTO => {
+        clients.push(dtoToClient(clientDTO));
+    });
+    return clients;
+}
+
 export {
     ClientDTO,
     dtoToClient,
-    clientToDTO
+    clientToDTO,
+    dtoToClientArray
 }
