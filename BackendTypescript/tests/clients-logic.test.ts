@@ -39,11 +39,11 @@ describe("Create client", () => {
         expect(clientController.createClient(testClient)).resolves.toEqual(testClient);
     });
     test("should reject when adding same client twice",  () => {
-        clientController.createClient(testClient)
-            .then(() => {
-                expect(clientController.createClient(testClient)).rejects.toBeCalled();
-            })
-            .catch(() => fail());
+        clientsInMock.push(testClient);
+        expect(clientController.createClient(testClient)).rejects.toHaveBeenCalled();
+    });
+    test("should reject when adding invalid client",  () => {
+        expect(clientController.createClient(testClient)).rejects.toHaveBeenCalled();
     });
 });
 
