@@ -1,3 +1,6 @@
 export default {
-    COMPANY_SESSIONS_COLLECTION: 'company-users'
+    CLIENTS_COLLECTION: 'clients',
+    COMMENTS_COLLECTION: 'comments',
+    PROJECTS_COLLECTION: 'projects',
+    USERS_COLLECTION: 'users'
 }

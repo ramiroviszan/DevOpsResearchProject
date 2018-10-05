@@ -2,6 +2,7 @@ import config from "../config";
 import * as request from "request-promise-native";
 import * as jwt from "jsonwebtoken";
 import EnterpriseUser from "../models/enterprise-user.mode";
+import RejectReason from "../models/reject-reason.model";
 
 export default {
     login(username: string, password: string): Promise<string> {
@@ -29,27 +30,12 @@ export default {
                     resolve(token);
                 })
                 .catch(({ statusCode, message }) => {
-                    reject({ statusCode, message });
+                    const reason: RejectReason = {
+                        message,
+                        statusCode
+                    }
+                    reject(reason);
                 });
-        });
-    },
-    verify(token: string): Promise<EnterpriseUser> {
-        return new Promise((resolve, reject) => {
-            try {
-                const decodedToken = jwt.verify(token, config.JWT_SECRET);
-
-                const user: EnterpriseUser = {
-                    username: decodedToken["username"]
-                };
-                resolve(user);
-            }
-            catch {
-                const reason = {
-                    message: "Invalid Token",
-                    statusCode: 400
-                }
-                reject(reason);
-            }
         });
     }
 };
