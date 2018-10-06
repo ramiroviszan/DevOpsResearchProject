@@ -4,6 +4,7 @@ import config from "../../config";
 import mongoConfig from "./mongo.config";
 import RejectReason from "../../models/reject-reason.model";
 import User from "../../models/customer-user.model";
+import { CustomerUserDTO } from "../data-transfer-objects/customer-user.dto";
 
 const mongoClient = new MongoClient(config.DB_URL, { useNewUrlParser: true });
 
