@@ -7,6 +7,12 @@ import { CustomerUserDTO, customerToDTO, dtoToCustomerUser } from "../data-acces
 export default {
     processLogin(username: string, password: string): Promise<CustomerUser> {
         return new Promise((resolve, reject) => {
+            const reason: RejectReason = {
+                statusCode: 404,
+                message: 'Not user or password not provided'
+            };
+            if ((!username) || (!password))
+                reject(reason)
 
             repository.customerUsers.get(username, password)
                 .then(customerUser => {

@@ -3,12 +3,12 @@ import { MongoClient } from "mongodb";
 import config from "../../config";
 import mongoConfig from "./mongo.config";
 import RejectReason from "../../models/reject-reason.model";
-import { CustomerUserDTO } from "../data-transfer-objects/customer-user.dto";
+import User from "../../models/customer-user.model";
 
 const mongoClient = new MongoClient(config.DB_URL, { useNewUrlParser: true });
 
 const mongoClientsRepo: CustomerUsersRepository = {
-    get(username: string, password: string): Promise<CustomerUserDTO> {
+    get(username: string, password: string): Promise<User> {
         return new Promise((resolve, reject) => {
             const query = { 'username': username, 'password': password };
             console.log(query);
