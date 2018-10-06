@@ -1,7 +1,7 @@
 import React from 'react';
+import './function.js';
 import { Link } from 'react-router-dom';
 var $ = require('jquery')
-import './function.js';
 
 export class HomeHTML extends React.Component {
 

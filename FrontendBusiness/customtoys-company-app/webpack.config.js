@@ -5,7 +5,8 @@ module.exports = {
     entry: './src/index.jsx',
     output: {
         path: path.resolve('dist'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     resolve: {
         extensions: ['.js', '.jsx']
@@ -19,17 +20,12 @@ module.exports = {
                 query: {
                     presets: ['react', 'es2015', 'stage-3']
                 }
-            },
-            {
-                test: /\.css$/,
-                exclude: /node_modules/,
-                loaders: ['style-loader', 'css-loader'],
             }
         ]
     },
     plugins: [new HtmlWebpackPlugin({
         template: './src/index.html',
-        filename: 'index.html',
+        filename: './src/index.html',
         inject: 'body'
     })],
     devServer: {
@@ -38,7 +34,7 @@ module.exports = {
     externals: {
         // global app config object
         config: JSON.stringify({
-            apiUrl: 'http://localhost:3000'
+            apiUrl: 'http://localhost:4000'
         })
     }
 }
