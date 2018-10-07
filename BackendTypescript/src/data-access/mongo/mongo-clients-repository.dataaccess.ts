@@ -39,6 +39,40 @@ const mongoClientsRepo: ClientsRepository = {
     remove(client: ClientDTO): Promise<any> {
         throw new Error();
     },
+    get(companyName: string): Promise<ClientDTO> {
+        return new Promise((resolve, reject) => {
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.CLIENTS_COLLECTION).findOne({ companyName })
+                        .then(readResult => {
+                            if (!readResult) {
+                                const reason: RejectReason = {
+                                    message: "Client not found",
+                                    statusCode: 400
+                                };
+                                reject(reason);
+                            }
+                            else {
+                                resolve(readResult);
+                            }
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
+        });
+    },
     getAll(): Promise<ClientDTO[]> {
         return new Promise((resolve, reject) => {
             mongoClient.connect()
