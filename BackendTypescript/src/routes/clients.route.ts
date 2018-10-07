@@ -42,5 +42,5 @@ export default (router: Router) => {
             .catch(reason => {
                 response.status(reason.statusCode).send(reason.message);
             });
-    })
+    });
 }
