@@ -1,6 +1,10 @@
 import { Router } from "express";
-import loginCompany from "./login-company.route";
+import enterpriseLogin from "./enterprise-login.route";
+import customerLogin from "./customer-login.route";
+import clientRoutes from "./clients.route";
 
 export default (router: Router) => {
-    loginCompany(router);
+    enterpriseLogin(router);
+    customerLogin(router);
+    clientRoutes(router);
 }

@@ -61,3 +61,5 @@ typings/
 .next
 
 BackendTypescript/package-lock\.json
+
+BackendTypescript/dist/
