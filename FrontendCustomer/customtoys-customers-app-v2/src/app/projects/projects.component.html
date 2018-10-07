@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <br><br><br>
+  <div class='card'>
+    <div class='card-header text-left'>
+      {{pageTitle}}
+    </div>
+
+    <div class='card-body'>
+      <!-- Mensaje de error -->
+      <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+
+
+      <!--Tabla de mascotas -->
+      <div class='table-responsive'>
+        <table class='table'>
+          <!--Cabezal de la tabla -->
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <!--Cuerpo de la tabla-->
+          <tbody>
+          <!-- Aca va todo el contenido de la tabla  -->
+          <tr *ngFor='let p of projects'>
+            <td>{{p.name}}</td>
+            <td>{{p.start_date}}</td>
+            <td>{{p.end_date}}</td>
+
+            <td><span class="fa fa-edit show-comment" [title]='"Show comments"' (click)='showComments(p._id)'>Show comments</span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
