@@ -18,16 +18,16 @@ export class LoginService {
   }
 
   login(username: string, password: string): Observable<HttpResponse<User>> {
-    const myHeaders= new HttpHeaders({
+    const body = {
       'username': username,
       'password': password
-    });
-    const httpOptions = {
-      headers:myHeaders,
-      observe:'response'
     };
+    // const httpOptions = {
+    //   headers: null,
+    //   observe: 'response'
+    // };
 
-    return this.httpClient.post<User>(this.WEB_API_URL, null,  {headers: myHeaders, observe: 'response'})
+    return this.httpClient.post<User>(this.WEB_API_URL, body,  {headers: null, observe: 'response'})
       .pipe(
          tap(data => console.log('Los datos que obtuvimos fueron: ' + JSON.stringify(data)))
         // catchError(this.handleError)

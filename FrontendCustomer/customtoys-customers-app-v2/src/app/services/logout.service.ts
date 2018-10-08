@@ -16,13 +16,13 @@ export class LogoutService {
   }
 
   logout(token: string): Observable<HttpResponse<any>> {
-    const myHeaders= new HttpHeaders({
-      'Token':  token
+    const myHeaders = new HttpHeaders({
+      'authorization':  token
     });
 
     const httpOptions = {
-      headers:myHeaders,
-      observe:'response'
+      headers: myHeaders,
+      observe: 'response'
     };
 
     return this.httpClient.post(this.WEB_API_URL, null,  {headers: myHeaders, observe: 'response'})
