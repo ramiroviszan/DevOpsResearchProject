@@ -92,7 +92,8 @@ function _delete(id) {
 
 function handleResponse(response) {
     return response.text().then(text => {
-        if (text == "Not Found")
+        console.log("text: ", text);
+        if (text == '404 - "Not Found"')
             return Promise.reject("Datos Incorrectos");
         const data = text && JSON.parse(text);
         if (!response.ok) {
