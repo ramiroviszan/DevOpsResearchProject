@@ -8,11 +8,13 @@ export default (router: Router) => {
 
         customerController.processLogin(username, password)
             .then((user) => {
+                console.log("[ROUTER] Then ProcessLogin");
                 response.setHeader("Authorization", user.token + '');
                 response.send(user);
             })
             .catch(reason => {
-                console.log(reason);
+                console.log("[ROUTER] Catch ProcessLogin");
+                console.log("[ROUTER] " + reason);
                 response.status(reason.statusCode).send(reason.message);
             });
     });
