@@ -3,7 +3,6 @@ import config from '../config'
 import { authHeader } from '../_helpers';
 
 export const userService = {
-    getToken,
     login,
     logout,
     register,
@@ -13,19 +12,7 @@ export const userService = {
     delete: _delete
 };
 
-function getToken(username, password) {
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Authorization': 'd774f026-6243-4a14-9696-051329f82987',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password })
-    };
-    return fetch(`${config.ENTERPRISE_AUTH_API_URL}`, requestOptions).then(handleResponse);
-}
-
-function login(username, password, value) {
+function login(username, password) {
     const loginRequestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -33,11 +20,11 @@ function login(username, password, value) {
     };
     return fetch(`${config.apiUrl}/api/login/enterprise`, loginRequestOptions)
         .then(handleResponse)
-        .then(user => {
-            user = {
+        .then(userResponse => {
+            const user = {
                 "username": username,
                 "password": password,
-                "token": value.token
+                "token": userResponse.token
             };
             // login successful if there's a jwt token in the response
             if (user.token) {

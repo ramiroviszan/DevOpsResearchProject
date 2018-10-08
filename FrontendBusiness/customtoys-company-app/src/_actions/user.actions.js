@@ -15,20 +15,11 @@ function login(username, password) {
     return dispatch => {
         dispatch(request({ username }));
 
-        userService.getToken(username, password)
+        userService.login(username, password)
             .then(
-                token => {
-                    userService.login(username, password, token)
-                        .then(
-                            user => {
-                                dispatch(success(user));
-                                history.push('/');
-                            },
-                            error => {
-                                dispatch(failure(error.toString()));
-                                dispatch(alertActions.error(error.toString()));
-                            }
-                        );
+                user => {
+                    dispatch(success(user));
+                    history.push('/');
                 },
                 error => {
                     dispatch(failure(error.toString()));
