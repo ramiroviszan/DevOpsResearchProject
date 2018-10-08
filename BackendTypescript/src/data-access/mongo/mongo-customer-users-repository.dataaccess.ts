@@ -5,6 +5,7 @@ import mongoConfig from "./mongo.config";
 import RejectReason from "../../models/reject-reason.model";
 import User from "../../models/customer-user.model";
 import { CustomerUserDTO } from "../data-transfer-objects/customer-user.dto";
+import { ObjectID } from "bson";
 
 const mongoClient = new MongoClient(config.DB_URL, { useNewUrlParser: true });
 
@@ -68,6 +69,33 @@ const mongoClientsRepo: CustomerUsersRepository = {
                 })
                 .catch(({ errmsg }) => {
                     console.log("[MONGO] Catch Modify -> Connect");
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
+        });
+    },
+    clear(token: string): Promise<CustomerUserDTO> {
+        return new Promise((resolve, reject) => {
+            let query = { token: new ObjectID(token) };
+            let newValues = { $set: { token: '' } };
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.USERS_COLLECTION).findOneAndUpdate(query, newValues, { returnOriginal: false })
+                        .then((updatedUser) => {
+                            resolve(updatedUser.value);
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
                     const reason: RejectReason = {
                         statusCode: 400,
                         message: errmsg

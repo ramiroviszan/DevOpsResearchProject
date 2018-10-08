@@ -539,7 +539,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/pabluc/repositorios/test_angular_node/customtoys-customers-app/src/styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! /Users/pabluc/repositorios/DevOpsResearchProject/FrontendCustomer/customtoys-customers-app-v2/src/styles.css */"./src/styles.css");
 
 
 /***/ })

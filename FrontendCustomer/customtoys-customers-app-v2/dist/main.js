@@ -901,7 +901,7 @@ var apiconfig_1 = __webpack_require__(/*! ../classes/apiconfig */ "./src/app/cla
 var LoginService = /** @class */ (function () {
     function LoginService(httpClient) {
         this.httpClient = httpClient;
-        this.WEB_API_URL = apiconfig_1.Apiconfig.getProtocol() + apiconfig_1.Apiconfig.getIP() + '' + apiconfig_1.Apiconfig.getPort() + '/api/CustomerLogin';
+        this.WEB_API_URL = apiconfig_1.Apiconfig.getProtocol() + apiconfig_1.Apiconfig.getIP() + '' + apiconfig_1.Apiconfig.getPort() + '/api/login/customer';
     }
     LoginService.prototype.login = function (username, password) {
         var myHeaders = new http_1.HttpHeaders({
@@ -960,7 +960,7 @@ var apiconfig_1 = __webpack_require__(/*! ../classes/apiconfig */ "./src/app/cla
 var LogoutService = /** @class */ (function () {
     function LogoutService(httpClient) {
         this.httpClient = httpClient;
-        this.WEB_API_URL = apiconfig_1.Apiconfig.getProtocol() + apiconfig_1.Apiconfig.getIP() + '' + apiconfig_1.Apiconfig.getPort() + '/api/CustomerLogout';
+        this.WEB_API_URL = apiconfig_1.Apiconfig.getProtocol() + apiconfig_1.Apiconfig.getIP() + '' + apiconfig_1.Apiconfig.getPort() + '/api/logout/customer';
     }
     LogoutService.prototype.logout = function (token) {
         var myHeaders = new http_1.HttpHeaders({
@@ -1233,7 +1233,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/pabluc/repositorios/test_angular_node/customtoys-customers-app/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/pabluc/repositorios/DevOpsResearchProject/FrontendCustomer/customtoys-customers-app-v2/src/main.ts */"./src/main.ts");
 
 
 /***/ })
