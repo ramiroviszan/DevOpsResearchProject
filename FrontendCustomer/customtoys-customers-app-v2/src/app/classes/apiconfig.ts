@@ -1,5 +1,5 @@
 export class Apiconfig {
-    private static ApiIP: string = "test-node-angular.herokuapp.com"; //"app-obli-devops-backend.herokuapp.com";
+    private static ApiIP: string = "app-obli-devops.herokuapp.com"; //"app-obli-devops-backend.herokuapp.com";
     private static ApiProtocol: string = "https://";
     private static ApiPort: string = ""; //:4100
   
