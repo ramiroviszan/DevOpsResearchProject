@@ -9,7 +9,7 @@ export default (router: Router) => {
         enterpriseAuthController.login(username, password)
             .then((token) => {
                 response.setHeader("Authorization", token);
-                response.send(token);
+                response.send({ token });
             })
             .catch(reason => {
                 response.status(reason.statusCode).send(reason.message);
