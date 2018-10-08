@@ -192,7 +192,7 @@ var Apiconfig = /** @class */ (function () {
     Apiconfig.getApiStartUri = function () {
         return this.ApiStartUri;
     };
-    Apiconfig.ApiIP = "test-node-angular.herokuapp.com"; //"app-obli-devops-backend.herokuapp.com";
+    Apiconfig.ApiIP = "app-obli-devops.herokuapp.com"; //"app-obli-devops-backend.herokuapp.com";
     Apiconfig.ApiProtocol = "https://";
     Apiconfig.ApiPort = ""; //:4100
     Apiconfig.ApiStartUri = "front/";
@@ -904,15 +904,15 @@ var LoginService = /** @class */ (function () {
         this.WEB_API_URL = apiconfig_1.Apiconfig.getProtocol() + apiconfig_1.Apiconfig.getIP() + '' + apiconfig_1.Apiconfig.getPort() + '/api/login/customer';
     }
     LoginService.prototype.login = function (username, password) {
-        var myHeaders = new http_1.HttpHeaders({
+        var body = {
             'username': username,
             'password': password
-        });
-        var httpOptions = {
-            headers: myHeaders,
-            observe: 'response'
         };
-        return this.httpClient.post(this.WEB_API_URL, null, { headers: myHeaders, observe: 'response' })
+        // const httpOptions = {
+        //   headers: null,
+        //   observe: 'response'
+        // };
+        return this.httpClient.post(this.WEB_API_URL, body, { headers: null, observe: 'response' })
             .pipe(operators_1.tap(function (data) { return console.log('Los datos que obtuvimos fueron: ' + JSON.stringify(data)); })
         // catchError(this.handleError)
         );
@@ -964,7 +964,7 @@ var LogoutService = /** @class */ (function () {
     }
     LogoutService.prototype.logout = function (token) {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': token
+            'authorization': token
         });
         var httpOptions = {
             headers: myHeaders,
