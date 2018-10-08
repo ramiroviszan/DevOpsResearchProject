@@ -16,7 +16,7 @@ class HomePage extends React.Component {
         return (
             <div>
                 <div className="welcomeMsg">
-                    <p>Bienvenido/a {user.username}!</p>
+                    <p>Bienvenido/a {(user) ? user.username : ''}!</p>
                 </div>
 
                 <HomeHTML />

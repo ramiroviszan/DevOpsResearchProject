@@ -1,4 +1,5 @@
-import config from 'config';
+//import config from 'config';
+import config from '../config'
 import { authHeader } from '../_helpers';
 
 export const projectService = {
@@ -7,11 +8,22 @@ export const projectService = {
     getClientProjects
 };
 
+function filterProjectInformation(project){
+    const projecetFiltered = {
+        'name': project.name,
+        'start_date': project.start_date,
+        'end_date': project.end_date,
+        'company': 'COMPANY'
+    }
+    return projecetFiltered;
+}
+
 function register(project) {
+    const projectInfo = filterProjectInformation(project);
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(project)
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(projectInfo)
     };
 
     return fetch(`${config.apiUrl}/api/projects`, requestOptions).then(handleResponse);

@@ -4,29 +4,12 @@ import { alertActions } from './';
 import { history } from '../_helpers';
 
 export const userActions = {
-    getToken,
     login,
     logout,
     register,
     getAll,
     delete: _delete
 };
-
-function getToken(username, password) {
-    return dispatch => {
-        dispatch(request({ username }));
-
-        userService.getToken(username, password)
-            .then(
-                token => dispatch(success(token)),
-                error => dispatch(failure(error.toString()))
-            );
-    };
-
-    function request() { return { type: userConstants.GETTOKEN_REQUEST } }
-    function success(token) { return { type: userConstants.GETTOKEN_SUCCESS, token } }
-    function failure(error) { return { type: userConstants.GETTOKEN_FAILURE, error } }
-}
 
 function login(username, password) {
     return dispatch => {
