@@ -14,7 +14,7 @@ export function registration(state = {}, action) {
       return {};
     case projectConstants.REGISTER_SUCCESS:
       return {};
-    default:
+    default:  
       return state
   }
 }
