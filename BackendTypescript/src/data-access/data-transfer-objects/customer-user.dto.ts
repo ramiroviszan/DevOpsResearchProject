@@ -21,9 +21,6 @@ function dtoToCustomerUser(customerUserDTO: CustomerUserDTO): CustomerUser {
 }
 
 function customerToDTO(customer: CustomerUser): CustomerUserDTO {
-    console.log("--------------------------------------------------------------------------------");
-    console.log(customer);
-    console.log("--------------------------------------------------------------------------------");
     const customerDTO: CustomerUserDTO = {
         _id: customer._id,
         username: customer.username,
