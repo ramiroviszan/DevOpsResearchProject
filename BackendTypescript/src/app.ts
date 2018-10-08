@@ -3,7 +3,7 @@ import useMiddlewares from "./middlewares";
 import api from "./api";
 import * as cors from "cors";
 
-const corsOptions : cors.CorsOptions = {
+const corsOptions: cors.CorsOptions = {
     allowedHeaders: ["Authorization"]
 }
 
