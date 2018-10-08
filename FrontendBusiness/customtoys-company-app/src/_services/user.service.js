@@ -3,6 +3,7 @@ import config from '../config'
 import { authHeader } from '../_helpers';
 
 export const userService = {
+    getToken,
     login,
     logout,
     register,
@@ -12,7 +13,7 @@ export const userService = {
     delete: _delete
 };
 
-function login(username, password) {
+function getToken(username, password) {
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -21,14 +22,10 @@ function login(username, password) {
         },
         body: JSON.stringify({ username, password })
     };
-    return fetch(`${config.ENTERPRISE_AUTH_API_URL}`, requestOptions)
-        .then(handleResponse)
-        .then(value => {
-            saveUser(username, password, value);
-        });
+    return fetch(`${config.ENTERPRISE_AUTH_API_URL}`, requestOptions).then(handleResponse);
 }
 
-function saveUser(username, password, value) {
+function login(username, password, value) {
     const loginRequestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -42,7 +39,6 @@ function saveUser(username, password, value) {
                 "password": password,
                 "token": value.token
             };
-            console.log("muestro token por las dudas: ", user.token);
             // login successful if there's a jwt token in the response
             if (user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
