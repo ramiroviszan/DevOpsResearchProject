@@ -33,13 +33,13 @@ export class HomeHTML extends React.Component {
         return (
             <div id='cssmenu'>
                 <ul>
-                    <li className='has-sub'><a href='#'>Clientes</a>
+                    <li className='has-sub'><a href='#top'>Clientes</a>
                         <ul>
                             <li><Link to="/register">Crear Cliente</Link></li>
                             <li><Link to="/">Mostrar Clientes</Link></li>
                         </ul>
                     </li>
-                    <li className='has-sub'><a href='#'>Proyectos</a>
+                    <li className='has-sub'><a href='#top'>Proyectos</a>
                         <ul>
                             <li><Link to="/createProject">Crear Proyecto</Link></li>
                             <li><Link to="/">Mostrar Proyectos</Link></li>

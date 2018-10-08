@@ -77,7 +77,7 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
+    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -92,8 +92,7 @@ function _delete(id) {
 
 function handleResponse(response) {
     return response.text().then(text => {
-        console.log("text: ", text);
-        if (text == '404 - "Not Found"')
+        if (text === '404 - "Not Found"')
             return Promise.reject("Datos Incorrectos");
         const data = text && JSON.parse(text);
         if (!response.ok) {

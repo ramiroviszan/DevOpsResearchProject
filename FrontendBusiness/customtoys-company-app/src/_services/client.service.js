@@ -35,7 +35,7 @@ function update(client) {
         body: JSON.stringify(client)
     };
 
-    return fetch(`${config.apiUrl}/api/client/${client.id}`, requestOptions).then(handleResponse);;
+    return fetch(`${config.apiUrl}/api/client/${client.id}`, requestOptions).then(handleResponse);
 }
 
 function getAll() {
