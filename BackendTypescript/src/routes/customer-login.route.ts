@@ -18,4 +18,14 @@ export default (router: Router) => {
                 response.status(reason.statusCode).send(reason.message);
             });
     });
+    router.post("/logout/customer", (request: Request, response: Response) => {
+        const token: string = <string>request.headers['authorization'];
+        customerController.processLogout(token)
+            .then(() => {
+                response.status(200).send();
+            })
+            .catch(reason => {
+                response.status(reason.statusCode).send(reason.message);
+            });
+    });
 };
