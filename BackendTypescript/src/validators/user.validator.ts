@@ -6,6 +6,7 @@ export default (user: User): boolean => {
     if (!user) isValid = false;
     if (!(user.username)) isValid = false;
     if (!(user.password)) isValid = false;
+    if (!(user.id_client)) isValid = false;
 
     return isValid;
 }

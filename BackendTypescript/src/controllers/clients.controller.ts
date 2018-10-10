@@ -6,6 +6,7 @@ import validUser from "../validators/user.validator";
 import RejectReason from "../models/reject-reason.model";
 import User from "../models/customer-user.model";
 import { CustomerUserDTO, customerToDTO, dtoToCustomerUser } from "../data-access/data-transfer-objects/customer-user.dto";
+import { ObjectID } from "bson";
 
 export default {
     createClient(client: Client): Promise<Client> {
@@ -19,6 +20,7 @@ export default {
             }
             else {
                 const clientDTO: ClientDTO = clientToDTO(client);
+
                 repository.clients.add(clientDTO)
                     .then(addedClientDTO => {
                         const addedClient: Client = dtoToClient(addedClientDTO);
@@ -39,12 +41,26 @@ export default {
                 }
                 reject(reason);
             }
+            if (!ObjectID.isValid(user.id_client)) {
+                const reason: RejectReason = {
+                    message: "Invalid client ID",
+                    statusCode: 400
+                }
+                reject(reason);
+            }
             else {
-                const userDTO: CustomerUserDTO = customerToDTO(user);
-                repository.customerUsers.add(userDTO)
-                    .then(addedUserDTO => {
-                        const addedUser: User = dtoToCustomerUser(addedUserDTO);
-                        resolve(addedUser);
+                repository.clients.get({ _id: new ObjectID(user.id_client) })
+                    .then(clientDTO => {
+                        const userDTO: CustomerUserDTO = customerToDTO(user);
+
+                        repository.customerUsers.add(userDTO)
+                            .then(addedUserDTO => {
+                                const addedUser: User = dtoToCustomerUser(addedUserDTO);
+                                resolve(addedUser);
+                            })
+                            .catch(reason => {
+                                reject(reason);
+                            });
                     })
                     .catch(reason => {
                         reject(reason);
@@ -54,7 +70,7 @@ export default {
     },
     getClient(companyName: string): Promise<Client> {
         return new Promise((resolve, reject) => {
-            repository.clients.get(companyName)
+            repository.clients.get({ companyName })
                 .then(clientDTO => {
                     const client: Client = dtoToClient(clientDTO);
                     resolve(client);

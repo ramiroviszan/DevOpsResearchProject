@@ -26,6 +26,7 @@ export default (router: Router) => {
         requireEnterpriseAuth(request)
             .then(() => {
                 const clientUser: User = extractClientUserFromRequest(request);
+
                 clientController.createClientUser(clientUser)
                     .then(addedUser => {
                         response.status(201).send(addedUser);
@@ -34,11 +35,15 @@ export default (router: Router) => {
                         response.status(reason.statusCode).send(reason.message);
                     });
             })
+            .catch(reason => {
+                response.status(reason.statusCode).send(reason.message);
+            });
     });
     router.post("/clients", (request, response) => {
         requireEnterpriseAuth(request)
             .then(() => {
                 const client: Client = extractClientFromRequest(request);
+
                 clientController.createClient(client)
                     .then(createdClient => {
                         response.status(201).send(createdClient);
