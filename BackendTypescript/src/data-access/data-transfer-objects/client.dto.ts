@@ -10,6 +10,7 @@ interface ClientDTO {
 
 function dtoToClient(clientDTO: ClientDTO): Client {
     const client: Client = {
+        _id: clientDTO._id,
         companyName: clientDTO.companyName,
         entryDate: clientDTO.entryDate,
         rut: clientDTO.rut
@@ -19,7 +20,7 @@ function dtoToClient(clientDTO: ClientDTO): Client {
 
 function clientToDTO(client: Client): ClientDTO {
     const clientDTO: ClientDTO = {
-        _id: new ObjectID(),
+        _id: client._id || new ObjectID(),
         companyName: client.companyName,
         entryDate: client.entryDate,
         rut: client.rut

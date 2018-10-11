@@ -9,6 +9,31 @@ import { CustomerUserDTO } from "../data-transfer-objects/customer-user.dto";
 const mongoClient = new MongoClient(config.DB_URL, { useNewUrlParser: true });
 
 const mongoClientsRepo: CustomerUsersRepository = {
+    add(customerUserDTO: CustomerUserDTO): Promise<CustomerUserDTO> {
+        return new Promise((resolve, reject) => {
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.USERS_COLLECTION).insertOne(customerUserDTO)
+                        .then(writeResult => {
+                            resolve(writeResult.ops[0]);
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
+        });
+    },
     get(username: string, password: string): Promise<User> {
         return new Promise((resolve, reject) => {
             const query = { 'username': username, 'password': password };
