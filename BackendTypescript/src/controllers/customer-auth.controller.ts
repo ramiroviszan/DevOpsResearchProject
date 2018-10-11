@@ -54,5 +54,6 @@ export default {
         };
         return getMethod()
             .then(modifyMethod)
+            .catch(() => { throw new Error() });
     }
 };

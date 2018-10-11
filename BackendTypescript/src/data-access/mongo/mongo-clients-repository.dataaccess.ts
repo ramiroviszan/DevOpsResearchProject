@@ -39,16 +39,16 @@ const mongoClientsRepo: ClientsRepository = {
     remove(client: ClientDTO): Promise<any> {
         throw new Error();
     },
-    get(companyName: string): Promise<ClientDTO> {
+    get(filter: any): Promise<ClientDTO> {
         return new Promise((resolve, reject) => {
             mongoClient.connect()
                 .then(mongoClient => {
-                    mongoClient.db().collection(mongoConfig.CLIENTS_COLLECTION).findOne({ companyName })
+                    mongoClient.db().collection(mongoConfig.CLIENTS_COLLECTION).findOne(filter)
                         .then(readResult => {
                             if (!readResult) {
                                 const reason: RejectReason = {
                                     message: "Client not found",
-                                    statusCode: 400
+                                    statusCode: 404
                                 };
                                 reject(reason);
                             }

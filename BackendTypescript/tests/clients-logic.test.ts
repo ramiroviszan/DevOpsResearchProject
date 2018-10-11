@@ -2,11 +2,7 @@ import clientController from "../src/controllers/clients.controller";
 import Client from "../src/models/client.model";
 import repository from "../src/data-access/repository-chooser.dataaccess";
 
-jest.mock("../src/data-access/repository-chooser.dataaccess");
-
-var clientsInMock : Client[] = [];
-
-repository.clients = {
+jest.mock("../src/data-access/repository-chooser.dataaccess", () => ({
     add: jest.fn(client => {
         return new Promise((resolve, reject) => {
             if(clientsInMock.find(x => x.companyName === client.companyName)) {
@@ -16,14 +12,14 @@ repository.clients = {
             resolve(client);
         });
     }),
-    modify: jest.fn(),
-    remove: jest.fn(),
     getAll: jest.fn(() => {
         return new Promise((resolve, reject) => {
             resolve(clientsInMock);
         });
     })
-}
+}));
+
+var clientsInMock : Client[] = [];
 
 const testClient :Client = {
     companyName: "test",
@@ -40,6 +36,7 @@ describe("Create client", () => {
     });
     test("should reject when adding same client twice",  () => {
         clientsInMock.push(testClient);
+        
         expect(clientController.createClient(testClient)).rejects.toHaveBeenCalled();
     });
     test("should reject when adding invalid client",  () => {

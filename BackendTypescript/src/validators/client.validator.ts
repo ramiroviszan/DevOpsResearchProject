@@ -1,11 +1,11 @@
 import Client from "../models/client.model";
 
-export default (client: Client): boolean => {
-    let isValid: boolean = true;
+export default async (client: Client): Promise<Client> => {
+    const statusCode: number = 400;
 
-    if (!client) isValid = false;
-    if (!(client.companyName)) isValid = false;
-    if (!(client.entryDate)) isValid = false;
+    if (!client) throw { statusCode, message: "Invalid empty client" };
+    if (!(client.companyName)) throw { statusCode, message: "Invalid empty company name" };
+    if (!(client.entryDate)) throw { statusCode, message: "Invalid empty entry date" };
 
-    return isValid;
+    return client;
 }
