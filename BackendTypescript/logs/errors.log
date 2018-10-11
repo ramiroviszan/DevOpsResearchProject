@@ -1,0 +1,5 @@
+GET /users 404 144 - 2.024 ms
+POST /api/register/client 400 10 - 28.386 ms
+GET /users 404 144 - 0.322 ms
+GET /users 404 144 - 0.192 ms
+GET /api/clients 400 13 - 0.657 ms

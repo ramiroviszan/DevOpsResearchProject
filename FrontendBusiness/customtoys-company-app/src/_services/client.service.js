@@ -9,23 +9,39 @@ export const clientService = {
     getById
 };
 
-function filterClientInformation(client) {
-    const filterClient = {
-        'company_name': client.username,
-        'entry_date': client.entry_date
-    }
-    return filterClient;
-}
-
 function register(client) {
-    const clientInfo = filterClientInformation(client);
     const requestOptions = {
         method: 'POST',
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify(clientInfo)
+        body: JSON.stringify({'company_name':client.company_name, 'entry_date':client.entry_date})
     };
 
-    return fetch(`${config.apiUrl}/api/clients`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/api/clients`, requestOptions)
+    .then(handleResponse)
+    .then(id => {
+        if(id)
+        {
+            client.id = id;
+            saveUser(client);
+        }
+        else
+            return Promise.reject("Error al crear el cliente");
+    });
+}
+
+function saveUser(client)
+{
+    const requestOptions = {
+        method: 'POST',
+        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'user_name': client.username,
+            'password': client.password,
+            'id_client': client.id
+        })
+    };
+
+    return fetch(`${config.apiUrl}/api/register/client`, requestOptions).then(handleResponse)
 }
 
 function update(client) {
