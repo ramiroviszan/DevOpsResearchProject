@@ -3,93 +3,43 @@ import repository from "../data-access/repository-chooser.dataaccess";
 import { ClientDTO, clientToDTO, dtoToClient, dtoToClientArray } from "../data-access/data-transfer-objects/client.dto";
 import validClient from "../validators/client.validator";
 import validUser from "../validators/user.validator";
+import validID from "../validators/object-id.validator";
 import RejectReason from "../models/reject-reason.model";
 import User from "../models/customer-user.model";
 import { CustomerUserDTO, customerToDTO, dtoToCustomerUser } from "../data-access/data-transfer-objects/customer-user.dto";
 import { ObjectID } from "bson";
 
 export default {
-    createClient(client: Client): Promise<Client> {
-        return new Promise((resolve, reject) => {
-            if (!validClient(client)) {
-                const reason: RejectReason = {
-                    message: "Invalid client",
-                    statusCode: 400
-                }
-                reject(reason);
-            }
-            else {
-                const clientDTO: ClientDTO = clientToDTO(client);
+    async createClient(client: Client): Promise<Client> {
+        await validClient(client);
 
-                repository.clients.add(clientDTO)
-                    .then(addedClientDTO => {
-                        const addedClient: Client = dtoToClient(addedClientDTO);
-                        resolve(addedClient);
-                    })
-                    .catch(reason => {
-                        reject(reason);
-                    });
-            }
-        });
-    },
-    createClientUser(user: User): Promise<User> {
-        return new Promise((resolve, reject) => {
-            if (!validUser(user)) {
-                const reason: RejectReason = {
-                    message: "Invalid user",
-                    statusCode: 400
-                }
-                reject(reason);
-            }
-            if (!ObjectID.isValid(user.id_client)) {
-                const reason: RejectReason = {
-                    message: "Invalid client ID",
-                    statusCode: 400
-                }
-                reject(reason);
-            }
-            else {
-                repository.clients.get({ _id: new ObjectID(user.id_client) })
-                    .then(clientDTO => {
-                        const userDTO: CustomerUserDTO = customerToDTO(user);
+        const clientDTO: ClientDTO = clientToDTO(client);
+        const addedClientDTO: ClientDTO = await repository.clients.add(clientDTO);
 
-                        repository.customerUsers.add(userDTO)
-                            .then(addedUserDTO => {
-                                const addedUser: User = dtoToCustomerUser(addedUserDTO);
-                                resolve(addedUser);
-                            })
-                            .catch(reason => {
-                                reject(reason);
-                            });
-                    })
-                    .catch(reason => {
-                        reject(reason);
-                    });
-            }
-        });
+        const addedClient: Client = dtoToClient(addedClientDTO);
+        return addedClient;
     },
-    getClient(companyName: string): Promise<Client> {
-        return new Promise((resolve, reject) => {
-            repository.clients.get({ companyName })
-                .then(clientDTO => {
-                    const client: Client = dtoToClient(clientDTO);
-                    resolve(client);
-                })
-                .catch(reason => {
-                    reject(reason);
-                });
-        });
+    async createClientUser(user: User): Promise<User> {
+        await validUser(user);
+        await validID(user.id_client);
+        await repository.clients.get({ _id: new ObjectID(user.id_client) });
+
+        const userDTO: CustomerUserDTO = customerToDTO(user);
+        const addedUserDTO = await repository.customerUsers.add(userDTO);
+
+        const addedUser: User = dtoToCustomerUser(addedUserDTO);
+        return addedUser;
     },
-    getAllClients(): Promise<Client[]> {
-        return new Promise((resolve, reject) => {
-            repository.clients.getAll()
-                .then(clientDTOs => {
-                    const clients: Client[] = dtoToClientArray(clientDTOs);
-                    resolve(clients);
-                })
-                .catch(reason => {
-                    reject(reason);
-                });
-        });
+    async getClient(companyName: string): Promise<Client> {
+        const clientDTO: ClientDTO = await repository.clients.get({ companyName });
+
+        const client: Client = dtoToClient(clientDTO);
+        return client;
+    },
+    async getAllClients(): Promise<Client[]> {
+        const clientDTOs: ClientDTO[] = await repository.clients.getAll();
+
+        const clients: Client[] = dtoToClientArray(clientDTOs);
+        return clients;
     }
 }

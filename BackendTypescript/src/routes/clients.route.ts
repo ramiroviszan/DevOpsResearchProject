@@ -22,53 +22,38 @@ function extractClientUserFromRequest(request): User {
 }
 
 export default (router: Router) => {
-    router.post("/register/client", (request, response) => {
-        requireEnterpriseAuth(request)
-            .then(() => {
-                const clientUser: User = extractClientUserFromRequest(request);
+    router.post("/register/client", async (request, response) => {
+        try {
+            await requireEnterpriseAuth(request);
+            const clientUser: User = extractClientUserFromRequest(request);
+            const addedUser = await clientController.createClientUser(clientUser);
 
-                clientController.createClientUser(clientUser)
-                    .then(addedUser => {
-                        response.status(201).send(addedUser);
-                    })
-                    .catch(reason => {
-                        response.status(reason.statusCode).send(reason.message);
-                    });
-            })
-            .catch(reason => {
-                response.status(reason.statusCode).send(reason.message);
-            });
+            response.status(201).send(addedUser);
+        }
+        catch (reason) {
+            response.status(reason.statusCode).send(reason.message);
+        }
     });
-    router.post("/clients", (request, response) => {
-        requireEnterpriseAuth(request)
-            .then(() => {
-                const client: Client = extractClientFromRequest(request);
+    router.post("/clients", async (request, response) => {
+        try {
+            await requireEnterpriseAuth(request)
+            const client: Client = extractClientFromRequest(request);
 
-                clientController.createClient(client)
-                    .then(createdClient => {
-                        response.status(201).send(createdClient);
-                    })
-                    .catch(reason => {
-                        response.status(reason.statusCode).send(reason.message);
-                    });
-            })
-            .catch(reason => {
-                response.status(reason.statusCode).send(reason.message);
-            });
+            const createdClient = await clientController.createClient(client)
+            response.status(201).send(createdClient);
+        }
+        catch (reason) {
+            response.status(reason.statusCode).send(reason.message);
+        }
     });
-    router.get("/clients", (request, response) => {
-        requireEnterpriseAuth(request)
-            .then(() => {
-                clientController.getAllClients()
-                    .then(clients => {
-                        response.send(clients);
-                    })
-                    .catch(reason => {
-                        response.status(reason.statusCode).send(reason.message);
-                    });
-            })
-            .catch(reason => {
-                response.status(reason.statusCode).send(reason.message);
-            });
+    router.get("/clients", async (request, response) => {
+        try {
+            await requireEnterpriseAuth(request);
+            const clients = await clientController.getAllClients();
+            response.send(clients);
+        }
+        catch (reason) {
+            response.status(reason.statusCode).send(reason.message);
+        }
     });
 }
