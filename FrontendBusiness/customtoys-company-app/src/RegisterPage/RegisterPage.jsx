@@ -10,6 +10,7 @@ class RegisterPage extends React.Component {
 
         this.state = {
             client: {
+                id: '',
                 username: '',
                 password: '',
                 company_name: '',
