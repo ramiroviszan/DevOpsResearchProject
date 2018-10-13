@@ -5,14 +5,17 @@
     "type": "git",
     "url": "https://github.com/cornflourblue/react-redux-registration-login-example.git"
   },
+  "engines": {
+    "npm": "5.7.1",
+    "node": "9.5.0"
+  },
   "license": "MIT",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "compile": "webpack --mode production",
-    "dev": "webpack-dev-server --mode development --devtool inline-source-map --hot"
+    "compile": "webpack --mode production"
   },
   "dependencies": {
     "config": "^2.0.1",
