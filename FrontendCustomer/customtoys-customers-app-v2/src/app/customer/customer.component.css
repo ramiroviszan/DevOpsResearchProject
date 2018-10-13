@@ -1,0 +1,87 @@
+
+.container{
+    width: 320px;
+    height: 300px;
+    font-family: 'Montserrat', sans-serif;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    box-shadow: 5px 7px 7px rgba(0,0,0,0.4);
+  }
+  
+  .encabezado{
+    height: 20%;
+    padding-left: 2px;
+    padding-right: 2px;
+    background-color: #264763; 
+    text-align: center;
+    vertical-align: middle;
+    padding: 2%;
+    color: #fff;
+  }
+  
+  .encabezado h1{
+    padding: 3%;
+    font-size: 2em;
+    width: 100%;
+  }
+  
+  .formulario form{
+    margin: 0 auto;
+    padding: 2%;
+    width: 90%;
+    text-align: right;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  
+  input[type=text]{
+    border:none;
+    border-radius: 0;
+    outline: none;
+    box-shadow:none !important;
+    border-bottom: 2px solid #d2d2d2;
+  }
+  
+  input[type=password]{
+    border:none;
+    border-radius: 0;
+    outline: none;
+    box-shadow:none !important;
+    border-bottom: 2px solid #d2d2d2;
+  }
+  
+  .iniciar{
+    border:none;
+    border-radius: 0;
+    background-color: #0077f7; 
+    color:#fff;
+  }
+  
+  .search-class {
+    border: none;
+    background: #ffffff;
+  }
+  
+  .icon-search {
+    border: 0;
+    border-right: none;
+    padding-right: 0;
+  }
+  
+  .input-search {
+    border: 0;
+    border-left: none;
+  }
+  
+  .fa-user{
+    padding-top: 10px;
+    color: #d2d2d2;
+  }
+  
+  .fa-lock{
+    padding-top: 10px;
+    color: #d2d2d2;
+  }

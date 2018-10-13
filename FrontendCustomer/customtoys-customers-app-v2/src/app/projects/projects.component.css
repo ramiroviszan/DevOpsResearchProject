@@ -1,0 +1,33 @@
+.card-header{
+    background-color: #264763;
+    color: white;
+  }
+  
+  .editar{
+    color: #0077f7;
+  }
+  
+  .eliminar{
+    color: crimson;
+  }
+  
+  .admin{
+    color: darkgreen;
+  }
+  .notadmin{
+    color: crimson;
+  }
+  
+  .editar:hover{
+    cursor: pointer;
+    cursor: hand;
+  }
+  
+  .eliminar:hover{
+    cursor: pointer;
+    cursor: hand;
+  }
+
+  .show-comment{
+    cursor: pointer;
+  }

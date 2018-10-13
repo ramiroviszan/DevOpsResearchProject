@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <br><br><br>
+  <div class='card'>
+    <div class='card-header text-left'>
+      {{pageTitle}}
+    </div>
+
+    <div class='card-body'>
+      <!-- Mensaje de error -->
+      <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+
+
+      <!--Tabla de mascotas -->
+      <div class='table-responsive'>
+        <table class='table'>
+          <!--Cabezal de la tabla -->
+          <thead>
+          <tr>
+            <th>Text</th>
+          </tr>
+          </thead>
+          <!--Cuerpo de la tabla-->
+          <tbody>
+          <!-- Aca va todo el contenido de la tabla  -->
+          <tr *ngFor='let c of comments'>
+            <td>{{c.text}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <form id="editForm" method="post" accept-charset="utf-8" [formGroup]="editForm">
+    <div class="form-group">
+      <div class="input-group margin-bottom-sm search-class-width">
+        <span class="input-group-addon search-class icon-search"><i class="fa fa-lock"></i></span>
+        <input type="text" class="form-control search-class input-search" id="text" required
+               placeholder="text to add a comment..." formControlName="text">
+      </div>
+    </div>
+    <input type="button" value="Save" class="btn iniciar" (click)="save()">
+    <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+  </form>
+</div>
