@@ -1,6 +1,7 @@
 import { Router } from "express";
 import requireEnterpriseAuth from "../services/require-enterprise-auth.service";
 import clientController from "../controllers/clients.controller";
+import rutValidateController from "../controllers/rut-validate.controller";
 import Client from "../models/client.model";
 import User from "../models/customer-user.model";
 
@@ -87,8 +88,14 @@ export default (router: Router) => {
         try {
             const dataToSearch: any = extractClientDataToSearch(request);
             const clientNewData: Client = extractClientDataToUpdate(dataToSearch, request);
-            const client = await clientController.updateClient(dataToSearch, clientNewData);
-            response.send(client);
+
+            const rutIsValid: boolean = await rutValidateController.validate(clientNewData.rut, dataToSearch.token);
+            if (rutIsValid) {
+                const client = await clientController.updateClient(dataToSearch, clientNewData);
+                response.send(client);
+            } else {
+                response.status(401).send('Validation RUT API: request rejected.');
+            }
         } catch (reason) {
             response.status(reason.statusCode).send(reason.message);
         }

@@ -66,9 +66,6 @@ export default {
         await validClient(client);
 
         if (await userBelongsToCompany(dataToSearch)) {
-            console.log("ENTRO A QUE EL USUARIO PERTENECE");
-            //llamar a la API externa a ver si falida
-            //res.status(status).send('Validation RUT API: request rejected.');
             const clientDTO: ClientDTO = clientToDTO(client);
             clientDTO._id = new ObjectID(clientDTO._id);
             clientDTO.entryDate = new Date(clientDTO.entryDate);
