@@ -4,7 +4,7 @@ import api from "./api";
 import * as cors from "cors";
 
 const corsOptions: cors.CorsOptions = {
-    allowedHeaders: ["Authorization"]
+    allowedHeaders: ["Authorization", "Content-Type"]
 }
 
 class App {
