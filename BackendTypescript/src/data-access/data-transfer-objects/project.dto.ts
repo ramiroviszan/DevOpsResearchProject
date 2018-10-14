@@ -7,7 +7,7 @@ interface ProjectDTO {
     startDate: Date;
     endDate: Date;
     company: string;
-    id_client?: ObjectID;
+    clientID?: ObjectID;
 }
 
 function dtoToProject(projectDTO: ProjectDTO): Project {
@@ -15,7 +15,8 @@ function dtoToProject(projectDTO: ProjectDTO): Project {
         name: projectDTO.name,
         startDate: projectDTO.startDate,
         endDate: projectDTO.endDate,
-        company: projectDTO.company
+        company: projectDTO.company,
+        clientID: projectDTO.clientID
     }
     return project;
 }
@@ -26,7 +27,8 @@ function projectToDTO(project: Project): ProjectDTO {
         name: project.name,
         startDate: project.startDate,
         endDate: project.endDate,
-        company: project.company
+        company: project.company,
+        clientID: project.clientID
     }
     return projectDTO;
 }

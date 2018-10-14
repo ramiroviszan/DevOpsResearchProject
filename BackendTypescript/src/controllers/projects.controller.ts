@@ -21,7 +21,8 @@ export default {
             }
 
             clientsController.getClient(project.company)
-                .then(() => {
+                .then(client => {
+                    project.clientID = client._id;
                     const projectDTO: ProjectDTO = projectToDTO(project);
                     repository.projects.add(projectDTO)
                         .then(addedProjectDTO => {
@@ -52,7 +53,7 @@ export default {
                     reject(reason);
                 });
         });
-    },
+    },  
     async getProjectComments(dataToSearch: any): Promise<Comment[]> {
         let comments: Comment[] = null;
         await validID(dataToSearch.id);
