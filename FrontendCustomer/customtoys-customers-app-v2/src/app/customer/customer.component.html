@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row encabezado">
+    <h1>Edit Profile</h1>
+  </div>
+  <br>
+  <div class="row formulario">
+    <form id="editForm" method="post" accept-charset="utf-8" [formGroup]="editForm">
+      <div class="form-group">
+        <div class="input-group margin-bottom-sm search-class-width">
+          <span class="input-group-addon search-class icon-search"><i class="fa fa-user"></i></span>
+          <input type="text" class="form-control search-class input-search" id="nomUsu" required
+                 placeholder="Company name" formControlName="company_name">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group margin-bottom-sm search-class-width">
+          <span class="input-group-addon search-class icon-search"><i class="fa fa-lock"></i></span>
+          <input type="text" class="form-control search-class input-search" id="psw" required
+                 placeholder="Rut" formControlName="rut" (keypress)="numberOnly($event)">
+        </div>
+      </div>
+      <input type="button" value="Save" class="btn iniciar" (click)="save()">
+      <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+    </form>
+  </div>
+</div>

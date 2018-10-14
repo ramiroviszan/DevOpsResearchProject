@@ -8,7 +8,7 @@ export default {
     processLogin(username: string, password: string): Promise<CustomerUser> {
         var getMethod = function() {
             var promise = new Promise<CustomerUser>(function(resolve, reject) {
-                if ((!username) || (!password)) {
+                if (!username || !password) {
                     const reason: RejectReason = {
                         statusCode: 404,
                         message: "Not user or password not provided"
@@ -56,5 +56,31 @@ export default {
         return getMethod()
             .then(modifyMethod)
             .catch(() => { throw new Error() });
+    },
+    processLogout(token: string): Promise<any> {
+        return new Promise<any>(function(resolve, reject) {
+            if (!token) {
+                const reason: RejectReason = {
+                    statusCode: 400,
+                    message: "Not token provided"
+                };
+                reject(reason);
+            }
+            repository.customerUsers.clear(token)
+                .then(theUserDTO => {
+                    if (theUserDTO != null) {
+                        resolve();
+                    } else {
+                        const reason: RejectReason = {
+                            statusCode: 404,
+                            message: "Resource not found"
+                        };
+                        reject(reason);
+                    }
+                })
+                .catch(reason => {
+                    reject(reason);
+                });
+        });
     }
 };

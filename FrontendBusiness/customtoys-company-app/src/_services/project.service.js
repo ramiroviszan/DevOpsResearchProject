@@ -1,6 +1,7 @@
 //import config from 'config';
 import config from '../config'
 import { authHeader } from '../_helpers';
+import { parseBackendError } from '../_helpers'
 
 export const projectService = {
     register,
@@ -8,12 +9,12 @@ export const projectService = {
     getClientProjects
 };
 
-function filterProjectInformation(project){
+function filterProjectInformation(project) {
     const projecetFiltered = {
         'name': project.name,
-        'start_date': project.start_date,
-        'end_date': project.end_date,
-        'company': 'COMPANY'
+        'start-date': project.start_date,
+        'end-date': project.end_date,
+        'company': project.company_name
     }
     return projecetFiltered;
 }
@@ -25,7 +26,6 @@ function register(project) {
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(projectInfo)
     };
-
     return fetch(`${config.apiUrl}/api/projects`, requestOptions).then(handleResponse);
 }
 
@@ -50,24 +50,30 @@ function getClientProjects(idClient) {
 
 function logout() {
     // remove user from local storage to log user out
-    
+
     localStorage.removeItem('user');
 }
 
 function handleResponse(response) {
     return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                logout();
-                window.location.reload(true);
+        try {
+            const data = text && JSON.parse(text);
+            if (!response.ok) {
+                if (response.status === 401) {
+                    // auto logout if 401 response returned from api
+                    logout();
+                    window.location.reload(true);
+                }
+
+                const error = (data && data.message) || response.statusText;
+                return Promise.reject(error);
             }
 
-            const error = (data && data.message) || response.statusText;
+            return data;
+        }
+        catch (e) {
+            const error = parseBackendError(text);
             return Promise.reject(error);
         }
-
-        return data;
     });
 }

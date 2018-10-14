@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row encabezado">
+    <h1>CustomToys</h1>
+  </div>
+  <br>
+  <div class="row formulario">
+    <form id="formLogin" method="post" accept-charset="utf-8" (keydown)="keyDownFunction($event)" [formGroup]="loginForm" [ngClass]="{'was-validated':loginForm.controls.username.dirty && loginForm.controls.password.dirty}">
+      <div class="form-group">
+        <div class="input-group margin-bottom-sm search-class-width">
+          <span class="input-group-addon search-class icon-search"><i class="fa fa-user"></i></span>
+          <input type="text" class="form-control search-class input-search" id="nomUsu" required
+                 placeholder="Username" formControlName="username">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group margin-bottom-sm search-class-width">
+          <span class="input-group-addon search-class icon-search"><i class="fa fa-lock"></i></span>
+          <input type="password" class="form-control search-class input-search" id="psw" required
+                 placeholder="Password" formControlName="password">
+        </div>
+      </div>
+      <input type="button" value="Login" class="btn iniciar" (click)="login()">
+      <ngb-alert *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
+    </form>
+  </div>
+</div>
