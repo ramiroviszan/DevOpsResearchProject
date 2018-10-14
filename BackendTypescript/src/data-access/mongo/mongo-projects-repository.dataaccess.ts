@@ -88,6 +88,31 @@ const mongoProjectsRepo: ProjectsRepository = {
                     reject(reason);
                 });
         });
+    },
+    getComments(filter: any): Promise<Comment[]> {
+        return new Promise((resolve, reject) => {
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.COMMENTS_COLLECTION).find(filter).toArray()
+                        .then(findResult => {
+                            resolve(findResult);
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
+        });
     }
 };
 

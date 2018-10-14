@@ -3,6 +3,14 @@ import requireEnterpriseAuth from "../services/require-enterprise-auth.service";
 import Project from "../models/project.model";
 import projectsController from "../controllers/projects.controller";
 
+function extractProjectDataToSearch(request): any {
+    const dataToSearch: any = {
+        id: request.params.id,
+        token: request.headers.authorization
+    };
+    return dataToSearch;
+}
+
 export default (router: Router) => {
     router.post("/projects", (request: Request, response: Response) => {
         requireEnterpriseAuth(request)
@@ -39,5 +47,14 @@ export default (router: Router) => {
             .catch(reason => {
                 response.status(reason.statusCode).send(reason.message);
             });
+    });
+    router.get('/projects/:id/comments', async (request, response) => {
+        try {
+            const dataToSearch: any = extractProjectDataToSearch(request);
+            const comments: Comment[] = await projectsController.getProjectComments(dataToSearch);
+            response.send(comments);
+        } catch (reason) {
+            response.status(reason.statusCode).send(reason.message);
+        }
     });
 };
