@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { projectActions } from '../_actions';
+import { clientActions, projectActions } from '../_actions';
 
 class CreateProjectPage extends React.Component {
     constructor(props) {
@@ -11,7 +11,6 @@ class CreateProjectPage extends React.Component {
 
         this.state = {
             project: {
-                _id: '',
                 name: '',
                 start_date: '',
                 end_date: '',
@@ -25,19 +24,40 @@ class CreateProjectPage extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount() {
+        this.props.dispatch(clientActions.getAll());
+    }
+
     /*handleDeleteUser(id) {
         return (e) => this.props.dispatch(clientActions.delete(id));
     }*/
 
-    handleChange(event) {
-        const { name, value } = event.target;
+    handleClient(selectedOption) {
         const { project } = this.state;
-        this.setState({
-            project: {
-                ...project,
-                [name]: value
-            }
-        });
+        if (selectedOption) {
+            this.setState({
+                selectedOption,
+                project: {
+                    ...project,
+                    company_name: selectedOption.value
+                }
+            });
+        }
+    }
+
+    handleChange(event) {
+        if (event.target) {
+            const { name, value } = event.target;
+            const { project } = this.state;
+            this.setState({
+                project: {
+                    ...project,
+                    [name]: value
+                }
+            });
+        }
+        else
+            this.handleClient(event);
     }
 
     fieldsCompleted() {
@@ -64,8 +84,17 @@ class CreateProjectPage extends React.Component {
     }
 
     render() {
-        const { registering } = this.props;
+        const { registering, clients } = this.props;
         const { project, submitted, selectedOption } = this.state;
+        const optionItems = [];
+
+        if (clients && clients.items) {
+            clients.items.map((client, index) =>
+                optionItems.push({
+                    value: client.companyName, label: client.companyName
+                })
+            );
+        }
 
         return (
             <div className="col-md-6 col-md-offset-3">
@@ -93,10 +122,16 @@ class CreateProjectPage extends React.Component {
                         }
                     </div>
                     <div className={'form-group' + (submitted && !project.company_name ? ' has-error' : '')}>
-                        <label htmlFor="company_name">Empresa asignada: </label>
-                        <input type="text" className="form-control" name="company_name" value={project.company_name} onChange={this.handleChange} />
+                        <label htmlFor="company_name">Seleccione una empresa cliente</label>
+                        <Select
+                            placeholder="Seleccione una empresa cliente"
+                            value={selectedOption}
+                            onChange={this.handleChange}
+                            options={optionItems}
+                            noOptionsMessage={() => "No hay clientes registrados"}
+                        />
                         {submitted && !project.company_name &&
-                            <div className="help-block">Debe ingresar una empresa</div>
+                            <div className="help-block">Debe seleccionar una empresa cliente</div>
                         }
                     </div>
                     <div className="form-group">
