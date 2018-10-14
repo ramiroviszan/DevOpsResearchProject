@@ -6,8 +6,10 @@ import validUser from "../validators/user.validator";
 import validID from "../validators/object-id.validator";
 import RejectReason from "../models/reject-reason.model";
 import User from "../models/customer-user.model";
+import Project from "../models/project.model";
 import { CustomerUserDTO, customerToDTO, dtoToCustomerUser } from "../data-access/data-transfer-objects/customer-user.dto";
 import { ObjectID } from "bson";
+import { ProjectDTO, dtoToProjectArray } from "../data-access/data-transfer-objects/project.dto";
 
 export default {
     async createClient(client: Client): Promise<Client> {
@@ -78,6 +80,23 @@ export default {
             throw (reason);
         }
         return clientUpdated;
+    },
+    async getClientProjects(dataToSearch: any): Promise<Project[]> {
+        let projects: Project[] = null;
+        await validID(dataToSearch.id);
+        await validID(dataToSearch.token);
+
+        if (await userBelongsToCompany(dataToSearch)) {
+            const query = { 'id_client': new ObjectID(dataToSearch.id) };
+            const projectDTOs: ProjectDTO[] = await repository.projects.get(query);
+            projects = dtoToProjectArray(projectDTOs);
+        }
+
+        if (projects == null) {
+            const reason: RejectReason = { message: "Client not found.", statusCode: 404 };
+            throw (reason);
+        }
+        return projects;
     }
 }
 

@@ -38,3 +38,5 @@ PUT /api/clients/5b9d1e46fb6fc00e4d765711 200 132 - 2526.745 ms
 PUT /api/clients/5b9d1e46fb6fc00e4d765711 200 133 - 2816.176 ms
 PUT /api/clients/5b9d1e46fb6fc00e4d765711 200 134 - 8157.329 ms
 PUT /api/clients/5b9d1e46fb6fc00e4d765711 401 37 - 2834.166 ms
+GET /api/clients/5b9d1e46fb6fc00e4d765711/projects 200 2 - 8323.547 ms
+GET /api/clients/5b9d1e46fb6fc00e4d765711/projects 200 253 - 2528.475 ms

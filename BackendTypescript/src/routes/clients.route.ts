@@ -4,6 +4,8 @@ import clientController from "../controllers/clients.controller";
 import rutValidateController from "../controllers/rut-validate.controller";
 import Client from "../models/client.model";
 import User from "../models/customer-user.model";
+import Project from "../models/project.model";
+import { ProjectDTO, dtoToProjectArray } from "../data-access/data-transfer-objects/project.dto";
 
 function extractClientFromRequest(request): Client {
     const client: Client = {
@@ -96,6 +98,15 @@ export default (router: Router) => {
             } else {
                 response.status(401).send('Validation RUT API: request rejected.');
             }
+        } catch (reason) {
+            response.status(reason.statusCode).send(reason.message);
+        }
+    });
+    router.get('/clients/:id/projects', async (request, response) => {
+        try {
+            const dataToSearch: any = extractClientDataToSearch(request);
+            const projects: Project[] = await clientController.getClientProjects(dataToSearch);
+            response.send(projects);
         } catch (reason) {
             response.status(reason.statusCode).send(reason.message);
         }
