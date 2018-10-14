@@ -15,7 +15,8 @@ export default {
                     };
                     reject(reason);
                 }
-                repository.customerUsers.get(username, password)
+                const query = { 'username': username, 'password': password };
+                repository.customerUsers.get(query)
                     .then(theUserDTO => {
                         console.log("[CONTROLLER] Then Get");
                         console.log("[CONTROLLER] " + theUserDTO);

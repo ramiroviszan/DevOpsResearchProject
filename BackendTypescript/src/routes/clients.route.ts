@@ -21,6 +21,14 @@ function extractClientUserFromRequest(request): User {
     return user;
 }
 
+function extractClientDataToSearch(request): any {
+    const dataToSearch: any = {
+        id: request.params.id,
+        token: request.headers.authorization
+    };
+    return dataToSearch;
+}
+
 export default (router: Router) => {
     router.post("/register/client", async (request, response) => {
         try {
@@ -53,6 +61,15 @@ export default (router: Router) => {
             response.send(clients);
         }
         catch (reason) {
+            response.status(reason.statusCode).send(reason.message);
+        }
+    });
+    router.get('/clients/:id', async (request, response) => {
+        try {
+            const dataToSearch: any = extractClientDataToSearch(request);
+            const client = await clientController.getClientById(dataToSearch);
+            response.send(client);
+        } catch (reason) {
             response.status(reason.statusCode).send(reason.message);
         }
     });

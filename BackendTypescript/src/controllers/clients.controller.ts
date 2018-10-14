@@ -41,5 +41,32 @@ export default {
 
         const clients: Client[] = dtoToClientArray(clientDTOs);
         return clients;
+    },
+    async getClientById(dataToSearch: any): Promise<Client> {
+        let client: Client = null;
+        await validID(dataToSearch.id);
+        await validID(dataToSearch.token);
+
+        if (await userBelongsToCompany(dataToSearch)) {
+            const queryClient = { '_id': new ObjectID(dataToSearch.id) };
+            const clientDTO: ClientDTO = await repository.clients.get(queryClient);
+            client = dtoToClient(clientDTO);
+        }
+
+        if (client == null) {
+            const reason: RejectReason = { message: "Client not found.", statusCode: 404 };
+            throw (reason);
+        }
+        return client;
     }
+}
+
+async function userBelongsToCompany(dataToSearch: any): Promise<boolean> {
+    const queryUser = { 'token': new ObjectID(dataToSearch.token) };
+    const userDTO: CustomerUserDTO = await repository.customerUsers.get(queryUser);
+
+    if (userDTO != null && userDTO.id_client == dataToSearch.id) {
+        return true;
+    }
+    return false;
 }

@@ -34,12 +34,11 @@ const mongoClientsRepo: CustomerUsersRepository = {
                 });
         });
     },
-    get(username: string, password: string): Promise<User> {
+    get(filter: any): Promise<User> {
         return new Promise((resolve, reject) => {
-            const query = { 'username': username, 'password': password };
             mongoClient.connect()
                 .then(mongoClient => {
-                    mongoClient.db().collection(mongoConfig.USERS_COLLECTION).findOne(query)
+                    mongoClient.db().collection(mongoConfig.USERS_COLLECTION).findOne(filter)
                         .then(findResult => {
                             console.log("[MONGO] Then Get");
                             resolve(findResult);
