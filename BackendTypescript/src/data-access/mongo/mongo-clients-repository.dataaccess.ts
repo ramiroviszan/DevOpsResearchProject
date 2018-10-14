@@ -33,8 +33,40 @@ const mongoClientsRepo: ClientsRepository = {
                 });
         });
     },
-    modify(client: ClientDTO): Promise<ClientDTO> {
-        throw new Error();
+    modify(client: ClientDTO): Promise<any> {
+        return new Promise((resolve, reject) => {
+            let query = { _id: client._id };
+            let newValues = {
+                $set: {
+                    _id: client._id,
+                    companyName: client.companyName,
+                    entryDate: client.entryDate,
+                    rut: client.rut
+                }
+            };
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.CLIENTS_COLLECTION).findOneAndUpdate(query, newValues, { returnOriginal: false })
+                        .then(updatedClient => {
+                            resolve(updatedClient.value);
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
+        });
+
     },
     remove(client: ClientDTO): Promise<any> {
         throw new Error();

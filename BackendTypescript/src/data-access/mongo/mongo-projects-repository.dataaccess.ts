@@ -63,6 +63,81 @@ const mongoProjectsRepo: ProjectsRepository = {
                     reject(reason);
                 });
         });
+    },
+    get(filter: any): Promise<ProjectDTO[]> {
+        return new Promise((resolve, reject) => {
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.PROJECTS_COLLECTION).find(filter).toArray()
+                        .then(findResult => {
+                            resolve(findResult);
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
+        });
+    },
+    getComments(filter: any): Promise<Comment[]> {
+        return new Promise((resolve, reject) => {
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.COMMENTS_COLLECTION).find(filter).toArray()
+                        .then(findResult => {
+                            resolve(findResult);
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
+        });
+    },
+    addComment(comment: Comment): Promise<Comment> {
+        return new Promise((resolve, reject) => {
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.COMMENTS_COLLECTION).insertOne(comment)
+                        .then(writeResult => {
+                            resolve(writeResult.ops[0]);
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
+        });
     }
 };
 
