@@ -1,6 +1,6 @@
 import React from 'react';
-import './function.js';
 import { Link } from 'react-router-dom';
+import './styles.css';
 var $ = require('jquery')
 
 export class HomeHTML extends React.Component {
@@ -36,13 +36,13 @@ export class HomeHTML extends React.Component {
                     <li className='has-sub'><a href='#top'>Clientes</a>
                         <ul>
                             <li><Link to="/register">Crear Cliente</Link></li>
-                            <li><Link to="/">Mostrar Clientes</Link></li>
+                            {/*<li><Link to="/">Mostrar Clientes</Link></li>*/}
                         </ul>
                     </li>
                     <li className='has-sub'><a href='#top'>Proyectos</a>
                         <ul>
                             <li><Link to="/createProject">Crear Proyecto</Link></li>
-                            <li><Link to="/">Mostrar Proyectos</Link></li>
+                            {/*<li><Link to="/">Mostrar Proyectos</Link></li>*/}
                         </ul>
                     </li>
                     <li className='logout'><Link to="/login">Cerrar Sesión</Link></li>

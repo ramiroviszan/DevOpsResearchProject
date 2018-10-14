@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { userActions } from '../_actions';
 
-import './styles.css';
-import { HomeHTML } from './HomeHTML';
+import { HomeHTML } from './HomePageTemplate/HomeHTML.jsx';
 
 class HomePage extends React.Component {
-    componentDidMount() {
+    constructor(props){
+        super(props);
         this.props.dispatch(userActions.getAll());
     }
 
