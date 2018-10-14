@@ -1,8 +1,11 @@
 import { Router } from "express";
 import requireEnterpriseAuth from "../services/require-enterprise-auth.service";
 import clientController from "../controllers/clients.controller";
+import rutValidateController from "../controllers/rut-validate.controller";
 import Client from "../models/client.model";
 import User from "../models/customer-user.model";
+import Project from "../models/project.model";
+import { ProjectDTO, dtoToProjectArray } from "../data-access/data-transfer-objects/project.dto";
 
 function extractClientFromRequest(request): Client {
     const client: Client = {
@@ -19,6 +22,24 @@ function extractClientUserFromRequest(request): User {
         password: request.body["password"]
     }
     return user;
+}
+
+function extractClientDataToSearch(request): any {
+    const dataToSearch: any = {
+        id: request.params.id,
+        token: request.headers.authorization
+    };
+    return dataToSearch;
+}
+
+function extractClientDataToUpdate(dataToSearch, request): Client {
+    const clientNewData: Client = {
+        _id: dataToSearch.id,
+        companyName: request.body.company_name,
+        rut: request.body.rut,
+        entryDate: request.body.entry_date
+    };
+    return clientNewData;
 }
 
 export default (router: Router) => {
@@ -53,6 +74,40 @@ export default (router: Router) => {
             response.send(clients);
         }
         catch (reason) {
+            response.status(reason.statusCode).send(reason.message);
+        }
+    });
+    router.get('/clients/:id', async (request, response) => {
+        try {
+            const dataToSearch: any = extractClientDataToSearch(request);
+            const client = await clientController.getClientById(dataToSearch);
+            response.send(client);
+        } catch (reason) {
+            response.status(reason.statusCode).send(reason.message);
+        }
+    });
+    router.put('/clients/:id', async (request, response) => {
+        try {
+            const dataToSearch: any = extractClientDataToSearch(request);
+            const clientNewData: Client = extractClientDataToUpdate(dataToSearch, request);
+
+            const rutIsValid: boolean = await rutValidateController.validate(clientNewData.rut, dataToSearch.token);
+            if (rutIsValid) {
+                const client = await clientController.updateClient(dataToSearch, clientNewData);
+                response.send(client);
+            } else {
+                response.status(401).send('Validation RUT API: request rejected.');
+            }
+        } catch (reason) {
+            response.status(reason.statusCode).send(reason.message);
+        }
+    });
+    router.get('/clients/:id/projects', async (request, response) => {
+        try {
+            const dataToSearch: any = extractClientDataToSearch(request);
+            const projects: Project[] = await clientController.getClientProjects(dataToSearch);
+            response.send(projects);
+        } catch (reason) {
             response.status(reason.statusCode).send(reason.message);
         }
     });
