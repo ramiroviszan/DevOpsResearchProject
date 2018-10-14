@@ -2,6 +2,7 @@ import Project from "../models/project.model";
 import RejectReason from "../models/reject-reason.model";
 import { ProjectDTO, projectToDTO, dtoToProject, dtoToProjectArray } from "../data-access/data-transfer-objects/project.dto";
 import User from "../models/customer-user.model";
+import Comment from "../models/comment.model";
 import repository from "../data-access/repository-chooser.dataaccess";
 import validProject from "../validators/project.validator";
 import clientsController from "./clients.controller";
@@ -67,6 +68,21 @@ export default {
             throw (reason);
         }
         return comments;
+    },
+    async createProjectComment(dataToSearch: any, newComment: any): Promise<Comment> {
+        let comment: Comment = null;
+        await validID(dataToSearch.id);
+        await validID(dataToSearch.token);
+
+        if (await userAndProjectBelongsToCompany(dataToSearch)) {
+            comment = await repository.projects.addComment(newComment);
+        }
+        if (comment == null) {
+            const reason: RejectReason = { message: "Project not found.", statusCode: 404 };
+            throw (reason);
+        }
+
+        return comment;
     }
 }
 

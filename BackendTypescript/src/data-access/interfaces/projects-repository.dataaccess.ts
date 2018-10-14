@@ -7,4 +7,5 @@ export default interface ProjectsRepository {
     getAll(): Promise<ProjectDTO[]>;
     get(filter: any): Promise<ProjectDTO[]>;
     getComments(filter: any): Promise<Comment[]>;
+    addComment(comment: Comment): Promise<Comment>;
 }

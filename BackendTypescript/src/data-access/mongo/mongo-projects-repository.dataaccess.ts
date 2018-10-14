@@ -113,6 +113,31 @@ const mongoProjectsRepo: ProjectsRepository = {
                     reject(reason);
                 });
         });
+    },
+    addComment(comment: Comment): Promise<Comment> {
+        return new Promise((resolve, reject) => {
+            mongoClient.connect()
+                .then(mongoClient => {
+                    mongoClient.db().collection(mongoConfig.COMMENTS_COLLECTION).insertOne(comment)
+                        .then(writeResult => {
+                            resolve(writeResult.ops[0]);
+                        })
+                        .catch(({ errmsg }) => {
+                            const reason: RejectReason = {
+                                statusCode: 400,
+                                message: errmsg
+                            };
+                            reject(reason);
+                        });
+                })
+                .catch(({ errmsg }) => {
+                    const reason: RejectReason = {
+                        statusCode: 400,
+                        message: errmsg
+                    };
+                    reject(reason);
+                });
+        });
     }
 };
 
