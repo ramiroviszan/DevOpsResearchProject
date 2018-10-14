@@ -29,6 +29,16 @@ function extractClientDataToSearch(request): any {
     return dataToSearch;
 }
 
+function extractClientDataToUpdate(dataToSearch, request): Client {
+    const clientNewData: Client = {
+        _id: dataToSearch.id,
+        companyName: request.body.company_name,
+        rut: request.body.rut,
+        entryDate: request.body.entry_date
+    };
+    return clientNewData;
+}
+
 export default (router: Router) => {
     router.post("/register/client", async (request, response) => {
         try {
@@ -68,6 +78,16 @@ export default (router: Router) => {
         try {
             const dataToSearch: any = extractClientDataToSearch(request);
             const client = await clientController.getClientById(dataToSearch);
+            response.send(client);
+        } catch (reason) {
+            response.status(reason.statusCode).send(reason.message);
+        }
+    });
+    router.put('/clients/:id', async (request, response) => {
+        try {
+            const dataToSearch: any = extractClientDataToSearch(request);
+            const clientNewData: Client = extractClientDataToUpdate(dataToSearch, request);
+            const client = await clientController.updateClient(dataToSearch, clientNewData);
             response.send(client);
         } catch (reason) {
             response.status(reason.statusCode).send(reason.message);

@@ -10,3 +10,6 @@ GET /api/clients/5b9d1e46fb6fc00e4d765710 404 17 - 1096.296 ms
 GET /api/clients/5b9d1e46fb6fc00e4d765711 404 17 - 1097.309 ms
 GET /api/clients/5b9d1e46fb6fc00e4d765710 404 17 - 1061.822 ms
 GET /api/clients/5b9d1e46fb6fc00e4d765711 404 17 - 1186.197 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 - - - 8622.695 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 - - - 2597.985 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 - - - 2533.392 ms

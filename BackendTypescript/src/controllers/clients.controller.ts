@@ -58,6 +58,29 @@ export default {
             throw (reason);
         }
         return client;
+    },
+    async updateClient(dataToSearch: any, client: Client): Promise<Client> {
+        let clientUpdated: Client = null;
+        await validID(dataToSearch.id);
+        await validID(dataToSearch.token);
+        await validClient(client);
+
+        if (await userBelongsToCompany(dataToSearch)) {
+            console.log("ENTRO A QUE EL USUARIO PERTENECE");
+            //llamar a la API externa a ver si falida
+            //res.status(status).send('Validation RUT API: request rejected.');
+            const clientDTO: ClientDTO = clientToDTO(client);
+            clientDTO._id = new ObjectID(clientDTO._id);
+            clientDTO.entryDate = new Date(clientDTO.entryDate);
+            const clientDTOUpdated: ClientDTO = await repository.clients.modify(clientDTO);
+            clientUpdated = dtoToClient(clientDTOUpdated);
+        }
+
+        if (clientUpdated == null) {
+            const reason: RejectReason = { message: "Client not found.", statusCode: 404 };
+            throw (reason);
+        }
+        return clientUpdated;
     }
 }
 

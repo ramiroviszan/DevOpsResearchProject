@@ -31,3 +31,8 @@ GET /api/clients/5b9d1e46fb6fc00e4d765710 404 17 - 1061.822 ms
 GET /api/clients/5b9d1e46fb6fc00e4d765711 200 126 - 2486.638 ms
 GET /api/clients/5b9d1e46fb6fc00e4d765711 404 17 - 1186.197 ms
 GET /api/clients/5b9d1e46fb6fc00e4d765711 200 126 - 2249.043 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 - - - 8622.695 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 - - - 2597.985 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 - - - 2533.392 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 200 132 - 2526.745 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 200 133 - 2816.176 ms
