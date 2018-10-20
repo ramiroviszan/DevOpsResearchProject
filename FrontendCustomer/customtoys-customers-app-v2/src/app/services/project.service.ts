@@ -68,7 +68,7 @@ export class ProjectService {
     
     return this.httpClient.get<Array<Comment>>(url,  {headers: myHeaders, observe: 'response'})
       .pipe(
-         tap(data => console.log('Los datos que obtuvimos fueron: ' + JSON.stringify(data)))
+         tap(data => console.log('Los datos de los comentarios fueron que obtuvimos fueron: ' + JSON.stringify(data)))
       );
   }
 

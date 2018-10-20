@@ -6,6 +6,7 @@ import {ProjectService} from "../services/project.service";
 import {Project} from "../classes/project";
 import {StorageService} from "../services/storage.service";
 import {Router} from "@angular/router";
+import {Apiconfig} from "../classes/apiconfig";
 
 @Component({
   selector: 'app-projects',
@@ -13,14 +14,13 @@ import {Router} from "@angular/router";
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
-  
   pageTitle = 'Projects';
   projects: Array<Project>;
 
   private _subjectError = new Subject<string>();
   errorMessage: string;
 
-  constructor(private router: Router, private projectsService : ProjectService, private storageService: StorageService) { }
+  constructor(private router: Router, private projectsService: ProjectService, private storageService: StorageService) { }
 
   ngOnInit() {
     this._subjectError.subscribe((message) => this.errorMessage = message);
@@ -28,19 +28,20 @@ export class ProjectsComponent implements OnInit {
       debounceTime(3000)
     ).subscribe(() => this.errorMessage = null);
 
-    if(this.storageService.getCurrentClient())
+    if (this.storageService.getCurrentClient()) {
       this.getProjects();
+    }
   }
 
-  getProjects(){
+  getProjects() {
     this.projectsService.getProjectsOfClient().subscribe(
-      ((data : HttpResponse<Array<Project>>) => this.result(data)),
+      ((data: HttpResponse<Array<Project>>) => this.result(data)),
       ((error: HttpErrorResponse) => { console.error(error);this.handleError(error)})
     );
   }
 
   showComments(id_project){
-    this.router.navigateByUrl(`/projects/${id_project}/comments`);
+    this.router.navigateByUrl(Apiconfig.getApiStartUri() + `/projects/${id_project}/comments`);
   }
 
   private result(data: HttpResponse<Array<Project>>): void {
@@ -48,13 +49,13 @@ export class ProjectsComponent implements OnInit {
   }
 
   private handleError(error: HttpErrorResponse) {
-    if(error.status==401){
+    if (error.status === 401) {
       this._subjectError.next(this.errorMessage='Usuario no autorizado');
-    }else{
-      if(error.error.Message!=null){
-        this._subjectError.next(this.errorMessage=error.error.Message);
-      }else {
-        this._subjectError.next(this.errorMessage='Se ha producido un error');
+    } else {
+      if (error.error.Message != null) {
+        this._subjectError.next(this.errorMessage = error.error.Message);
+      } else {
+        this._subjectError.next(this.errorMessage = 'Se ha producido un error');
       }
     }
   }

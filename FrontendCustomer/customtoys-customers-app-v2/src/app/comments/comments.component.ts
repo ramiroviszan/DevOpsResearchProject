@@ -39,20 +39,12 @@ export class CommentsComponent implements OnInit {
       this._subjectError.next(this.errorMessage='Se necesita un ID de proyecto');
     }
     else{
-      //this.getProject();
       this.getComments();
     }
 
     this.editForm = this.formBuilder.group({
       text: ['', Validators.required]
     });
-  }
-
-  private getProject(){
-    this.projectsService.getProject(this.id_project).subscribe(
-      ((data : HttpResponse<Project>) => this.resultProject(data)),
-      ((error: HttpErrorResponse) => { console.error(error);this.handleError(error)})
-    );
   }
 
   private getComments(){
