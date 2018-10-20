@@ -768,7 +768,8 @@ var ProjectsComponent = /** @class */ (function () {
         this.projectsService.getProjectsOfClient().subscribe((function (data) { return _this.result(data); }), (function (error) { console.error(error); _this.handleError(error); }));
     };
     ProjectsComponent.prototype.showComments = function (id_project) {
-        this.router.navigateByUrl(apiconfig_1.Apiconfig.getApiStartUri() + ("/projects/" + id_project + "/comments"));
+        console.log(apiconfig_1.Apiconfig.getApiStartUri() + 'projects/' + id_project + '/comments');
+        this.router.navigateByUrl(apiconfig_1.Apiconfig.getApiStartUri() + 'projects/' + id_project + '/comments');
     };
     ProjectsComponent.prototype.result = function (data) {
         this.projects = data.body;

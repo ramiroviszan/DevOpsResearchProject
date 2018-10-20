@@ -41,7 +41,8 @@ export class ProjectsComponent implements OnInit {
   }
 
   showComments(id_project){
-    this.router.navigateByUrl(Apiconfig.getApiStartUri() + `/projects/${id_project}/comments`);
+    console.log(Apiconfig.getApiStartUri() + 'projects/' + id_project + '/comments');
+    this.router.navigateByUrl(Apiconfig.getApiStartUri() + 'projects/' + id_project + '/comments');
   }
 
   private result(data: HttpResponse<Array<Project>>): void {
