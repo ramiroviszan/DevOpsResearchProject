@@ -29,11 +29,11 @@ export class CustomerComponent implements OnInit {
       debounceTime(3000)
     ).subscribe(() => this.errorMessage = null);
 
-    let company_name = this.storageService.getCurrentClient() ? this.storageService.getCurrentClient().company_name : '';
+    let companyName = this.storageService.getCurrentClient() ? this.storageService.getCurrentClient().companyName : '';
     let rut = this.storageService.getCurrentClient() ? this.storageService.getCurrentClient().rut : '';
 
     this.editForm = this.formBuilder.group({
-      company_name: [{value: company_name, disabled: true} ],
+      companyName: [{value: companyName, disabled: true} ],
       rut: [rut, Validators.required]
     })
   }

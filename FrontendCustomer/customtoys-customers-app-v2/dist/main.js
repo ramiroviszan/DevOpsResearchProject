@@ -392,7 +392,7 @@ module.exports = "\n.container{\n    width: 320px;\n    height: 300px;\n    font
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-navbar></app-navbar>\n<div class=\"container\">\n  <div class=\"row encabezado\">\n    <h1>Edit Profile</h1>\n  </div>\n  <br>\n  <div class=\"row formulario\">\n    <form id=\"editForm\" method=\"post\" accept-charset=\"utf-8\" [formGroup]=\"editForm\">\n      <div class=\"form-group\">\n        <div class=\"input-group margin-bottom-sm search-class-width\">\n          <span class=\"input-group-addon search-class icon-search\"><i class=\"fa fa-user\"></i></span>\n          <input type=\"text\" class=\"form-control search-class input-search\" id=\"nomUsu\" required\n                 placeholder=\"Company name\" formControlName=\"company_name\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"input-group margin-bottom-sm search-class-width\">\n          <span class=\"input-group-addon search-class icon-search\"><i class=\"fa fa-lock\"></i></span>\n          <input type=\"text\" class=\"form-control search-class input-search\" id=\"psw\" required\n                 placeholder=\"Rut\" formControlName=\"rut\" (keypress)=\"numberOnly($event)\">\n        </div>\n      </div>\n      <input type=\"button\" value=\"Save\" class=\"btn iniciar\" (click)=\"save()\">\n      <ngb-alert *ngIf=\"errorMessage\" type=\"danger\" (close)=\"errorMessage = null\">{{ errorMessage }}</ngb-alert>\n    </form>\n  </div>\n</div>\n"
+module.exports = "<app-navbar></app-navbar>\n<div class=\"container\">\n  <div class=\"row encabezado\">\n    <h1>Edit Profile</h1>\n  </div>\n  <br>\n  <div class=\"row formulario\">\n    <form id=\"editForm\" method=\"post\" accept-charset=\"utf-8\" [formGroup]=\"editForm\">\n      <div class=\"form-group\">\n        <div class=\"input-group margin-bottom-sm search-class-width\">\n          <span class=\"input-group-addon search-class icon-search\"><i class=\"fa fa-user\"></i></span>\n          <input type=\"text\" class=\"form-control search-class input-search\" id=\"nomUsu\" required\n                 placeholder=\"Company name\" formControlName=\"companyName\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"input-group margin-bottom-sm search-class-width\">\n          <span class=\"input-group-addon search-class icon-search\"><i class=\"fa fa-lock\"></i></span>\n          <input type=\"text\" class=\"form-control search-class input-search\" id=\"psw\" required\n                 placeholder=\"Rut\" formControlName=\"rut\" (keypress)=\"numberOnly($event)\">\n        </div>\n      </div>\n      <input type=\"button\" value=\"Save\" class=\"btn iniciar\" (click)=\"save()\">\n      <ngb-alert *ngIf=\"errorMessage\" type=\"danger\" (close)=\"errorMessage = null\">{{ errorMessage }}</ngb-alert>\n    </form>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -434,10 +434,10 @@ var CustomerComponent = /** @class */ (function () {
         var _this = this;
         this._subject.subscribe(function (message) { return _this.errorMessage = message; });
         this._subject.pipe(operators_1.debounceTime(3000)).subscribe(function () { return _this.errorMessage = null; });
-        var company_name = this.storageService.getCurrentClient() ? this.storageService.getCurrentClient().company_name : '';
+        var companyName = this.storageService.getCurrentClient() ? this.storageService.getCurrentClient().companyName : '';
         var rut = this.storageService.getCurrentClient() ? this.storageService.getCurrentClient().rut : '';
         this.editForm = this.formBuilder.group({
-            company_name: [{ value: company_name, disabled: true }],
+            companyName: [{ value: companyName, disabled: true }],
             rut: [rut, forms_1.Validators.required]
         });
     };
