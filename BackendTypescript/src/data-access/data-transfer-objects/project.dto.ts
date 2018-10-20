@@ -2,7 +2,7 @@ import { ObjectID } from "bson";
 import Project from "../../models/project.model";
 
 interface ProjectDTO {
-    _id: ObjectID;
+    _id?: ObjectID;
     name: string;
     startDate: Date;
     endDate: Date;
@@ -12,6 +12,7 @@ interface ProjectDTO {
 
 function dtoToProject(projectDTO: ProjectDTO): Project {
     const project: Project = {
+        _id: projectDTO._id,
         name: projectDTO.name,
         startDate: projectDTO.startDate,
         endDate: projectDTO.endDate,
