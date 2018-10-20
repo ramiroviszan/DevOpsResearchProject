@@ -16,12 +16,12 @@ console.log("Ruta al frontend company");
 console.log(path.join(__dirname, fronend_company));
 console.log("--------------------------------------------------------------");
 
-app.use('/front/*',express.static(path.join(__dirname, fronend_customers)));
-app.use('/front',express.static(path.join(__dirname, fronend_customers)));
-app.use('/',express.static(path.join(__dirname, fronend_customers)));
+app.use('/front/*', express.static(path.join(__dirname, fronend_customers)));
+app.use('/front', express.static(path.join(__dirname, fronend_customers)));
+app.use('/', express.static(path.join(__dirname, fronend_customers)));
 
-app.use('/company/*',express.static(path.join(__dirname, fronend_company)));
-app.use('/company',express.static(path.join(__dirname, fronend_company)));
+app.use('/company/*', express.static(path.join(__dirname, fronend_company)));
+app.use('/company', express.static(path.join(__dirname, fronend_company)));
 
 app.listen(config.PORT, () => {
     console.log('Server listening on port: ' + config.PORT);
