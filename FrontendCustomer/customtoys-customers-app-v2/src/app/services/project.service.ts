@@ -23,7 +23,7 @@ export class ProjectService {
 
   getProject(id_project: string): Observable<HttpResponse< Project>> {
     const myHeaders= new HttpHeaders({
-      'Token': this.storageService.getCurrentToken()
+      'authorization': this.storageService.getCurrentToken()
     });
     const httpOptions = {
       headers:myHeaders,
@@ -40,7 +40,7 @@ export class ProjectService {
 
   getProjectsOfClient(): Observable<HttpResponse< Array<Project>>> {
     const myHeaders= new HttpHeaders({
-      'Token': this.storageService.getCurrentToken()
+      'authorization': this.storageService.getCurrentToken()
     });
     const httpOptions = {
       headers:myHeaders,
@@ -57,14 +57,14 @@ export class ProjectService {
 
   getCommentsProject(id_project: string): Observable<HttpResponse<Array<Comment>>> {
     const myHeaders= new HttpHeaders({
-      'Token': this.storageService.getCurrentToken()
+      'authorization': this.storageService.getCurrentToken()
     });
     const httpOptions = {
       headers:myHeaders,
       observe:'response'
     };
     
-    const url = `${this.WEB_API_URL_PROJECTS}/${id_project}/Comments`;
+    const url = `${this.WEB_API_URL_PROJECTS}/${id_project}/comments`;
     
     return this.httpClient.get<Array<Comment>>(url,  {headers: myHeaders, observe: 'response'})
       .pipe(
@@ -74,14 +74,14 @@ export class ProjectService {
 
   postCoommentProject(id_project: string, text: string): Observable<HttpResponse<Comment>> {
     const myHeaders= new HttpHeaders({
-      'Token': this.storageService.getCurrentToken()
+      'authorization': this.storageService.getCurrentToken()
     });
     const httpOptions = {
       headers:myHeaders,
       observe:'response'
     };
     
-    const url = `${this.WEB_API_URL_PROJECTS}/${id_project}/Comments`;
+    const url = `${this.WEB_API_URL_PROJECTS}/${id_project}/comments`;
     
     let comment = new Comment();
     comment.text = text;
