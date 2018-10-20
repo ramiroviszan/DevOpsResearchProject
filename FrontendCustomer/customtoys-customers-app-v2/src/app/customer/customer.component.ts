@@ -43,6 +43,7 @@ export class CustomerComponent implements OnInit {
       let client = this.storageService.getCurrentClient(); 
       
       client.rut = this.editForm.controls['rut'].value;
+      client.companyName = this.editForm.controls['companyName'].value;
       console.log(client);
       this.customerService.put(client)
         .subscribe(
