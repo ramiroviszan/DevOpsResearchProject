@@ -63,3 +63,5 @@ typings/
 BackendTypescript/package-lock\.json
 
 BackendTypescript/dist/
+BackendTypescript/logs/*.log
+BackendTypescript/logs/*

@@ -1,4 +1,5 @@
 import { ProjectDTO } from "../data-transfer-objects/project.dto";
+import { CommentDTO } from "../data-transfer-objects/comment.dto";
 
 export default interface ProjectsRepository {
     add(project: ProjectDTO): Promise<ProjectDTO>;
@@ -6,6 +7,6 @@ export default interface ProjectsRepository {
     remove(project: ProjectDTO): Promise<any>;
     getAll(): Promise<ProjectDTO[]>;
     get(filter: any): Promise<ProjectDTO[]>;
-    getComments(filter: any): Promise<Comment[]>;
-    addComment(comment: any): Promise<Comment>;
+    getComments(filter: any): Promise<CommentDTO[]>;
+    addComment(comment: any): Promise<CommentDTO>;
 }
