@@ -835,7 +835,7 @@ var CustomerService = /** @class */ (function () {
     }
     CustomerService.prototype.get = function () {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
@@ -847,7 +847,7 @@ var CustomerService = /** @class */ (function () {
     };
     CustomerService.prototype.put = function (client) {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
@@ -1025,7 +1025,7 @@ var ProjectService = /** @class */ (function () {
     }
     ProjectService.prototype.getProject = function (id_project) {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
@@ -1037,7 +1037,7 @@ var ProjectService = /** @class */ (function () {
     };
     ProjectService.prototype.getProjectsOfClient = function () {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
@@ -1049,25 +1049,25 @@ var ProjectService = /** @class */ (function () {
     };
     ProjectService.prototype.getCommentsProject = function (id_project) {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
             observe: 'response'
         };
-        var url = this.WEB_API_URL_PROJECTS + "/" + id_project + "/Comments";
+        var url = this.WEB_API_URL_PROJECTS + "/" + id_project + "/comments";
         return this.httpClient.get(url, { headers: myHeaders, observe: 'response' })
             .pipe(operators_1.tap(function (data) { return console.log('Los datos que obtuvimos fueron: ' + JSON.stringify(data)); }));
     };
     ProjectService.prototype.postCoommentProject = function (id_project, text) {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
             observe: 'response'
         };
-        var url = this.WEB_API_URL_PROJECTS + "/" + id_project + "/Comments";
+        var url = this.WEB_API_URL_PROJECTS + "/" + id_project + "/comments";
         var comment = new comment_1.Comment();
         comment.text = text;
         comment.id_project = id_project;
