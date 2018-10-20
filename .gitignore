@@ -63,7 +63,3 @@ typings/
 BackendTypescript/package-lock\.json
 
 BackendTypescript/dist/
-
-# Lo habia agregado pero veo que da error si no existen.
-#BackendTypescript/logs/*.log
-#BackendTypescript/logs/*
