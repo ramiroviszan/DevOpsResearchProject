@@ -21,7 +21,7 @@ export class CustomerService {
 
   get(): Observable<HttpResponse<Client>> {
     const myHeaders= new HttpHeaders({
-      'Token': this.storageService.getCurrentToken()
+      'authorization': this.storageService.getCurrentToken()
     });
     const httpOptions = {
       headers:myHeaders,
@@ -38,7 +38,7 @@ export class CustomerService {
 
   put(client: Client): Observable<HttpResponse<Client>> {
     const myHeaders= new HttpHeaders({
-      'Token': this.storageService.getCurrentToken()
+      'authorization': this.storageService.getCurrentToken()
     });
     const httpOptions = {
       headers:myHeaders,

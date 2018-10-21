@@ -1,13 +1,13 @@
 export class Client {
     public _id: string;
-    public company_name: string;
+    public companyName: string;
     public rut: string;
-    public entry_date: string;
+    public entryDate: string;
 
     constructor(client:Client){
         this._id=client._id;
-        this.company_name=client.company_name;
+        this.companyName=client.companyName;
         this.rut=client.rut;
-        this.entry_date=client.entry_date;
+        this.entryDate=client.entryDate;
     }
   }

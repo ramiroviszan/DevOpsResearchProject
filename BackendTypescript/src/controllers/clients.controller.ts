@@ -87,7 +87,7 @@ export default {
         await validID(dataToSearch.token);
 
         if (await userBelongsToCompany(dataToSearch)) {
-            const query = { 'id_client': new ObjectID(dataToSearch.id) };
+            const query = { 'clientID': new ObjectID(dataToSearch.id) };
             const projectDTOs: ProjectDTO[] = await repository.projects.get(query);
             projects = dtoToProjectArray(projectDTOs);
         }

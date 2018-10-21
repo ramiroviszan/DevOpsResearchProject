@@ -1,0 +1,9 @@
+GET /api/clients/5b9d1e46fb6fc00e4d765711/projects 404 17 - 3646.392 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 400 10 - 2903.168 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 400 10 - 3628.160 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 400 26 - 760.767 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 400 24 - 718.982 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 400 26 - 3684.292 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 400 26 - 3353.348 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 400 26 - 788.279 ms
+PUT /api/clients/5b9d1e46fb6fc00e4d765711 400 26 - 2861.410 ms

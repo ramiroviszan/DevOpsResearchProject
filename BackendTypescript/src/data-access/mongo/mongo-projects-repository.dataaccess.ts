@@ -4,6 +4,7 @@ import config from "../../config";
 import mongoConfig from "./mongo.config";
 import RejectReason from "../../models/reject-reason.model";
 import { ProjectDTO } from "../data-transfer-objects/project.dto";
+import { CommentDTO } from "../data-transfer-objects/comment.dto";
 
 const mongoClient = new MongoClient(config.DB_URL, { useNewUrlParser: true });
 
@@ -89,7 +90,7 @@ const mongoProjectsRepo: ProjectsRepository = {
                 });
         });
     },
-    getComments(filter: any): Promise<Comment[]> {
+    getComments(filter: any): Promise<CommentDTO[]> {
         return new Promise((resolve, reject) => {
             mongoClient.connect()
                 .then(mongoClient => {
@@ -114,7 +115,7 @@ const mongoProjectsRepo: ProjectsRepository = {
                 });
         });
     },
-    addComment(comment: Comment): Promise<Comment> {
+    addComment(comment: any): Promise<CommentDTO> {
         return new Promise((resolve, reject) => {
             mongoClient.connect()
                 .then(mongoClient => {

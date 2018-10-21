@@ -28,8 +28,8 @@
           <!-- Aca va todo el contenido de la tabla  -->
           <tr *ngFor='let p of projects'>
             <td>{{p.name}}</td>
-            <td>{{p.start_date}}</td>
-            <td>{{p.end_date}}</td>
+            <td>{{p.startDate}}</td>
+            <td>{{p.endDate}}</td>
 
             <td><span class="fa fa-edit show-comment" [title]='"Show comments"' (click)='showComments(p._id)'>Show comments</span></td>
           </tr>

@@ -35,9 +35,9 @@ function extractClientDataToSearch(request): any {
 function extractClientDataToUpdate(dataToSearch, request): Client {
     const clientNewData: Client = {
         _id: dataToSearch.id,
-        companyName: request.body.company_name,
+        companyName: request.body.companyName,
         rut: request.body.rut,
-        entryDate: request.body.entry_date
+        entryDate: request.body.entryDate
     };
     return clientNewData;
 }

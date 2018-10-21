@@ -316,16 +316,11 @@ var CommentsComponent = /** @class */ (function () {
             this._subjectError.next(this.errorMessage = 'Se necesita un ID de proyecto');
         }
         else {
-            //this.getProject();
             this.getComments();
         }
         this.editForm = this.formBuilder.group({
             text: ['', forms_1.Validators.required]
         });
-    };
-    CommentsComponent.prototype.getProject = function () {
-        var _this = this;
-        this.projectsService.getProject(this.id_project).subscribe((function (data) { return _this.resultProject(data); }), (function (error) { console.error(error); _this.handleError(error); }));
     };
     CommentsComponent.prototype.getComments = function () {
         var _this = this;
@@ -392,7 +387,7 @@ module.exports = "\n.container{\n    width: 320px;\n    height: 300px;\n    font
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-navbar></app-navbar>\n<div class=\"container\">\n  <div class=\"row encabezado\">\n    <h1>Edit Profile</h1>\n  </div>\n  <br>\n  <div class=\"row formulario\">\n    <form id=\"editForm\" method=\"post\" accept-charset=\"utf-8\" [formGroup]=\"editForm\">\n      <div class=\"form-group\">\n        <div class=\"input-group margin-bottom-sm search-class-width\">\n          <span class=\"input-group-addon search-class icon-search\"><i class=\"fa fa-user\"></i></span>\n          <input type=\"text\" class=\"form-control search-class input-search\" id=\"nomUsu\" required\n                 placeholder=\"Company name\" formControlName=\"company_name\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"input-group margin-bottom-sm search-class-width\">\n          <span class=\"input-group-addon search-class icon-search\"><i class=\"fa fa-lock\"></i></span>\n          <input type=\"text\" class=\"form-control search-class input-search\" id=\"psw\" required\n                 placeholder=\"Rut\" formControlName=\"rut\" (keypress)=\"numberOnly($event)\">\n        </div>\n      </div>\n      <input type=\"button\" value=\"Save\" class=\"btn iniciar\" (click)=\"save()\">\n      <ngb-alert *ngIf=\"errorMessage\" type=\"danger\" (close)=\"errorMessage = null\">{{ errorMessage }}</ngb-alert>\n    </form>\n  </div>\n</div>\n"
+module.exports = "<app-navbar></app-navbar>\n<div class=\"container\">\n  <div class=\"row encabezado\">\n    <h1>Edit Profile</h1>\n  </div>\n  <br>\n  <div class=\"row formulario\">\n    <form id=\"editForm\" method=\"post\" accept-charset=\"utf-8\" [formGroup]=\"editForm\">\n      <div class=\"form-group\">\n        <div class=\"input-group margin-bottom-sm search-class-width\">\n          <span class=\"input-group-addon search-class icon-search\"><i class=\"fa fa-user\"></i></span>\n          <input type=\"text\" class=\"form-control search-class input-search\" id=\"companyName\" required\n                 placeholder=\"Company name\" formControlName=\"companyName\">\n        </div>\n      </div>\n      <div class=\"form-group\">\n        <div class=\"input-group margin-bottom-sm search-class-width\">\n          <span class=\"input-group-addon search-class icon-search\"><i class=\"fa fa-lock\"></i></span>\n          <input type=\"text\" class=\"form-control search-class input-search\" id=\"rut\" required\n                 placeholder=\"Rut\" formControlName=\"rut\" (keypress)=\"numberOnly($event)\">\n        </div>\n      </div>\n      <input type=\"button\" value=\"Save\" class=\"btn iniciar\" (click)=\"save()\">\n      <ngb-alert *ngIf=\"errorMessage\" type=\"danger\" (close)=\"errorMessage = null\">{{ errorMessage }}</ngb-alert>\n    </form>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -434,10 +429,10 @@ var CustomerComponent = /** @class */ (function () {
         var _this = this;
         this._subject.subscribe(function (message) { return _this.errorMessage = message; });
         this._subject.pipe(operators_1.debounceTime(3000)).subscribe(function () { return _this.errorMessage = null; });
-        var company_name = this.storageService.getCurrentClient() ? this.storageService.getCurrentClient().company_name : '';
+        var companyName = this.storageService.getCurrentClient() ? this.storageService.getCurrentClient().companyName : '';
         var rut = this.storageService.getCurrentClient() ? this.storageService.getCurrentClient().rut : '';
         this.editForm = this.formBuilder.group({
-            company_name: [{ value: company_name, disabled: true }],
+            companyName: [{ value: companyName, disabled: true }],
             rut: [rut, forms_1.Validators.required]
         });
     };
@@ -446,6 +441,7 @@ var CustomerComponent = /** @class */ (function () {
         if (this.editForm.valid) {
             var client = this.storageService.getCurrentClient();
             client.rut = this.editForm.controls['rut'].value;
+            client.companyName = this.editForm.controls['companyName'].value;
             console.log(client);
             this.customerService.put(client)
                 .subscribe((function (data) { return _this.correctSave(data); }), (function (error) { console.error(error); _this.setErrorMessage(); }));
@@ -721,7 +717,7 @@ module.exports = ".card-header{\n    background-color: #264763;\n    color: whit
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-navbar></app-navbar>\n<div class=\"container\">\n  <br><br><br>\n  <div class='card'>\n    <div class='card-header text-left'>\n      {{pageTitle}}\n    </div>\n\n    <div class='card-body'>\n      <!-- Mensaje de error -->\n      <ngb-alert *ngIf=\"errorMessage\" type=\"danger\" (close)=\"errorMessage = null\">{{ errorMessage }}</ngb-alert>\n\n\n      <!--Tabla de mascotas -->\n      <div class='table-responsive'>\n        <table class='table'>\n          <!--Cabezal de la tabla -->\n          <thead>\n          <tr>\n            <th>Name</th>\n            <th>Start Date</th>\n            <th>End Date</th>\n            <th>Actions</th>\n          </tr>\n          </thead>\n          <!--Cuerpo de la tabla-->\n          <tbody>\n          <!-- Aca va todo el contenido de la tabla  -->\n          <tr *ngFor='let p of projects'>\n            <td>{{p.name}}</td>\n            <td>{{p.start_date}}</td>\n            <td>{{p.end_date}}</td>\n\n            <td><span class=\"fa fa-edit show-comment\" [title]='\"Show comments\"' (click)='showComments(p._id)'>Show comments</span></td>\n          </tr>\n          </tbody>\n        </table>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<app-navbar></app-navbar>\n<div class=\"container\">\n  <br><br><br>\n  <div class='card'>\n    <div class='card-header text-left'>\n      {{pageTitle}}\n    </div>\n\n    <div class='card-body'>\n      <!-- Mensaje de error -->\n      <ngb-alert *ngIf=\"errorMessage\" type=\"danger\" (close)=\"errorMessage = null\">{{ errorMessage }}</ngb-alert>\n\n\n      <!--Tabla de mascotas -->\n      <div class='table-responsive'>\n        <table class='table'>\n          <!--Cabezal de la tabla -->\n          <thead>\n          <tr>\n            <th>Name</th>\n            <th>Start Date</th>\n            <th>End Date</th>\n            <th>Actions</th>\n          </tr>\n          </thead>\n          <!--Cuerpo de la tabla-->\n          <tbody>\n          <!-- Aca va todo el contenido de la tabla  -->\n          <tr *ngFor='let p of projects'>\n            <td>{{p.name}}</td>\n            <td>{{p.startDate}}</td>\n            <td>{{p.endDate}}</td>\n\n            <td><span class=\"fa fa-edit show-comment\" [title]='\"Show comments\"' (click)='showComments(p._id)'>Show comments</span></td>\n          </tr>\n          </tbody>\n        </table>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -750,6 +746,7 @@ var operators_1 = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs
 var project_service_1 = __webpack_require__(/*! ../services/project.service */ "./src/app/services/project.service.ts");
 var storage_service_1 = __webpack_require__(/*! ../services/storage.service */ "./src/app/services/storage.service.ts");
 var router_1 = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var apiconfig_1 = __webpack_require__(/*! ../classes/apiconfig */ "./src/app/classes/apiconfig.ts");
 var ProjectsComponent = /** @class */ (function () {
     function ProjectsComponent(router, projectsService, storageService) {
         this.router = router;
@@ -762,21 +759,23 @@ var ProjectsComponent = /** @class */ (function () {
         var _this = this;
         this._subjectError.subscribe(function (message) { return _this.errorMessage = message; });
         this._subjectError.pipe(operators_1.debounceTime(3000)).subscribe(function () { return _this.errorMessage = null; });
-        if (this.storageService.getCurrentClient())
+        if (this.storageService.getCurrentClient()) {
             this.getProjects();
+        }
     };
     ProjectsComponent.prototype.getProjects = function () {
         var _this = this;
         this.projectsService.getProjectsOfClient().subscribe((function (data) { return _this.result(data); }), (function (error) { console.error(error); _this.handleError(error); }));
     };
     ProjectsComponent.prototype.showComments = function (id_project) {
-        this.router.navigateByUrl("/projects/" + id_project + "/comments");
+        console.log(apiconfig_1.Apiconfig.getApiStartUri() + 'projects/' + id_project + '/comments');
+        this.router.navigateByUrl(apiconfig_1.Apiconfig.getApiStartUri() + 'projects/' + id_project + '/comments');
     };
     ProjectsComponent.prototype.result = function (data) {
         this.projects = data.body;
     };
     ProjectsComponent.prototype.handleError = function (error) {
-        if (error.status == 401) {
+        if (error.status === 401) {
             this._subjectError.next(this.errorMessage = 'Usuario no autorizado');
         }
         else {
@@ -835,7 +834,7 @@ var CustomerService = /** @class */ (function () {
     }
     CustomerService.prototype.get = function () {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
@@ -847,7 +846,7 @@ var CustomerService = /** @class */ (function () {
     };
     CustomerService.prototype.put = function (client) {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
@@ -1025,7 +1024,7 @@ var ProjectService = /** @class */ (function () {
     }
     ProjectService.prototype.getProject = function (id_project) {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
@@ -1037,7 +1036,7 @@ var ProjectService = /** @class */ (function () {
     };
     ProjectService.prototype.getProjectsOfClient = function () {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
@@ -1049,25 +1048,25 @@ var ProjectService = /** @class */ (function () {
     };
     ProjectService.prototype.getCommentsProject = function (id_project) {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
             observe: 'response'
         };
-        var url = this.WEB_API_URL_PROJECTS + "/" + id_project + "/Comments";
+        var url = this.WEB_API_URL_PROJECTS + "/" + id_project + "/comments";
         return this.httpClient.get(url, { headers: myHeaders, observe: 'response' })
-            .pipe(operators_1.tap(function (data) { return console.log('Los datos que obtuvimos fueron: ' + JSON.stringify(data)); }));
+            .pipe(operators_1.tap(function (data) { return console.log('Los datos de los comentarios fueron que obtuvimos fueron: ' + JSON.stringify(data)); }));
     };
     ProjectService.prototype.postCoommentProject = function (id_project, text) {
         var myHeaders = new http_1.HttpHeaders({
-            'Token': this.storageService.getCurrentToken()
+            'authorization': this.storageService.getCurrentToken()
         });
         var httpOptions = {
             headers: myHeaders,
             observe: 'response'
         };
-        var url = this.WEB_API_URL_PROJECTS + "/" + id_project + "/Comments";
+        var url = this.WEB_API_URL_PROJECTS + "/" + id_project + "/comments";
         var comment = new comment_1.Comment();
         comment.text = text;
         comment.id_project = id_project;

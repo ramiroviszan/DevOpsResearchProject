@@ -94,7 +94,7 @@ async function userAndProjectBelongsToCompany(dataToSearch: any): Promise<boolea
     const queryUser = { 'token': new ObjectID(dataToSearch.token) };
     const user: User = await repository.customerUsers.get(queryUser);
 
-    if (projectDTO[0] && user && projectDTO[0].id_client == user.id_client &&
+    if (projectDTO[0] && user && projectDTO[0].clientID == user.id_client &&
         projectDTO[0]._id == dataToSearch.id &&
         user.token == dataToSearch.token) {
         return true;
